@@ -43,15 +43,7 @@ export default function Home () {
         <h1 className={styles.title}>
           Welcome to DSC Ideas Hub!
         </h1>
-        <p>Islands/Castles/Something
-
-          Can be integrated with a channel on a discord server via a helper bot.
-          Use NFTs and web3 for virtual transactions.
-          Incorporate gather.town type of functionality (specifically the video thing)
-          Usecase: hackathon announcements.
-
-          Gamifying tasks and goals kinda like Habitica
-          Incentive system with in game items/rewards
+        <p>Lorem Ipsum Dolor Sit Amet.
         </p>
         <p>"Everything Begins With An Idea" – Earl Nightingale</p>
       </div>
