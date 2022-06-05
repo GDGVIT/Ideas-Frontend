@@ -27,22 +27,34 @@ export default function Home () {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className={styles.main}>
+      <GoogleLogin
+        onSuccess={async (res) => {
+          await axios
+            .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
+              token: res.credential
+            })
+            .then(res => {
+              console.log(res.data)
+            })
+        }}
+      />
+
+      <div className={styles.main}>
         <h1 className={styles.title}>
           Welcome to DSC Ideas Hub!
         </h1>
-        <GoogleLogin
-          onSuccess={async (res) => {
-            await axios
-              .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
-                token: res.credential
-              })
-              .then(res => {
-                console.log(res.data)
-              })
-          }}
-        />
-      </main>
+        <p>Islands/Castles/Something
+
+          Can be integrated with a channel on a discord server via a helper bot.
+          Use NFTs and web3 for virtual transactions.
+          Incorporate gather.town type of functionality (specifically the video thing)
+          Usecase: hackathon announcements.
+
+          Gamifying tasks and goals kinda like Habitica
+          Incentive system with in game items/rewards
+        </p>
+        <p>"Everything Begins With An Idea" – Earl Nightingale</p>
+      </div>
     </div>
   )
 }
