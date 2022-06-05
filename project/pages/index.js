@@ -2,12 +2,11 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
 
-import { useGoogleOneTapLogin } from '@react-oauth/google'
+import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google'
 
 export default function Home () {
   useGoogleOneTapLogin({
     onSuccess: async credentialResponse => {
-      console.log(credentialResponse)
       await axios
         .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
           token: credentialResponse.credential
@@ -32,6 +31,17 @@ export default function Home () {
         <h1 className={styles.title}>
           Welcome to DSC Ideas Hub!
         </h1>
+        <GoogleLogin
+          onSuccess={async (res) => {
+            await axios
+              .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
+                token: res.credential
+              })
+              .then(res => {
+                console.log(res.data)
+              })
+          }}
+        />
       </main>
     </div>
   )
