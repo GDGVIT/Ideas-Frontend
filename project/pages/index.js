@@ -1,19 +1,25 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import axios from 'axios'
 
-import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleOneTapLogin } from '@react-oauth/google';
+import { useGoogleOneTapLogin } from '@react-oauth/google'
 
 export default function Home () {
   useGoogleOneTapLogin({
-    onSuccess: credentialResponse => {
-        console.log(credentialResponse.credential);
+    onSuccess: async credentialResponse => {
+      console.log(credentialResponse)
+      await axios
+        .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
+          token: credentialResponse.credential
+        })
+        .then(res => {
+          console.log(res.data)
+        })
     },
     onError: () => {
-        console.log('Login Failed')
+      console.log('Login Failed')
     }
-  });
+  })
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +30,7 @@ export default function Home () {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href='https://nextjs.org'>DSC Ideas Hub!</a>
+          Welcome to DSC Ideas Hub!
         </h1>
       </main>
     </div>
