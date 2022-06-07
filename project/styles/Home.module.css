@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 3rem 6rem;
 }
 
 .main {
@@ -120,4 +120,9 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.hero {
+  margin-top: 8rem;
+  margin-bottom: 18rem
 }

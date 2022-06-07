@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
-import '/node_modules/primeflex/primeflex.css'
+import 'primeflex/primeflex.css'
 
 import Layout from '../components/Layout'
 

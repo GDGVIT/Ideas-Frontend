@@ -2,23 +2,9 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
 
-import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 
 export default function Home () {
-  useGoogleOneTapLogin({
-    onSuccess: async credentialResponse => {
-      await axios
-        .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
-          token: credentialResponse.credential
-        })
-        .then(res => {
-          console.log(res.data)
-        })
-    },
-    onError: () => {
-      console.log('Login Failed')
-    }
-  })
   return (
     <div className={styles.container}>
       <Head>
@@ -39,13 +25,24 @@ export default function Home () {
         }}
       />
 
-      <div className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to DSC Ideas Hub!
+      <div className={`${styles.hero} w-8`}>
+        <h1 className='text-7xl'>
+          DSC Idea
         </h1>
-        <p>Lorem Ipsum Dolor Sit Amet.
+        <h1 className='text-7xl'>
+          Hub
+        </h1>
+        <p className='mt-5'>DSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
         </p>
-        <p>"Everything Begins With An Idea" – Earl Nightingale</p>
+        <p className='mt-5'>"Everything Begins With An Idea" – Earl Nightingale</p>
+        <button className='primary-button mt-5'>Add an Idea</button>
+      </div>
+
+      <div>
+        <h2>Trending Ideas</h2>
+      </div>
+      <div className='mt-6'>
+        <h2>Ideas Made Real</h2>
       </div>
     </div>
   )
