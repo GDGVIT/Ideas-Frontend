@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useGoogleOneTapLogin } from '@react-oauth/google'
+import { useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 
 export default function Navbar () {
@@ -27,6 +27,7 @@ export default function Navbar () {
       console.log('Login Failed')
     }
   })
+
   return (
     <header className='bg-white p-3 flex justify-content-between'>
       <div className='flex gap-6 align-items-center'>
@@ -38,6 +39,14 @@ export default function Navbar () {
         <img src='#' alt='notif' />
         <img src='#' alt='mess' />
         <img className='profile' height={33} src='#' />
+        <GoogleLogin
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse)
+          }}
+          onError={() => {
+            console.log('Login Failed')
+          }}
+        />
       </div>
     </header>
   )
