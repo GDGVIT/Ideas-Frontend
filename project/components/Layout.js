@@ -6,7 +6,7 @@ export default function Layout ({ children }) {
   return (
     <div className='layout min-h-screen flex flex-column'>
       <Navbar />
-      <main>{children}</main>
+      <main className='container'>{children}</main>
       <Footer />
     </div>
   )

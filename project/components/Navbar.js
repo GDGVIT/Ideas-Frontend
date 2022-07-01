@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
-import axios from 'axios'
+import axios from '../axios'
 
 export default function Navbar () {
   useGoogleOneTapLogin({
     onSuccess: async credentialResponse => {
       await axios
-        .post('https://ideas-backend-v2.herokuapp.com/auth/google', {
+        .post('/auth/google', {
           token: credentialResponse.credential
         })
         .then(res => {
