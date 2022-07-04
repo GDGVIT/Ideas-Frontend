@@ -33,7 +33,7 @@
 < directions to install > 
 ```bash
 cd project
-npm run i
+npm i
 ```
 
 < directions to execute >
