@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
+import Link from 'next/link'
 
 export default function Navbar () {
   useGoogleOneTapLogin({
@@ -31,9 +32,9 @@ export default function Navbar () {
   return (
     <header className='bg-white p-3 flex justify-content-between'>
       <div className='flex gap-6 align-items-center'>
-        <img src='/DSClogo.svg' />
-        <a>Home</a>
-        <a>Ideas</a>
+        <Link href='/'><img src='/DSClogo.svg' /></Link>
+        <Link href='/'>Home</Link>
+        <Link href='/ideas'>Ideas</Link>
       </div>
       <div className='flex gap-6 align-items-center'>
         <img src='#' alt='notif' />

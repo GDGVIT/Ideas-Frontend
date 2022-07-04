@@ -4,8 +4,6 @@ import IdeaCard from '../components/IdeaCard'
 import Link from 'next/link'
 
 export default function Home () {
-  const trending = ['Idea One', 'Idea Two', 'Idea Three', 'Idea Four']
-
   return (
     <div>
       <Head>
