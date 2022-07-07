@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.2.6",
+    "@yaireo/tagify": "^4.12.0",
     "axios": "^0.27.2",
     "next": "12.1.6",
     "primeflex": "^3.2.1",

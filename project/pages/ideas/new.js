@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './newIdeas.module.css'
 import axios from '../../axios'
+import IdeaCard from '../../components/IdeaCard'
 
 export default function newIdea () {
   const [title, setTitle] = useState('')
@@ -47,13 +48,13 @@ export default function newIdea () {
         .catch(e => console.log(e))
     }
     fetchUserPosts()
-  }, [userIdeas])
+  }, [])
 
   return (
     <>
-      <div className='mt-8'>
+      <div className='mt-6 h-screen'>
         <h1>Add an Idea</h1>
-        <form onSubmit={handleSubmit} className='p-5 flex flex-column lg:w-6 md:w-7 w-12 gap-3 mt-3'>
+        <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column lg:w-6 md:w-7 w-12 gap-3 mt-3'>
           <label htmlFor='title-input'>Title</label>
           <input value={title} onChange={(e) => { setTitle(e.target.value) }} className={styles.input} id='title-input' />
           <label htmlFor='desc-input'>Description</label>
@@ -63,11 +64,18 @@ export default function newIdea () {
           <button className='primary-button mx-auto mt-5'>Submit</button>
         </form>
       </div>
-      <div className='mt-8'>
+      <div className='mt-4'>
         <h1>Your previous Ideas</h1>
-        {userIdeas.map((idea, index) => {
-          return <p key={index}>{idea.title}</p>
-        })}
+        <div className='grid gap-4 mt-4'>
+          <div className="md:col-4 col-12 top-0 md:sticky h-min">
+            <p>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+          </div>
+          <div className="md:col col-12 flex flex-column gap-5">
+          {userIdeas.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author="You" tags={idea.tags} date={idea.date}></IdeaCard>
+          })}
+          </div>
+        </div>
       </div>
     </>
   )

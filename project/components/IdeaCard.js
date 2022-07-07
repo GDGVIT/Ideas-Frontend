@@ -1,18 +1,19 @@
 import React from 'react'
 
-export default function IdeaCard () {
+export default function IdeaCard ({name, color, author, description, tags, date}) {
   return (
-    <div className='flex-grow-1 md:max-w-30rem border-round-xl w-18rem px-4 py-6 bg-white ideacard'>
-      <div className='flex flex-row justify-content-between'>
-        <p>Idea Name</p>
-        <span style={{ color: '#FF6B6B' }}>&#9829;</span>
+    <div className='flex-grow-1 border-round-xl p-3 bg-white ideacard'>
+      <div className="flex gap-1 flex-row">
+        <p>{author}</p>
+        <p>|</p>
+        <p>{date}</p>
       </div>
-      <p className='mt-3'>Author Name</p>
-      <p>Date</p>
-      <p className='mt-3'>Lorem ipsum and some assorted information about the project which is apparently trending.</p>
-      <div className='mt-6 flex flex-row gap-2'>
-        <button className='border-round-xl flex-grow-1'>One</button>
-        <button className='border-round-xl flex-grow-1'>Two</button>
+      <p className='mt-3'>{name}</p>
+      <p className='mt-3'>{description}</p>
+      <div className="mt-3 flex flex-row flex-wrap gap-2">
+        {tags.map((tag, index) => {
+          return <p className='p-2 border-round-md' style={{'backgroundColor': '#F0B501'}} key={index}>{tag}</p>
+        })}
       </div>
     </div>
   )
