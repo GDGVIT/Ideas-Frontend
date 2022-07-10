@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
+import { setUserInfo } from '../app/slices/authSlice'
+
+import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
 
-const getAuthToken = async (cred) => {
+const getAuthToken = async (cred, dispatch) => {
   await axios
     .post('/auth/google', {
       token: cred
@@ -17,18 +20,23 @@ const getAuthToken = async (cred) => {
       localStorage.setItem('givenName', res.data.data.givenName)
       localStorage.setItem('googleId', res.data.data.googleId)
       localStorage.setItem('picture', res.data.data.picture)
-      localStorage.setItem('id', res.data.data._id)
+      localStorage.setItem('_id', res.data.data._id)
       localStorage.setItem('token', res.data.token)
+      dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
     })
 }
 
 export default function Navbar () {
-  useGoogleOneTapLogin({
-    onSuccess: credentialResponse => getAuthToken(credentialResponse.credential),
-    onError: () => {
-      console.log('Login Failed')
-    }
-  })
+  const dispatch = useDispatch()
+
+  const auth = useSelector(state => state.auth)
+
+  // useGoogleOneTapLogin({
+  //   onSuccess: credentialResponse => getAuthToken(credentialResponse.credential, dispatch),
+  //   onError: () => {
+  //     console.log('Login Failed')
+  //   }
+  // })
 
   return (
     <header className='bg-white p-3 flex justify-content-between'>
@@ -38,17 +46,20 @@ export default function Navbar () {
         <Link to='/ideas'>Ideas</Link>
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
-        <img src='#' alt='notif' />
-        <img src='#' alt='mess' />
-        <img alt='profile' className='profile' height={33} src='#' />
-        <GoogleLogin
-          onSuccess={credentialResponse => {
-            getAuthToken(credentialResponse.credential)
-          }}
-          onError={() => {
-            console.log('Login Failed')
-          }}
-        />
+        {auth.token
+          ? <><img src='#' alt='notif' />
+            <img src='#' alt='mess' />
+            <img alt='profile' className='profile' height={33} src={auth.picture} />
+          </>
+          : <GoogleLogin
+              onSuccess={credentialResponse => {
+                getAuthToken(credentialResponse.credential, dispatch)
+              }}
+              onError={() => {
+                console.log('Login Failed')
+              }}
+              useOneTap
+            />}
       </div>
       <div className='md:hidden'>
         <button />
