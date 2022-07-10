@@ -5,7 +5,7 @@ export default function Ideas () {
     <div className='flex flex-row gap-4'>
       <div className='col-3'>
         <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard'>
-          <img alt='pfp' src={localStorage.getItem('picture')}></img>
+          <img alt='pfp' src={localStorage.getItem('picture')} />
           <p>{localStorage.getItem('name')}</p>
         </div>
       </div>
