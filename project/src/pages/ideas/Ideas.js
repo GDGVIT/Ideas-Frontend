@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
-=======
-import React from 'react'
-import { useEffect, useState } from 'react'
->>>>>>> fe69b7abf91f1966e84c7565c0bacee7386be3b5
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 
@@ -36,12 +31,9 @@ export default function Ideas () {
         </div>
       </div>
       <div className='col-12 lg:col gap-5 flex flex-column'>
-<<<<<<< HEAD
-=======
-      {ideas.map((idea, index) => {
-              return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === localStorage.getItem('id') ? 'You' : idea.author} tags={idea.tags} date={idea.date} />
-            })}
->>>>>>> fe69b7abf91f1966e84c7565c0bacee7386be3b5
+        {ideas.map((idea, index) => {
+          return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === localStorage.getItem('id') ? 'You' : idea.author} tags={idea.tags} date={idea.date} />
+        })}
       </div>
     </div>
   )
