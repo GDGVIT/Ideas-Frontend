@@ -30,19 +30,11 @@ export default function Home () {
       <div>
         <h2>Trending Ideas</h2>
         <div className='mt-5 flex flex-row gap-4 flex-wrap'>
-          <IdeaCard />
-          <IdeaCard />
-          <IdeaCard />
-          <IdeaCard />
-          <IdeaCard />
         </div>
       </div>
       <div className='mt-6'>
         <h2>Ideas Made Real</h2>
         <div className='mt-5 flex flex-row gap-4 flex-wrap'>
-          <IdeaCard />
-          <IdeaCard />
-          <IdeaCard />
         </div>
       </div>
       <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? Let's find out.</p>
