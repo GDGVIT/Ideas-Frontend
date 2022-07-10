@@ -12,7 +12,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
       <p style={{ fontSize: 16 }} className='mt-3 bodytext'>{description}</p>
       <div style={{ fontSize: 20 }} className='mt-3 flex flex-row flex-wrap gap-2'>
         {tags.map((tag, index) => {
-          return <p className='p-2 border-round-md' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
+          return <p className='p-1 px-3 border-round-xl' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div>
     </div>

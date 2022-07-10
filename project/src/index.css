@@ -88,3 +88,9 @@ h6 {
   padding: 0.6rem;
   resize: none;
 }
+
+.pfp {
+  border-radius: 50%;
+  object-fit: contain;
+  height: 100%;
+}
