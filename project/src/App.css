@@ -1,7 +1,3 @@
-.container {
-  padding: 0 2rem;
-}
-
 .main {
   min-height: 100vh;
   padding: 4rem 0;
@@ -72,14 +68,6 @@
     monospace;
 }
 
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-}
-
 .card {
   margin: 1rem;
   padding: 1.5rem;
@@ -120,4 +108,9 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.hero {
+  margin-top: 8rem;
+  margin-bottom: 18rem;
 }
