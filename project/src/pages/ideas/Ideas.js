@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 
-export default function Ideas () {
-  const [ideas, setIdeas] = useState
-  ([])
+export default function Ideas() {
+  const [ideas, setIdeas] = useState([])
 
   const fetchIdeas = async () => {
     await axios
