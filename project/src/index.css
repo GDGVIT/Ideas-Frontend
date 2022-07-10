@@ -81,3 +81,10 @@ h6 {
 .bodytext {
   color: var(--bodytext);
 }
+
+.input {
+  border: 3px solid #c7deff;
+  border-radius: 15px;
+  padding: 0.6rem;
+  resize: none;
+}

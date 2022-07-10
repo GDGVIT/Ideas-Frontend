@@ -1,9 +1,8 @@
 import React from 'react'
-import styles from './Navbar.module.css'
+import { Link } from 'react-router-dom'
 
 import { useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
-import Link from 'next/link'
 
 const getAuthToken = async (cred) => {
   await axios
@@ -34,14 +33,14 @@ export default function Navbar () {
   return (
     <header className='bg-white p-3 flex justify-content-between'>
       <div className='flex md:gap-5 gap-3 align-items-center'>
-        <Link href='/'><img src='/DSClogo.svg' /></Link>
-        <Link href='/'>Home</Link>
-        <Link href='/ideas'>Ideas</Link>
+        <Link to='/'><img alt='logo' src='/DSClogo.svg' /></Link>
+        <Link to='/'>Home</Link>
+        <Link to='/ideas'>Ideas</Link>
       </div>
-      <div className={`md:flex hidden md:gap-5 gap-3 align-items-center`}>
+      <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         <img src='#' alt='notif' />
         <img src='#' alt='mess' />
-        <img className='profile' height={33} src='#' />
+        <img alt='profile' className='profile' height={33} src='#' />
         <GoogleLogin
           onSuccess={credentialResponse => {
             getAuthToken(credentialResponse.credential)
@@ -51,9 +50,8 @@ export default function Navbar () {
           }}
         />
       </div>
-      <div className="md:hidden">
-        <button>
-        </button>
+      <div className='md:hidden'>
+        <button />
       </div>
     </header>
   )
