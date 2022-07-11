@@ -8,6 +8,7 @@ import { initialiseStore } from './app/slices/authSlice'
 import Landing from './pages/Landing'
 import Ideas from './pages/ideas/Ideas'
 import NewIdea from './pages/ideas/NewIdea'
+import SingleIdea from './pages/ideas/SingleIdea'
 
 function App () {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ function App () {
         <Route exact path='/' element={<Landing />} />
         <Route exact path='/ideas/' element={<Ideas />} />
         <Route exact path='/ideas/new/' element={<NewIdea />} />
+        <Route path='/ideas/:id' element={<SingleIdea />} />
       </Routes>
     </div>
   )

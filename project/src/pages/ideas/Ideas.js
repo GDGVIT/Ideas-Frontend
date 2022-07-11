@@ -34,7 +34,7 @@ export default function Ideas () {
       </div>
       <div className='col-12 lg:col gap-5 flex flex-column'>
         {ideas.map((idea, index) => {
-          return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.author} tags={idea.tags} date={idea.date} />
+          return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.date} ideaId={idea._id} />
         })}
       </div>
     </div>
