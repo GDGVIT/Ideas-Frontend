@@ -41,14 +41,14 @@ export default function Navbar () {
   return (
     <header className='bg-white p-3 flex justify-content-between'>
       <div className='flex md:gap-5 gap-3 align-items-center'>
-        <Link to='/'><img alt='logo' src='/DSClogo.svg' /></Link>
+        <Link to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link to='/'>Home</Link>
         <Link to='/ideas'>Ideas</Link>
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token
-          ? <><img src='#' alt='notif' />
-            <img src='#' alt='mess' />
+          ? <><img src={require('../assets/bellSymbol.svg').default} alt='notif' />
+            <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             <img alt='pfp' className='pfp' width={33} src={auth.picture} />
           </>
           : <GoogleLogin

@@ -5,6 +5,8 @@
   --yellow: #f0b501;
   --green: #6bcb77;
   --bodytext: #575757;
+  --datetext: #8d8d8d;
+  --linecolor: #b1b1b1;
 }
 
 html,
@@ -82,11 +84,31 @@ h6 {
   color: var(--bodytext);
 }
 
+.datetext {
+  color: var(--datetext);
+}
+
 .input {
   border: 3px solid #c7deff;
   border-radius: 15px;
   padding: 0.6rem;
   resize: none;
+}
+
+.comment-input {
+  border: 0 solid #c7deff;
+  padding: 0.7rem;
+  padding-left: 3rem;
+  width: 100%;
+  border-bottom: 0.5px solid var(--linecolor);
+}
+
+.comment-icon {
+  transform: translate(0, -50%);
+}
+
+.comment-input:focus {
+  outline: none;
 }
 
 .pfp {
