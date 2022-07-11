@@ -49,7 +49,7 @@ export default function Navbar () {
         {auth.token
           ? <><img src='#' alt='notif' />
             <img src='#' alt='mess' />
-            <img alt='profile' className='profile' height={33} src={auth.picture} />
+            <img alt='pfp' className='pfp' width={33} src={auth.picture} />
           </>
           : <GoogleLogin
               onSuccess={credentialResponse => {

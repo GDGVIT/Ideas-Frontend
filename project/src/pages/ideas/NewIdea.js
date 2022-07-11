@@ -80,7 +80,7 @@ export default function NewIdea () {
           </div>
           <div className='md:col col-12 flex flex-column gap-5'>
             {userIdeas.map((idea, index) => {
-              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.date} />
+              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.date} ideaId={idea._id} />
             })}
           </div>
         </div>
