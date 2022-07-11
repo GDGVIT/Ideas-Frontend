@@ -7,7 +7,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
       <div style={{ fontSize: 20 }} className='flex gap-1 flex-row'>
         <p>{author}</p>
         <p className='bodytext'>|</p>
-        <p className='bodytext'>{date}</p>
+        <p className='datetext'>{date}</p>
       </div>
       <Link to={`/ideas/${ideaId}`}><p style={{ fontSize: 24 }} className='mt-3'>{name}</p></Link>
       <p style={{ fontSize: 16 }} className='mt-3 bodytext'>{description}</p>

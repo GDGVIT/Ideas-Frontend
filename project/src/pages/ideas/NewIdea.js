@@ -75,7 +75,7 @@ export default function NewIdea () {
       <div className='mt-8'>
         <h1>Your previous Ideas</h1>
         <div className='grid gap-4 mt-4'>
-          <div className='md:col-4 col-12 top-0 md:sticky'>
+          <div className='md:col-4 col-12 top-0 md:sticky h-min'>
             <p className='bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
           </div>
           <div className='md:col col-12 flex flex-column gap-5'>
