@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
+import { useSelector } from 'react-redux'
 
 export default function NewIdea () {
   const [title, setTitle] = useState('')
   const [description, setDesc] = useState('')
   const [tags, setTags] = useState('')
   const [userIdeas, setUserIdeas] = useState([])
+
+  const auth = useSelector(state => state.auth)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -21,7 +24,7 @@ export default function NewIdea () {
     await axios
       .post('/ideas', postObject, {
         headers: {
-          authorization: localStorage.getItem('token')
+          authorization: auth.token
         }
       })
       .then(res => {
@@ -33,23 +36,27 @@ export default function NewIdea () {
       .catch(e => console.log(e))
   }
 
-  const fetchUserPosts = async () => {
-    await axios
-      .get(`/ideas/user/${localStorage.getItem('id')}`, {
-        headers: {
-          authorization: localStorage.getItem('token')
-        }
-      })
-      .then((res) => {
-        console.log(res.data)
-        setUserIdeas(res.data.ideas)
-      })
-      .catch(e => console.log(e))
-  }
+  const fetchUserPosts = useCallback(
+    async () => {
+      await axios
+        .get(`/ideas/user/${auth._id}`, {
+          headers: {
+            authorization: auth.token
+          }
+        })
+        .then((res) => {
+          console.log(res.data)
+          setUserIdeas(res.data.ideas)
+        })
+        .catch(e => console.log(e))
+    }, [auth]
+  )
 
   useEffect(() => {
-    fetchUserPosts()
-  }, [])
+    if (auth.token) {
+      fetchUserPosts()
+    }
+  }, [auth, fetchUserPosts])
 
   return (
     <div>
@@ -65,18 +72,25 @@ export default function NewIdea () {
           <button disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
         </form>
       </div>
-      <div className='mt-8'>
-        <h1>Your previous Ideas</h1>
-        <div className='grid gap-4 mt-4'>
-          <div className='md:col-4 col-12 top-0 md:sticky flex justify-content-start'>
-            <p className='bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+      <div className='mt-8 grid gap-4'>
+        <div className='md:col-4 h-min col-12 md:sticky top-0'>
+          <h1>Your previous Ideas</h1>
+          <p className='mt-4 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+        </div>
+        <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
+          {userIdeas.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
+          })}
+        </div>
+        {/* <div className='grid gap-4 mt-4'>
+          <div className='md:col-4 col-12 top-0 md:sticky h-min'>
           </div>
           <div className='md:col col-12 flex flex-column gap-5'>
             {userIdeas.map((idea, index) => {
-              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.date} />
+              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
             })}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
