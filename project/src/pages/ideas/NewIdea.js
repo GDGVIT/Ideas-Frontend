@@ -72,18 +72,25 @@ export default function NewIdea () {
           <button disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
         </form>
       </div>
-      <div className='mt-8'>
-        <h1>Your previous Ideas</h1>
-        <div className='grid gap-4 mt-4'>
+      <div className='mt-8 grid gap-4'>
+        <div className='md:col-4 h-min col-12 md:sticky top-0'>
+          <h1>Your previous Ideas</h1>
+          <p className='mt-4 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+        </div>
+        <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
+          {userIdeas.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
+          })}
+        </div>
+        {/* <div className='grid gap-4 mt-4'>
           <div className='md:col-4 col-12 top-0 md:sticky h-min'>
-            <p className='bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
           </div>
           <div className='md:col col-12 flex flex-column gap-5'>
             {userIdeas.map((idea, index) => {
-              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.date} ideaId={idea._id} />
+              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
             })}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
