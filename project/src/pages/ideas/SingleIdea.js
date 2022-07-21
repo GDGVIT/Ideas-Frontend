@@ -2,11 +2,17 @@ import axios from '../../axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 export default function SingleIdea () {
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
   const [idea, setIdea] = useState({ tags: [] })
+  const [upvotes, setUpvotes] = useState([])
+  const [upvoteCount, setUpvoteCount] = useState(0)
+  const [date, setDate] = useState('')
+  const [hearted, setHearted] = useState(false)
   const [comments, setComments] = useState([])
   const [newComment, getNewComment] = useState('')
 
@@ -20,6 +26,12 @@ export default function SingleIdea () {
         })
         .then(res => {
           setIdea(res.data.idea)
+          setDate(dayjs(res.data.idea.createdOn).format('DD-MM-YYYY'))
+          setUpvotes(res.data.idea.upvotes)
+          setUpvoteCount(res.data.idea.upvotes.length)
+          if (res.data.idea.upvotes.includes(auth._id)) {
+            setHearted(true)
+          }
           setComments(res.data.comments)
         })
     }, [auth, id]
@@ -43,20 +55,51 @@ export default function SingleIdea () {
     }
   }
 
+  const sendVote = (add) => {
+    let voteType
+    if (add) {
+      voteType = 1;
+      setHearted(true)
+      setUpvoteCount(upvoteCount+1)
+    } else {
+      voteType = 0;
+      setUpvoteCount(upvoteCount-1)
+      setHearted(false)
+    }
+    axios.patch(`/ideas/${id}/vote`, {
+      voteType
+    }, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+  }
+
   useEffect(() => {
     if (auth.token) {
       getIdea()
     }
   }, [auth, id, getIdea])
+
   return (
     <div className='border-round-xl p-8 bg-white ideacard relative'>
-      <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
-      <div style={{ fontSize: 20 }} className='flex gap-1 flex-row'>
-        <p>{idea.authorName}</p>
-        <p className='bodytext'>|</p>
-        <p className='datetext'>{idea.createdOn}</p>
+      <Link to='/ideas'>
+        <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
+      </Link>
+      <div className='flex flex-row gap-8'>
+        <div>
+          <div style={{ fontSize: 20 }} className='flex gap-1 flex-row'>
+            <p>{idea.authorName}</p>
+            <p className='bodytext'>|</p>
+            <p className='datetext'>{date}</p>
+          </div>
+          <h1>{idea.title}</h1>
+        </div>
+        <div className='flex flex-row gap-2 h-min mt-auto'>
+          <p style={{color:'#FF6B6B'}}>{upvoteCount}</p>
+          { hearted ? <img onClick={() => sendVote(0)} src={require(`../../assets/fullHeart.svg`).default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require(`../../assets/hollowHeart.svg`).default} alt='heart' />}
+        </div>
       </div>
-      <h1>{idea.title}</h1>
       <p className='mt-4 bodytext'>{idea.description}</p>
       <div style={{ fontSize: 20 }} className='mt-5 flex flex-row flex-wrap gap-2'>
         {idea.tags.map((tag, index) => {
@@ -72,12 +115,12 @@ export default function SingleIdea () {
         </form>
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0' />
       </div>
-      <div className='mt-6 px-6 flex flex-column gap-3'>
+      <div className='mt-6 px-6 flex flex-column gap-4'>
         {comments.map((comment, index) => {
           return (
             <div key={index}>
               <p>{comment.authorName}</p>
-              <p>{comment.body}</p>
+              <p className='mt-1 bodytext'>{comment.body}</p>
             </div>
           )
         })}
