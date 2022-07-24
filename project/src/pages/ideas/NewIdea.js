@@ -74,8 +74,8 @@ export default function NewIdea () {
       </div>
       <div className='mt-8 grid gap-4'>
         <div className='md:col-4 h-min col-12 md:sticky top-0'>
-          <h1>Your previous Ideas</h1>
-          <p className='mt-4 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+          <h1 className='font-semibold'>Your previous Ideas</h1>
+          <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
         <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
           {userIdeas.map((idea, index) => {

@@ -11,16 +11,16 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         <p style={{color:'#FF6B6B'}}>17</p>
         <img src={require('../assets/hollowHeart.svg').default} alt='heart' />
       </div>
-      <div style={{ fontSize: 20 }} className='flex gap-1 flex-row'>
+      <div className='bodytext font-20 flex gap-1 flex-row align-items-center'>
         <p>{author}</p>
-        <p className='bodytext'>|</p>
-        <p className='datetext'>{date}</p>
+        <p>|</p>
+        <p className='font-16 datetext'>{date}</p>
       </div>
-      <Link to={`/ideas/${ideaId}`}><p style={{ fontSize: 24 }} className='mt-3'>{name}</p></Link>
-      <p style={{ fontSize: 16 }} className='mt-3 bodytext'>{description}</p>
+      <Link to={`/ideas/${ideaId}`}><p className='font-24 mt-3'>{name}</p></Link>
+      <p style={{ fontSize: 16 }} className='mt-3 font-16 bodytext'>{description}</p>
       <div style={{ fontSize: 20 }} className='mt-3 flex flex-row flex-wrap gap-2'>
         {tags.map((tag, index) => {
-          return <p className='p-1 px-3 border-round-xl' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
+          return <p className='p-1 text-white font-20 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div>
     </div>
