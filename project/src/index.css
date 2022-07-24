@@ -82,10 +82,12 @@ h6 {
 
 .bodytext {
   color: var(--bodytext);
+  font-weight: 300;
 }
 
 .datetext {
   color: var(--datetext);
+  font-weight: 300;
 }
 
 .input {
@@ -115,4 +117,33 @@ h6 {
   border-radius: 50%;
   object-fit: contain;
   height: 100%;
+}
+
+.font-20 {
+  size: 20px;
+  font-size: 20px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.font-40 {
+  font-size: 40px;
+}
+
+.font-24 {
+  font-size: 24px;
+}
+
+.font-74 {
+  font-size: 74px;
+}
+
+.font-36 {
+  font-size: 36px;
+}
+
+.tag {
+  border-radius: 181px;
 }

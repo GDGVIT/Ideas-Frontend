@@ -39,11 +39,11 @@ export default function Navbar () {
   // })
 
   return (
-    <header className='bg-white p-3 flex justify-content-between'>
+    <header className='bg-white px-3 py-2 flex justify-content-between'>
       <div className='flex md:gap-5 gap-3 align-items-center'>
         <Link to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
-        <Link to='/'>Home</Link>
-        <Link to='/ideas'>Ideas</Link>
+        <Link className='bodytext font-16' to='/'>Home</Link>
+        <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token

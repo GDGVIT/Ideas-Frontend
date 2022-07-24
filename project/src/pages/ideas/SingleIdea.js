@@ -88,22 +88,22 @@ export default function SingleIdea () {
       </Link>
       <div className='flex flex-row gap-8'>
         <div>
-          <div style={{ fontSize: 20 }} className='flex gap-1 flex-row'>
-            <p>{idea.authorName}</p>
-            <p className='bodytext'>|</p>
-            <p className='datetext'>{date}</p>
+          <div className='flex gap-1 flex-row align-items-center'>
+            <p className='bodytext font-20'>{idea.authorName}</p>
+            <p className='font-20 bodytext'>|</p>
+            <p className='font-16 datetext'>{date}</p>
           </div>
-          <h1>{idea.title}</h1>
+          <h1 className='font-bold'>{idea.title}</h1>
         </div>
         <div className='flex flex-row gap-2 h-min mt-auto'>
           <p style={{color:'#FF6B6B'}}>{upvoteCount}</p>
           { hearted ? <img onClick={() => sendVote(0)} src={require(`../../assets/fullHeart.svg`).default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require(`../../assets/hollowHeart.svg`).default} alt='heart' />}
         </div>
       </div>
-      <p className='mt-4 bodytext'>{idea.description}</p>
-      <div style={{ fontSize: 20 }} className='mt-5 flex flex-row flex-wrap gap-2'>
+      <p className='mt-4 bodytext font-16'>{idea.description}</p>
+      <div className='font-20 text-white mt-5 flex flex-row flex-wrap gap-2'>
         {idea.tags.map((tag, index) => {
-          return <p className='p-1 px-3 border-round-xl' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
+          return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div>
       <div className='relative mt-7'>
@@ -119,8 +119,8 @@ export default function SingleIdea () {
         {comments.map((comment, index) => {
           return (
             <div key={index}>
-              <p>{comment.authorName}</p>
-              <p className='mt-1 bodytext'>{comment.body}</p>
+              <p className='font-20'>{comment.authorName}</p>
+              <p className='mt-1 bodytext font-16'>{comment.body}</p>
             </div>
           )
         })}
