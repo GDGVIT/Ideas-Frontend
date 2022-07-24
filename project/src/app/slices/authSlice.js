@@ -43,10 +43,16 @@ export const authSlice = createSlice({
       state._id = action.payload.data._id
       state.picture = action.payload.data.picture
       state.email = action.payload.data.email
+    },
+    logout: state => {
+      if (localStorage.getItem('token')) {
+        localStorage.removeItem('token')
+      }
+      window.location.reload()
     }
   }
 })
 
-export const { initialiseStore, setUserInfo } = authSlice.actions
+export const { initialiseStore, setUserInfo, logout } = authSlice.actions
 
 export default authSlice.reducer

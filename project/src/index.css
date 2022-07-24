@@ -147,3 +147,23 @@ h6 {
 .tag {
   border-radius: 181px;
 }
+
+.usermenu {
+  bottom: -115px;
+  right: 0;
+  margin-right: 1rem;
+}
+
+.logout-button {
+  color: red;
+  background: none;
+  border: none;
+  font-size: 16px;
+  border-radius: 2rem;
+  padding: 0.2rem;
+}
+
+.logout-button:hover {
+  background-color: rgb(255, 45, 45);
+  color: white;
+}
