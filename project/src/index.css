@@ -9,6 +9,10 @@
   --linecolor: #b1b1b1;
 }
 
+.sition {
+  transition: linear 1s;
+}
+
 html,
 body {
   padding: 0;
@@ -166,4 +170,19 @@ h6 {
 .logout-button:hover {
   background-color: rgb(255, 45, 45);
   color: white;
+}
+
+.ideasearch-input {
+  border-radius: 18px;
+  border: 0 black solid;
+  font-size: 20px;
+  color: var(--bodytext);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 60px;
+  padding-right: 15px;
+}
+
+.ideasearch-input::placeholder {
+  color: var(--linecolor);
 }
