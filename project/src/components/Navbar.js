@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setUserInfo } from '../app/slices/authSlice'
+import { setUserInfo, logout } from '../app/slices/authSlice'
 
 import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
@@ -31,17 +31,25 @@ export default function Navbar () {
 
   const auth = useSelector(state => state.auth)
 
-  // useGoogleOneTapLogin({
-  //   onSuccess: credentialResponse => getAuthToken(credentialResponse.credential, dispatch),
-  //   onError: () => {
-  //     console.log('Login Failed')
-  //   }
-  // })
+  const [menuHidden, setMenuHidden] = useState(true)
+
+  const userMenu = () => {
+    setMenuHidden(!menuHidden)
+  }
 
   return (
-    <header className='bg-white px-3 py-2 flex justify-content-between'>
+    <header className='bg-white px-4 py-2 flex justify-content-between relative'>
+      {auth.token ?
+      <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column ${menuHidden ? 'hidden' : 'flex'}`}>
+        <span className='flex flex-row gap-2'>
+          <img src={require('../assets/usericon.svg').default} alt='usericon'></img>
+          <p className='bodytext'>{auth.name}</p>
+        </span>
+        <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
+      </div> 
+      : null}
       <div className='flex md:gap-5 gap-3 align-items-center'>
-        <Link to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
+        <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link className='bodytext font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
       </div>
@@ -49,7 +57,7 @@ export default function Navbar () {
         {auth.token
           ? <><img src={require('../assets/bellSymbol.svg').default} alt='notif' />
             <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
-            <img alt='pfp' className='pfp' width={33} src={auth.picture} />
+            <img alt='pfp' className='pfp' onClick={userMenu} width={33} src={auth.picture} />
           </>
           : <GoogleLogin
               onSuccess={credentialResponse => {
