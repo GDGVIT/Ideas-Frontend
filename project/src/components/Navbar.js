@@ -40,7 +40,7 @@ export default function Navbar () {
   return (
     <header className='bg-white px-4 py-2 flex justify-content-between relative'>
       {auth.token ?
-      <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column ${menuHidden ? 'hidden' : 'flex'}`}>
+      <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${menuHidden ? 'hidden' : 'flex'}`}>
         <span className='flex flex-row gap-2'>
           <img src={require('../assets/usericon.svg').default} alt='usericon'></img>
           <p className='bodytext'>{auth.name}</p>

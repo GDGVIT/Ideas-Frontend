@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
+  const [search, setSearch] = useState('')
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -24,6 +25,10 @@ export default function Ideas () {
     }
   }, [auth])
 
+  const searchIdeas = (e) => {
+    e.preventDefault()
+  }
+
   return (
     <div className='grid gap-4'>
       <div className='h-min lg:sticky top-0 xl:col-4 lg:col-5 col-12'>
@@ -32,10 +37,18 @@ export default function Ideas () {
           <p>{auth.name}</p>
         </div>
       </div>
-      <div className='col-12 lg:col gap-5 flex flex-column'>
-        {ideas.map((idea, index) => {
-          return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
-        })}
+      <div className='col-12 lg:col flex flex-column gap-6'>
+        <div className="relative">
+          <form onSubmit={searchIdeas}>
+            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} className='w-full ideasearch-input'></input>
+          </form>
+          <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+        </div>
+        <div className='flex flex-column gap-5'>
+          {ideas.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
+          })}
+        </div>
       </div>
     </div>
   )
