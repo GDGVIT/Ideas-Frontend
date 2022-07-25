@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setUserInfo, logout } from '../app/slices/authSlice'
+import {listenForOutsideClicks} from '../utils/listenForOutsideClicks'
 
 import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
@@ -33,12 +34,24 @@ export default function Navbar () {
 
   const [menuHidden, setMenuHidden] = useState(true)
 
+  const menuRef = useRef(null)
+  const [listening, setListening] = useState(false)
+
+  useEffect(listenForOutsideClicks(
+    listening,
+    setListening,
+    menuRef,
+    setMenuHidden,
+  ));
+
   const userMenu = () => {
+    console.log("ok")
     setMenuHidden(!menuHidden)
   }
 
+
   return (
-    <header className='bg-white px-4 py-2 flex justify-content-between relative'>
+    <header ref={menuRef} className='bg-white px-4 py-2 flex justify-content-between relative'>
       {auth.token ?
       <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${menuHidden ? 'hidden' : 'flex'}`}>
         <span className='flex flex-row gap-2'>
