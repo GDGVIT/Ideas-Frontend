@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 export default function IdeaCard ({ name, color, author, description, tags, date, ideaId }) {
-
   date = dayjs(date).format('DD-MM-YYYY')
   return (
     <div className='flex-grow-1 border-round-xl p-3 bg-white ideacard relative'>
       <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
-        <p style={{color:'#FF6B6B'}}>17</p>
+        <p style={{ color: '#FF6B6B' }}>17</p>
         <img src={require('../assets/hollowHeart.svg').default} alt='heart' />
       </div>
       <div className='bodytext font-20 flex gap-1 flex-row align-items-center'>

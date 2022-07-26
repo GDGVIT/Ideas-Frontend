@@ -1,8 +1,7 @@
 import axios from '../../axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 export default function SingleIdea () {
@@ -58,12 +57,12 @@ export default function SingleIdea () {
   const sendVote = (add) => {
     let voteType
     if (add) {
-      voteType = 1;
+      voteType = 1
       setHearted(true)
-      setUpvoteCount(upvoteCount+1)
+      setUpvoteCount(upvoteCount + 1)
     } else {
-      voteType = 0;
-      setUpvoteCount(upvoteCount-1)
+      voteType = 0
+      setUpvoteCount(upvoteCount - 1)
       setHearted(false)
     }
     axios.patch(`/ideas/${id}/vote`, {
@@ -96,8 +95,8 @@ export default function SingleIdea () {
           <h1 className='font-bold'>{idea.title}</h1>
         </div>
         <div className='flex flex-row gap-2 h-min mt-auto'>
-          <p style={{color:'#FF6B6B'}}>{upvoteCount}</p>
-          { hearted ? <img onClick={() => sendVote(0)} src={require(`../../assets/fullHeart.svg`).default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require(`../../assets/hollowHeart.svg`).default} alt='heart' />}
+          <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
+          {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} alt='heart' />}
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description}</p>

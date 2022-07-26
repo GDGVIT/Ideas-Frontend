@@ -1,9 +1,9 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setUserInfo, logout } from '../app/slices/authSlice'
-import {listenForOutsideClicks} from '../utils/listenForOutsideClicks'
+import { listenForOutsideClicks } from '../utils/listenForOutsideClicks'
 
 import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
@@ -41,26 +41,25 @@ export default function Navbar () {
     listening,
     setListening,
     menuRef,
-    setMenuHidden,
-  ));
+    setMenuHidden
+  ))
 
   const userMenu = () => {
-    console.log("ok")
+    console.log('ok')
     setMenuHidden(!menuHidden)
   }
 
-
   return (
     <header ref={menuRef} className='bg-white px-4 py-2 flex justify-content-between relative'>
-      {auth.token ?
-      <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${menuHidden ? 'hidden' : 'flex'}`}>
-        <span className='flex flex-row gap-2'>
-          <img src={require('../assets/usericon.svg').default} alt='usericon'></img>
-          <p className='bodytext'>{auth.name}</p>
-        </span>
-        <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
-      </div> 
-      : null}
+      {auth.token
+        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${menuHidden ? 'hidden' : 'flex'}`}>
+          <span className='flex flex-row gap-2'>
+            <img src={require('../assets/usericon.svg').default} alt='usericon' />
+            <p className='bodytext'>{auth.name}</p>
+          </span>
+          <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
+        </div>
+        : null}
       <div className='flex md:gap-5 gap-3 align-items-center'>
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link className='bodytext font-16' to='/'>Home</Link>

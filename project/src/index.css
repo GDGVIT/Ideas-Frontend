@@ -168,7 +168,7 @@ h6 {
 }
 
 .logout-button:hover {
-  background-color: rgb(255, 45, 45);
+  background-color: rgb(255 45 45);
   color: white;
 }
 
@@ -177,10 +177,7 @@ h6 {
   border: 0 black solid;
   font-size: 20px;
   color: var(--bodytext);
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 60px;
-  padding-right: 15px;
+  padding: 15px 15px 15px 60px;
 }
 
 .ideasearch-input::placeholder {

@@ -1,14 +1,14 @@
-export function listenForOutsideClicks(listening, setListening, menuRef, setMenuHidden) {
+export function listenForOutsideClicks (listening, setListening, menuRef, setMenuHidden) {
   return () => {
-    if (listening) return;
-    if (!menuRef.current) return;
+    if (listening) return
+    if (!menuRef.current) return
     setListening(true);
-    [`click`, `touchstart`].forEach((type) => {
-      document.addEventListener(`click`, (evt) => {
-        console.log("hhjh")
-        if (menuRef.current.contains(evt.target)) return;
-        setMenuHidden(true);
-      });
-    });
+    ['click', 'touchstart'].forEach((type) => {
+      document.addEventListener('click', (evt) => {
+        console.log('hhjh')
+        if (menuRef.current.contains(evt.target)) return
+        setMenuHidden(true)
+      })
+    })
   }
 }

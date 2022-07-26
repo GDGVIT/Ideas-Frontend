@@ -38,9 +38,9 @@ export default function Ideas () {
         </div>
       </div>
       <div className='col-12 lg:col flex flex-column gap-6'>
-        <div className="relative">
+        <div className='relative'>
           <form onSubmit={searchIdeas}>
-            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} className='w-full ideasearch-input'></input>
+            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} className='w-full ideasearch-input' />
           </form>
           <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
         </div>
