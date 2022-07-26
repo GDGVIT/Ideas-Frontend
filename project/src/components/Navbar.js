@@ -58,7 +58,7 @@ export default function Navbar () {
             <p className='bodytext'>{auth.name}</p>
           </span>
           <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
-        </div>
+          </div>
         : null}
       <div className='flex md:gap-5 gap-3 align-items-center'>
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
@@ -67,10 +67,11 @@ export default function Navbar () {
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token
-          ? <><img src={require('../assets/bellSymbol.svg').default} alt='notif' />
+          ? <>
+            <img src={require('../assets/bellSymbol.svg').default} alt='notif' />
             <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             <img alt='pfp' className='pfp' onClick={userMenu} width={33} src={auth.picture} />
-          </>
+            </>
           : <GoogleLogin
               onSuccess={credentialResponse => {
                 getAuthToken(credentialResponse.credential, dispatch)
