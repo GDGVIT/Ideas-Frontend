@@ -183,3 +183,21 @@ h6 {
 .ideasearch-input::placeholder {
   color: var(--linecolor);
 }
+
+.frame-position {
+  margin-right: 16rem;
+}
+
+.shelf-position {
+  margin-top: 11rem;
+}
+
+.plant2-position {
+  margin-top: 35rem;
+}
+
+@media screen and (max-width: 768px) {
+  .frame-position {
+    margin-right: 6rem;
+  }
+}
