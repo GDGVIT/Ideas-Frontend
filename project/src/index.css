@@ -15,6 +15,7 @@
 
 html,
 body {
+  overflow-x: hidden;
   padding: 0;
   margin: 0;
   font-family:
@@ -194,6 +195,50 @@ h6 {
 
 .plant2-position {
   margin-top: 35rem;
+}
+
+.plantshelf-position {
+  margin-top: 30rem;
+  margin-left: 39rem;
+}
+
+.lamp-position {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 2.5rem;
+  z-index: 0;
+}
+
+.board-position {
+  top: 15rem;
+  left: 58rem;
+}
+
+.landing-person-position {
+  margin-top: 4rem;
+  margin-left: 6rem;
+}
+
+@media screen and (max-width: 1248px) {
+  .board-position {
+    left: 45rem;
+  }
+
+  .plantshelf-position {
+    margin-left: 34rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .plantshelf-position {
+    margin-left: 23rem;
+    margin-top: 38rem;
+  }
+
+  .board-position {
+    left: 35rem;
+  }
 }
 
 @media screen and (max-width: 768px) {

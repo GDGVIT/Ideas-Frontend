@@ -8,7 +8,6 @@ export default function SingleIdea () {
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
   const [idea, setIdea] = useState({ tags: [] })
-  const [upvotes, setUpvotes] = useState([])
   const [upvoteCount, setUpvoteCount] = useState(0)
   const [date, setDate] = useState('')
   const [hearted, setHearted] = useState(false)
@@ -26,7 +25,6 @@ export default function SingleIdea () {
         .then(res => {
           setIdea(res.data.idea)
           setDate(dayjs(res.data.idea.createdOn).format('DD-MM-YYYY'))
-          setUpvotes(res.data.idea.upvotes)
           setUpvoteCount(res.data.idea.upvotes.length)
           if (res.data.idea.upvotes.includes(auth._id)) {
             setHearted(true)
@@ -96,7 +94,7 @@ export default function SingleIdea () {
         </div>
         <div className='flex flex-row gap-2 h-min mt-auto'>
           <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
-          {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} alt='heart' />}
+          {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description}</p>
@@ -117,9 +115,12 @@ export default function SingleIdea () {
       <div className='mt-6 px-6 flex flex-column gap-4'>
         {comments.map((comment, index) => {
           return (
-            <div key={index}>
-              <p className='font-20'>{comment.authorName}</p>
-              <p className='mt-1 bodytext font-16'>{comment.body}</p>
+            <div key={index} className='grid gap-4'>
+              <img src='#' alt='pfp' />
+              <div>
+                <p className='font-20'>{comment.authorName}</p>
+                <p className='mt-1 bodytext font-16'>{comment.body}</p>
+              </div>
             </div>
           )
         })}

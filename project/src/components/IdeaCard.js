@@ -15,10 +15,10 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     if (add) {
       voteType = 1
       setHeartFull(true)
-      setUpvoteCountNum(upvoteCountNum+1);
+      setUpvoteCountNum(upvoteCountNum + 1)
     } else {
       voteType = 0
-      setUpvoteCountNum(upvoteCountNum-1);
+      setUpvoteCountNum(upvoteCountNum - 1)
       setHeartFull(false)
     }
     axios.patch(`/ideas/${ideaId}/vote`, {
@@ -35,9 +35,9 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     <div className='flex-grow-1 border-round-xl p-3 bg-white ideacard relative'>
       <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
         <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
-        {heartFull ? <img onClick={() => sendVote(0)} src={require('../assets/fullHeart.svg').default} alt='heart' /> : <img onClick={() => sendVote(1)} src={require('../assets/hollowHeart.svg').default} alt='heart' />}
+        {heartFull ? <img onClick={() => sendVote(0)} src={require('../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />}
       </div>
-      <div className='bodytext font-20 flex gap-1 flex-row align-items-center'>
+      <div className='bodytext font-20 grid gap-1 md:w-11 w-8 flex-row align-items-center'>
         <p>{author}</p>
         <p>|</p>
         <p className='font-16 datetext'>{date}</p>

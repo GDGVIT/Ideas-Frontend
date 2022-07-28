@@ -103,14 +103,21 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
+.hero {
+  padding-top: 10rem;
+  padding-bottom: 25rem;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    padding-top: 8rem;
+    padding-bottom: 20rem;
   }
 }
 
-.hero {
-  margin-top: 8rem;
-  margin-bottom: 18rem;
+@media (max-width: 800px) {
+  .hero {
+    padding-top: 8rem;
+    padding-bottom: 16rem;
+  }
 }
