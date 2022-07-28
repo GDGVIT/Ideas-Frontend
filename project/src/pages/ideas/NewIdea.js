@@ -62,9 +62,12 @@ export default function NewIdea () {
     <div>
       <div className='mt-6 grid gap-3 relative'>
         <div className='xl:w-4 lg:w-6 md:w-7 sm:w-8 w-12'>
-          <h1 className='font-medium'>Add an Idea</h1>
+          <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium'>Add an Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
-            <label htmlFor='title-input'>Title</label>
+            <label className='relative' htmlFor='title-input'>
+              <img className='absolute' style={{'top':'-0.5rem','left':'-0.7rem'}} src={require('../../assets/drawCircle1.svg').default} alt='stroke'></img>
+              Title
+            </label>
             <input value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
             <label htmlFor='desc-input'>Description</label>
             <textarea value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
@@ -81,12 +84,15 @@ export default function NewIdea () {
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden'></img>
       <div className='mt-8 grid gap-4'>
         <div className='md:col-4 h-min col-12 md:sticky top-0'>
-          <h1 className='font-medium'>Your previous Ideas</h1>
+          <h1 className='lg:text-4xl md:text-3xl text-2xl relative font-medium'>
+            Your previous Ideas
+            <img className='absolute lg:block md:hidden block' style={{'top':'2.7rem','left':'5.2rem'}} src={require('../../assets/drawUnderline1.svg').default} alt='stroke'></img>
+          </h1>
           <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
         <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
           {userIdeas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
         </div>
         {/* <div className='grid gap-4 mt-4'>
