@@ -53,7 +53,6 @@ export default function Navbar () {
   ))
 
   const userMenu = () => {
-    console.log('ok')
     setMenuHidden(!menuHidden)
   }
   const phoneUserMenu = () => {

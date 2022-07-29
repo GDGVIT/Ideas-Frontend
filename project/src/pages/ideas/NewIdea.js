@@ -6,19 +6,20 @@ import { useSelector } from 'react-redux'
 export default function NewIdea () {
   const [title, setTitle] = useState('')
   const [description, setDesc] = useState('')
-  const [tags, setTags] = useState('')
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState('')
   const [userIdeas, setUserIdeas] = useState([])
+  const [isKeyReleased, setIsKeyReleased] = useState(false);
 
   const auth = useSelector(state => state.auth)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const tagList = tags.split(',')
     const postObject = {
       idea: {
         title,
         description,
-        tags: tagList
+        tags
       }
     }
     await axios
@@ -30,7 +31,8 @@ export default function NewIdea () {
       .then(res => {
         setDesc('')
         setTitle('')
-        setTags('')
+        setTags([])
+        setTagInput('')
         fetchUserPosts()
       })
       .catch(e => console.log(e))
@@ -52,6 +54,36 @@ export default function NewIdea () {
     }, [auth]
   )
 
+  const detectTagSep = (e) => {
+    const {key} = e;
+    const trimmedTagInput = tagInput.trim();
+
+    if ((key === ',' || key === ' ') && trimmedTagInput.length && !tags.includes(trimmedTagInput)) {
+      e.preventDefault();
+      setTags(prevState => [...prevState, trimmedTagInput]);
+      setTagInput('');
+    }
+
+    if (key === "Backspace" && !tagInput.length && tags.length && isKeyReleased) {
+      e.preventDefault();
+      const tagsCopy = [...tags];
+      const poppedTag = tagsCopy.pop();
+  
+      setTags(tagsCopy);
+      setTagInput(poppedTag);
+    }
+
+    setIsKeyReleased(false);
+  }
+
+  const onKeyUp = () => {
+    setIsKeyReleased(true);
+  }
+
+  const deleteTag = (index) => {
+    setTags(prevState => prevState.filter((tag, i) => i !== index))
+  }
+
   useEffect(() => {
     if (auth.token) {
       fetchUserPosts()
@@ -61,7 +93,7 @@ export default function NewIdea () {
   return (
     <div>
       <div className='mt-6 grid gap-3 relative'>
-        <div className='xl:w-4 lg:w-6 md:w-7 sm:w-8 w-12'>
+        <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium'>Add an Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
             <label className='relative' htmlFor='title-input'>
@@ -72,8 +104,15 @@ export default function NewIdea () {
             <label htmlFor='desc-input'>Description</label>
             <textarea value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             <label htmlFor='tag-input'>Tags</label>
-            <input value={tags} onChange={(e) => { setTags(e.target.value) }} className='input' id='tag-input' />
-            <button disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            <div className='flex align-items-center flex-row flex-wrap gap-3'>
+            {tags.map((tag, index) => tag ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
+              <button className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+              {tag}
+            </div> : null)}
+              <input value={tagInput} onChange={(e) => { setTagInput(e.target.value)
+             }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input' />
+            </div>
+            <button type='submit' disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />

@@ -220,6 +220,11 @@ h6 {
   margin-left: 6rem;
 }
 
+.cross-button {
+  background: none;
+  color: white;
+}
+
 @media screen and (max-width: 1248px) {
   .board-position {
     left: 45rem;

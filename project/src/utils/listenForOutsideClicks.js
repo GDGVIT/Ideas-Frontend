@@ -5,7 +5,6 @@ export function listenForOutsideClicks (listening, setListening, menuRef, setMen
     setListening(true);
     ['click', 'touchstart'].forEach((type) => {
       document.addEventListener('click', (evt) => {
-        console.log('hhjh')
         if (menuRef.current.contains(evt.target)) return
         setMenuHidden(true)
       })
