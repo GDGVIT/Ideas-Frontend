@@ -15,7 +15,7 @@
 
 html,
 body {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   padding: 0;
   margin: 0;
   font-family:
@@ -141,6 +141,10 @@ h6 {
   font-size: 24px;
 }
 
+.landing-font {
+  font-size: 74px;
+}
+
 .font-74 {
   font-size: 74px;
 }
@@ -212,7 +216,7 @@ h6 {
 
 .board-position {
   top: 15rem;
-  left: 58rem;
+  left: 64rem;
 }
 
 .landing-person-position {
@@ -227,7 +231,7 @@ h6 {
 
 @media screen and (max-width: 1248px) {
   .board-position {
-    left: 45rem;
+    left: 50rem;
   }
 
   .plantshelf-position {
@@ -242,12 +246,36 @@ h6 {
   }
 
   .board-position {
-    left: 35rem;
+    left: 40rem;
+  }
+
+  .landing-font {
+    font-size: 54px;
+  }
+
+  .landing-circle {
+    width: 8.5rem;
   }
 }
 
 @media screen and (max-width: 768px) {
   .frame-position {
     margin-right: 6rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .rem-mar {
+    margin-left: -2rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .landing-font {
+    font-size: 46px;
+  }
+
+  .landing-circle {
+    width: 6.4rem;
   }
 }

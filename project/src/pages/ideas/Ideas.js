@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
   const [search, setSearch] = useState('')
+  const [user, setUser] = useState('')
+  const [userList, setUserList] = useState([])
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -20,13 +22,60 @@ export default function Ideas () {
           setIdeas(res.data.ideas)
         })
     }
+    const fetchUsers = async () => {
+      await axios
+        .get('/user', {
+          headers: {
+            authorization: auth.token
+          }
+        })
+        .then(res => {
+          setUserList(res.data.users)
+        })
+    }
     if (auth.token) {
       fetchIdeas()
+      fetchUsers()
     }
   }, [auth])
 
-  const searchIdeas = (e) => {
+  const searchIdeas = async (e) => {
     e.preventDefault()
+    let userId = userList.filter(userItem => {
+      return userItem.name === user
+    })
+    userId = userId[0]._id
+    await axios
+      .get(`/user/${userId}/ideas`, {
+        headers: {
+          authorization: auth.token
+        }
+      })
+      .then(res => {
+        setIdeas(res.data.ideas)
+      })
+  }
+
+  const deleteUserTag = () => {
+
+  }
+
+  const onKeyDown = (e) => {
+    const {key} = e;
+
+    if (key === ' ' && search.length) {
+      e.preventDefault();
+      setSearch(search+' ')
+
+      if (search.split(' ')[search.split(' ').length-1].substring(0,5) === 'from:') {
+        let start = search.indexOf('from:')
+        let end = search.length
+        console.log(start,end)
+        console.log(search)
+        setUser(search.substring(start+5,end))
+        setSearch(search.replace(search.substring(start,end), ''))
+      }
+    }
   }
 
   return (
@@ -38,11 +87,16 @@ export default function Ideas () {
         </div>
       </div>
       <div className='col-12 lg:col flex flex-column gap-6'>
-        <div className='relative'>
-          <form onSubmit={searchIdeas}>
-            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} className='w-full ideasearch-input' />
+        <div className='align-items-center relative w-full flex gap-4 flex-row'>
+          {user ?
+          <div className='h-min p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }}>
+          <button type='button' className='mr-2 cross-button' onClick={() => deleteUserTag()}>x</button>
+          from:{user}
+        </div> : null}
+          <form className='relative flex-grow-1' onSubmit={searchIdeas}>
+            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={onKeyDown} className='w-full ideasearch-input' />
+            <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
           </form>
-          <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
         </div>
         <div className='flex flex-column gap-5'>
           {ideas.map((idea, index) => {

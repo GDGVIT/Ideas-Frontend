@@ -5,14 +5,14 @@ export default function Landing () {
   return (
     <>
       <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-10rem md:w-8rem w-6rem mx-auto lamp-position' />
-      <div className='relative'>
+      <div className='w-screen relative px-6 rem-mar' style={{'overflow':'hidden','marginLeft':'-6rem'}}>
         <img src={require('../assets/plantshelf.png')} alt='plantshelf' className='absolute h-6rem plantshelf-position md:block hidden' />
         <img src={require('../assets/board.png')} alt='plantshelf' className='absolute lg:h-18rem md:h-15rem board-position md:block hidden' />
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
         <div className='hero lg:w-6 md:w-8 w-12'>
-          <h1 className='font-74 relative'>
+          <h1 className='landing-font  relative'>
             DSC Idea Hub
-            <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../assets/drawCircle2.svg').default} alt='stroke' />
+            <img className='landing-circle absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../assets/drawCircle2.svg').default} alt='stroke' />
           </h1>
           <p className='mt-5'>DSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
           </p>

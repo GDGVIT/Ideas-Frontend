@@ -106,7 +106,7 @@ export default function NewIdea () {
             <label htmlFor='tag-input'>Tags</label>
             <div className='flex align-items-center flex-row flex-wrap gap-3'>
             {tags.map((tag, index) => tag ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
-              <button className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+              <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
               {tag}
             </div> : null)}
               <input value={tagInput} onChange={(e) => { setTagInput(e.target.value)
@@ -134,15 +134,6 @@ export default function NewIdea () {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
         </div>
-        {/* <div className='grid gap-4 mt-4'>
-          <div className='md:col-4 col-12 top-0 md:sticky h-min'>
-          </div>
-          <div className='md:col col-12 flex flex-column gap-5'>
-            {userIdeas.map((idea, index) => {
-              return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} />
-            })}
-          </div>
-        </div> */}
       </div>
     </div>
   )
