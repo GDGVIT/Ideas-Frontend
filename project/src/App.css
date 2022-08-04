@@ -1,3 +1,5 @@
+@import '../node_modules/@yaireo/tagify/dist/tagify.css';
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
@@ -105,7 +107,7 @@
 
 .hero {
   padding-top: 10rem;
-  padding-bottom: 25rem;
+  padding-bottom: 20rem;
 }
 
 @media (max-width: 1024px) {

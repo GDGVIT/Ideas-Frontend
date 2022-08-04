@@ -229,6 +229,10 @@ h6 {
   color: white;
 }
 
+.blackout {
+  transition: all 1s ease;
+}
+
 @media screen and (max-width: 1248px) {
   .board-position {
     left: 50rem;
