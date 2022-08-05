@@ -1,13 +1,53 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
+import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
   const [search, setSearch] = useState('')
-  const [user, setUser] = useState('')
   const [userList, setUserList] = useState([])
+  const [userStrings, setUserStrings] = useState([])
+  const [tagStrings, setTagStrings] = useState([])
+  const [sort, setSort] = useState('')
+  const [order, setOrder] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
+  const [tagSettings, setTagSettings] = useState({
+    pattern: /@|#/,
+    dropdown: {
+      enabled: 1,
+      position: 'text'
+    },
+    templates: {
+      tag (tagData, tagify) {
+        return `<tag title="${(tagData.title || tagData.value)}"
+                contenteditable='false'
+                spellcheck='false'
+                tabIndex="${this.settings.a11y.focusableTags ? 0 : -1}"
+                class="${this.settings.classNames.tag} ${tagData.class ? tagData.class : ''}"
+                ${this.getAttributes(tagData)} style="--tag-bg:${getColor(tagData)}">
+        <x title='' class="${this.settings.classNames.tagX}" role='button' aria-label='remove tag'></x>
+        <div>
+            <span class="${this.settings.classNames.tagText}">${tagData[this.settings.tagTextProp] || tagData.value}</span>
+        </div>
+      </tag>`
+      }
+    }
+  })
+
+  const getColor = (tagData) => {
+    if (tagData.prefix === '@') {
+      return '#4799d3'
+    } else if (tagData.prefix === '#') {
+      return '#65d34c'
+    }
+  }
+  const [user, setUser] = useState()
+  const [tags, setTags] = useState()
+
+  const tagifyRef = useRef()
+
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -31,6 +71,7 @@ export default function Ideas () {
         })
         .then(res => {
           setUserList(res.data.users)
+          setUserStrings(res.data.users.map(a => a.name))
         })
     }
     if (auth.token) {
@@ -41,61 +82,114 @@ export default function Ideas () {
 
   const searchIdeas = async (e) => {
     e.preventDefault()
-    let userId = userList.filter(userItem => {
-      return userItem.name === user
-    })
-    userId = userId[0]._id
-    await axios
-      .get(`/user/${userId}/ideas`, {
-        headers: {
-          authorization: auth.token
-        }
-      })
-      .then(res => {
-        setIdeas(res.data.ideas)
-      })
   }
 
-  const deleteUserTag = () => {
+  const onInput = (e) => {
+    console.log(e)
+    const prefix = e.detail.prefix
+    // setSearch(e.detail.textContent)
 
-  }
+    if (prefix) {
+      if (prefix === '@') {
+        setUserStrings(state => {
+          tagifyRef.current.whitelist = state
+          return state
+        })
+      }
 
-  const onKeyDown = (e) => {
-    const {key} = e;
-
-    if (key === ' ' && search.length) {
-      e.preventDefault();
-      setSearch(search+' ')
-
-      if (search.split(' ')[search.split(' ').length-1].substring(0,5) === 'from:') {
-        let start = search.indexOf('from:')
-        let end = search.length
-        console.log(start,end)
-        console.log(search)
-        setUser(search.substring(start+5,end))
-        setSearch(search.replace(search.substring(start,end), ''))
+      if (prefix === '#') {
+        setTagStrings(state => {
+          tagifyRef.current.whitelist = state
+          return state
+        })
       }
     }
   }
 
+  const onChange = useCallback(e => {
+    console.log(e.detail)
+    console.log(e.detail.value)
+    if (e.detail.tagify.value[e.detail.tagify.value.length - 1].prefix === '@') {
+      setUser(e.detail.tagify.value[e.detail.tagify.value.length - 1].value)
+    } else if (e.detail.tagify.value[e.detail.tagify.value.length - 1].prefix === '#') {
+      setTags(e.detail.tagify.value.filter(tag => {
+        return tag.prefix === '#'
+      }).map(tag => {
+        return tag.value
+      }))
+    }
+  }, [])
+
   return (
     <div className='grid gap-4'>
-      <div className='h-min lg:sticky top-0 xl:col-4 lg:col-5 col-12'>
+      <div className='h-min lg:sticky top-0 xl:col-4 md:col-5 col-12'>
         <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3'>
           <img className='pfp' width={60} alt='pfp' src={auth.picture} />
           <p>{auth.name}</p>
         </div>
+        <div className={`mt-6 border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
+          <div className='flex flex-column gap-2 mb-4'>
+            <p className='font-16'><b>Sort By:</b></p>
+            <label>
+              <input
+                type='radio'
+                value='hearts'
+                checked={sort === 'hearts'}
+                className='form-check-input'
+                onChange={e => setSort(e.target.value)}
+              />
+              Hearts
+            </label>
+            <label>
+              <input
+                type='radio'
+                value='date'
+                checked={sort === 'date'}
+                className='form-check-input'
+                onChange={e => setSort(e.target.value)}
+              />
+              Date
+            </label>
+          </div>
+          <div className='flex flex-column gap-2'>
+            <p className='font-16'><b>Order:</b></p>
+            <label>
+              <input
+                type='radio'
+                value='asc'
+                checked={order === 'asc'}
+                className='form-check-input'
+                onChange={e => setOrder(e.target.value)}
+              />
+              Ascending
+            </label>
+            <label>
+              <input
+                type='radio'
+                value='desc'
+                checked={order === 'desc'}
+                className='form-check-input'
+                onChange={e => setOrder(e.target.value)}
+              />
+              Descending
+            </label>
+          </div>
+        </div>
       </div>
-      <div className='col-12 lg:col flex flex-column gap-6'>
+      <div className='col-12 md:col flex flex-column gap-6'>
         <div className='align-items-center relative w-full flex gap-4 flex-row'>
-          {user ?
-          <div className='h-min p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }}>
-          <button type='button' className='mr-2 cross-button' onClick={() => deleteUserTag()}>x</button>
-          from:{user}
-        </div> : null}
           <form className='relative flex-grow-1' onSubmit={searchIdeas}>
-            <input placeholder='Search for Ideas' value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={onKeyDown} className='w-full ideasearch-input' />
+            <MixedTags
+              autoFocus
+              settings={tagSettings}
+              onInput={onInput}
+              onChange={onChange}
+              placeholder='hint: type @ or #'
+              tagifyRef={tagifyRef}
+              className='flex-grow-1'
+            />
             <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+            <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-3 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
           </form>
         </div>
         <div className='flex flex-column gap-5'>

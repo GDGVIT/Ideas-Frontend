@@ -9,7 +9,7 @@ export default function NewIdea () {
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
   const [userIdeas, setUserIdeas] = useState([])
-  const [isKeyReleased, setIsKeyReleased] = useState(false);
+  const [isKeyReleased, setIsKeyReleased] = useState(false)
 
   const auth = useSelector(state => state.auth)
 
@@ -55,29 +55,29 @@ export default function NewIdea () {
   )
 
   const detectTagSep = (e) => {
-    const {key} = e;
-    const trimmedTagInput = tagInput.trim();
+    const { key } = e
+    const trimmedTagInput = tagInput.trim()
 
     if ((key === ',' || key === ' ') && trimmedTagInput.length && !tags.includes(trimmedTagInput)) {
-      e.preventDefault();
-      setTags(prevState => [...prevState, trimmedTagInput]);
-      setTagInput('');
+      e.preventDefault()
+      setTags(prevState => [...prevState, trimmedTagInput])
+      setTagInput('')
     }
 
-    if (key === "Backspace" && !tagInput.length && tags.length && isKeyReleased) {
-      e.preventDefault();
-      const tagsCopy = [...tags];
-      const poppedTag = tagsCopy.pop();
-  
-      setTags(tagsCopy);
-      setTagInput(poppedTag);
+    if (key === 'Backspace' && !tagInput.length && tags.length && isKeyReleased) {
+      e.preventDefault()
+      const tagsCopy = [...tags]
+      const poppedTag = tagsCopy.pop()
+
+      setTags(tagsCopy)
+      setTagInput(poppedTag)
     }
 
-    setIsKeyReleased(false);
+    setIsKeyReleased(false)
   }
 
   const onKeyUp = () => {
-    setIsKeyReleased(true);
+    setIsKeyReleased(true)
   }
 
   const deleteTag = (index) => {
@@ -105,12 +105,17 @@ export default function NewIdea () {
             <textarea value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             <label htmlFor='tag-input'>Tags</label>
             <div className='flex align-items-center flex-row flex-wrap gap-3'>
-            {tags.map((tag, index) => tag ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
-              <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
-              {tag}
-            </div> : null)}
-              <input value={tagInput} onChange={(e) => { setTagInput(e.target.value)
-             }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input' />
+              {tags.map((tag, index) => tag
+                ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
+                  <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+                  {tag}
+                </div>
+                : null)}
+              <input
+                value={tagInput} onChange={(e) => {
+                  setTagInput(e.target.value)
+                }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
+              />
             </div>
             <button type='submit' disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
           </form>

@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 
 export default function Landing () {
   const [enter, setEnter] = useState(false)
@@ -12,15 +11,12 @@ export default function Landing () {
       document.body.style.overflow = 'unset'
     }
   }, [enter])
-  
 
   return (
     <div className='z-2'>
-      <div className={`${enter ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{'background-color': 'rgba(0, 0, 0, 0.92)'}}>
-
-      </div>
+      <div className={`${enter ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ 'background-color': 'rgba(0, 0, 0, 0.92)' }} />
       <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-10rem md:w-8rem w-6rem mx-auto lamp-position' />
-      <div className='flex flex-column w-screen relative px-6 rem-mar' style={{'overflow':'hidden','marginLeft':'-6rem'}}>
+      <div className='flex flex-column w-screen relative px-6 rem-mar' style={{ overflow: 'hidden', marginLeft: '-6rem' }}>
         <img src={require('../assets/plantshelf.png')} alt='plantshelf' className='absolute h-6rem plantshelf-position md:block hidden' />
         <img src={require('../assets/board.png')} alt='plantshelf' className='absolute lg:h-18rem md:h-15rem board-position md:block hidden' />
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
@@ -32,12 +28,11 @@ export default function Landing () {
           <p className='mt-5'>DSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
           </p>
           <p className='mt-5'>"Everything Begins With An Idea" – Earl Nightingale</p>
-          {enter ? 
-          <Link to='/ideas/new'>
-            <button className='primary-button mt-5 font-20'>Add an Idea</button>
-          </Link> :
-          <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>
-          }
+          {enter
+            ? <Link to='/ideas/new'>
+              <button className='primary-button mt-5 font-20'>Add an Idea</button>
+            </Link>
+            : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
         </div>
 
         <div>

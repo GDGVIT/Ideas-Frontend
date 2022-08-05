@@ -9,6 +9,17 @@
   --linecolor: #b1b1b1;
 }
 
+.tagify {
+  --tags-border-color: #e5e5e500;
+  --tag-border-radius: 181px;
+
+  background-color: white;
+  border-radius: 18px;
+  padding: 15px 15px 15px 60px;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
 .sition {
   transition: linear 1s;
 }
@@ -31,7 +42,8 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  background-color: #fafafa;
+  background-image: url("../src/assets/noise.png");
+  background-repeat: repeat;
 }
 
 a {
@@ -265,6 +277,10 @@ h6 {
 @media screen and (max-width: 768px) {
   .frame-position {
     margin-right: 6rem;
+  }
+
+  .tagify {
+    padding-right: 60px;
   }
 }
 
