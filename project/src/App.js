@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import GuardedRoute from './components/GuardedRoute'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { initialiseStore } from './app/slices/authSlice'
 
@@ -17,12 +18,16 @@ function App () {
     dispatch(initialiseStore())
   }, [dispatch])
 
+  const token = localStorage.getItem('token')
+
   return (
     <div className='App'>
       <Routes>
         <Route exact path='/' element={<Landing />} />
+        <Route exact path='/ideas/new/' element={<GuardedRoute auth={token} />}>
+          <Route exact path='/ideas/new/' element={<NewIdea />} />
+        </Route>
         <Route exact path='/ideas/' element={<Ideas />} />
-        <Route exact path='/ideas/new/' element={<NewIdea />} />
         <Route path='/ideas/:id' element={<SingleIdea />} />
       </Routes>
     </div>

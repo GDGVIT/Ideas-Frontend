@@ -89,7 +89,7 @@ export default function Navbar () {
           ? <>
             <img src={require('../assets/bellSymbol.svg').default} alt='notif' />
             <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
-            <img alt='pfp' className='pfp' onClick={userMenu} width={33} src={auth.picture} />
+            <img alt='pfp' className='pfp' onClick={userMenu} width={33} src={auth.picture} referrerPolicy="no-referrer" />
           </>
           : <GoogleLogin
               onSuccess={credentialResponse => {
