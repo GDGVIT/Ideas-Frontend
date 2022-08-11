@@ -116,7 +116,7 @@ export default function SingleIdea () {
         {comments.map((comment, index) => {
           return (
             <div key={index} className='grid gap-4'>
-              <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy="no-referrer" />
+              <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div>
                 <p className='font-20'>{comment.authorName}</p>
                 <p className='mt-1 bodytext font-16'>{comment.body}</p>

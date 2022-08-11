@@ -14,7 +14,7 @@ export default function Landing () {
 
   return (
     <div className='z-2'>
-      <div className={`${enter ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ 'backgroundColor': 'rgba(0, 0, 0, 0.92)' }} />
+      <div className={`${enter ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.92)' }} />
       <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-10rem md:w-8rem w-6rem mx-auto lamp-position' />
       <div className='flex flex-column w-screen relative px-6 rem-mar' style={{ overflow: 'hidden', marginLeft: '-6rem' }}>
         <img src={require('../assets/plantshelf.png')} alt='plantshelf' className='absolute h-6rem plantshelf-position md:block hidden' />

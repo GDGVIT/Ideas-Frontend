@@ -80,21 +80,21 @@ export default function Ideas () {
     }
   }, [auth.token])
 
-  const searchIdeas = async (e,userName, authState) => {
+  const searchIdeas = async (e, userName, authState) => {
     e.preventDefault()
     console.log(authState, userName)
     if (e.detail.originalEvent.key === 'Enter') {
-        await axios.get('/ideas', {
-          headers: {
-            authorization: authState.token
-          },
-          params: {
-            order,
-            sortBy:sort,
-            user:userName,
-            query:search,
-          }
-        }).then(res => setIdeas(res.data.ideas))
+      await axios.get('/ideas', {
+        headers: {
+          authorization: authState.token
+        },
+        params: {
+          order,
+          sortBy: sort,
+          user: userName,
+          query: search
+        }
+      }).then(res => setIdeas(res.data.ideas))
     }
   }
 
@@ -137,7 +137,7 @@ export default function Ideas () {
     <div className='grid gap-4'>
       <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
         <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3'>
-          <img className='pfp' width={60} alt='pfp' src={auth.picture} referrerPolicy="no-referrer" />
+          <img className='pfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />
           <p>{auth.name}</p>
         </div>
         <div className={`mt-6 border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
@@ -165,7 +165,7 @@ export default function Ideas () {
             </label>
           </div>
           <div className='flex flex-column gap-2'>
-          <p className='font-20'>Order:</p>
+            <p className='font-20'>Order:</p>
             <label>
               <input
                 type='radio'
@@ -200,7 +200,7 @@ export default function Ideas () {
               placeholder='hint: type @ or #'
               tagifyRef={tagifyRef}
               className='flex-grow-1'
-              onKeydown={(e) => searchIdeas(e,user, auth)}
+              onKeydown={(e) => searchIdeas(e, user, auth)}
             />
             <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
             <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-3 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
