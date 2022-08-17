@@ -5,6 +5,7 @@ import GuardedRoute from './components/GuardedRoute'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { initialiseStore } from './app/slices/authSlice'
 

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 import { MentionsInput, Mention } from 'react-mentions'
 import { toast } from 'react-toastify';
+import Skeleton from 'react-loading-skeleton'
 
 export default function SingleIdea () {
   const { id } = useParams()
@@ -133,13 +134,13 @@ export default function SingleIdea () {
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
       </Link>
       <div className='flex flex-row gap-8'>
-        <div>
+        <div className='flex-grow-1'>
           <div className='flex gap-1 flex-row align-items-center'>
             <p className='bodytext font-20'>{idea.authorName}</p>
-            <p className='font-20 bodytext'>|</p>
+            <p className='font-20 bodytext'>{idea.authorName?`|`:null}</p>
             <p className='font-16 datetext'>{date}</p>
           </div>
-          <h1 className='font-bold'>{idea.title}</h1>
+          <h1 className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
         </div>
         <div className='flex flex-row gap-2 h-min mt-auto align-items-center'>
           <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
@@ -152,7 +153,7 @@ export default function SingleIdea () {
             <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
         </div>
       </div>
-      <p className='mt-4 bodytext font-16'>{idea.description}</p>
+      <p className='mt-4 bodytext font-16'>{idea.description || <Skeleton/>}</p>
       <div className='font-20 text-white mt-5 flex flex-row flex-wrap gap-2'>
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
@@ -183,7 +184,7 @@ export default function SingleIdea () {
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0' />
       </div>
       <div className='mt-6 px-6 flex flex-column gap-4'>
-        {comments.map((comment, index) => {
+        {comments.length ? comments.map((comment, index) => {
           return (
             <div key={index} className='grid gap-4'>
               <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
@@ -195,7 +196,7 @@ export default function SingleIdea () {
                 <img onClick={() => deleteComment(comment._id)} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
-        })}
+        }) : <Skeleton height={10} count={10} />}
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
+import Skeleton from 'react-loading-skeleton'
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
@@ -218,9 +219,10 @@ export default function Ideas () {
           </form>
         </div>
         <div className='flex flex-column gap-5'>
-          {ideas.map((idea, index) => {
+          {ideas.length ? ideas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          })}
+          })
+          : <Skeleton height={10} count={50}/>}
         </div>
       </div>
     </div>
