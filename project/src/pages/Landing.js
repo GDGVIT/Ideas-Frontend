@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { GoogleLogin } from '@react-oauth/google'
+import { setUserInfo, logout } from '../app/slices/authSlice'
+import axios from '../axios'
 
 export default function Landing () {
   const [enter, setEnter] = useState(false)
+  const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+
+  const getAuthToken = async (cred, dispatch) => {
+    await axios
+      .post('/auth/google', {
+        token: cred
+      })
+      .then(res => {
+        console.log(res.data)
+        localStorage.setItem('email', res.data.data.email)
+        localStorage.setItem('name', res.data.data.name)
+        localStorage.setItem('familyName', res.data.data.familyName)
+        localStorage.setItem('givenName', res.data.data.givenName)
+        localStorage.setItem('googleId', res.data.data.googleId)
+        localStorage.setItem('picture', res.data.data.picture)
+        localStorage.setItem('_id', res.data.data._id)
+        localStorage.setItem('token', res.data.token)
+        dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
+      })
+  }
 
   useEffect(() => {
     if (!enter) {
@@ -29,9 +54,17 @@ export default function Landing () {
           </p>
           <p className='mt-5'>"Everything Begins With An Idea" – Earl Nightingale</p>
           {enter
-            ? <Link to='/ideas/new'>
+            ? auth.token ? <Link to='/ideas/new'>
               <button className='primary-button mt-5 font-20'>Add an Idea</button>
             </Link>
+            : <GoogleLogin className='mt-5'
+            onSuccess={credentialResponse => {
+              getAuthToken(credentialResponse.credential, dispatch)
+            }}
+            onError={() => {
+              console.log('Login Failed')
+            }}
+          />
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
         </div>
 

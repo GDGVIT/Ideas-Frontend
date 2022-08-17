@@ -15,17 +15,17 @@ import EditIdea from './pages/ideas/EditIdea'
 function App () {
   const dispatch = useDispatch()
 
+  const auth = useSelector(state => state.auth)
+
   useEffect(() => {
     dispatch(initialiseStore())
-  }, [dispatch])
-
-  const token = localStorage.getItem('token')
+  }, [dispatch, auth])
 
   return (
     <div className='App'>
       <Routes>
         <Route exact path='/' element={<Landing />} />
-        <Route exact path='/ideas/new/' element={<GuardedRoute auth={token} />}>
+        <Route exact path='/ideas/new/' element={<GuardedRoute auth={auth.token} />}>
           <Route exact path='/ideas/new/' element={<NewIdea />} />
         </Route>
         <Route exact path='/ideas/' element={<Ideas />} />
