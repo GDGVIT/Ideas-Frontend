@@ -43,7 +43,7 @@ export default function Ideas () {
       return '#65d34c'
     }
   }
-  const [user, setUser] = useState()
+  const [user, setUser] = useState('')
   const [tags, setTags] = useState()
 
   const tagifyRef = useRef()
@@ -77,25 +77,33 @@ export default function Ideas () {
     if (auth.token) {
       fetchIdeas()
       fetchUsers()
+      document.getElementById('mainpfp').src = auth.picture
     }
-  }, [auth.token])
+  }, [auth])
 
-  const searchIdeas = async (e, userName, authState) => {
+  const searchIdeas = (e, userName, authState) => {
     e.preventDefault()
-    console.log(authState, userName)
     if (e.detail.originalEvent.key === 'Enter') {
-      await axios.get('/ideas', {
-        headers: {
-          authorization: authState.token
-        },
-        params: {
-          order,
-          sortBy: sort,
-          user: userName,
-          query: search
-        }
-      }).then(res => setIdeas(res.data.ideas))
-    }
+      setUser(user => {
+        setOrder(order => {
+          setSort(sort => {
+            setSearch(async search => {
+              await axios.get('/ideas', {
+                headers: {
+                  authorization: localStorage.getItem('token')
+                },
+                params: {
+                  order,
+                  sortBy: sort,
+                  user: user,
+                  query: search
+                }
+              }).then(res => setIdeas(res.data.ideas))
+            })
+          })
+        })
+      })
+    }  
   }
 
   const onInput = (e) => {
@@ -137,7 +145,7 @@ export default function Ideas () {
     <div className='grid gap-4'>
       <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
         <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3'>
-          <img className='pfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />
+          {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
           <p>{auth.name}</p>
         </div>
         <div className={`mt-6 border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>

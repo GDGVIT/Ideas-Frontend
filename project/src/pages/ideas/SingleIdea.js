@@ -13,6 +13,7 @@ export default function SingleIdea () {
   const [hearted, setHearted] = useState(false)
   const [comments, setComments] = useState([])
   const [newComment, getNewComment] = useState('')
+  const [userId, setUserId] = useState('')
 
   const getIdea = useCallback(
     async () => {
@@ -75,6 +76,7 @@ export default function SingleIdea () {
   useEffect(() => {
     if (auth.token) {
       getIdea()
+      setUserId(auth._id)
     }
   }, [auth, id, getIdea])
 
@@ -92,9 +94,12 @@ export default function SingleIdea () {
           </div>
           <h1 className='font-bold'>{idea.title}</h1>
         </div>
-        <div className='flex flex-row gap-2 h-min mt-auto'>
+        <div className='flex flex-row gap-2 h-min mt-auto align-items-center'>
           <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
           {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
+          {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
+            <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
+          </Link>}
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description}</p>

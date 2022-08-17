@@ -10,6 +10,7 @@ import Landing from './pages/Landing'
 import Ideas from './pages/ideas/Ideas'
 import NewIdea from './pages/ideas/NewIdea'
 import SingleIdea from './pages/ideas/SingleIdea'
+import EditIdea from './pages/ideas/EditIdea'
 
 function App () {
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ function App () {
         </Route>
         <Route exact path='/ideas/' element={<Ideas />} />
         <Route path='/ideas/:id' element={<SingleIdea />} />
+        <Route path='/ideas/edit/:id' element={<EditIdea />} />
       </Routes>
     </div>
   )
