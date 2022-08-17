@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import { setUserInfo, logout } from '../app/slices/authSlice'
 import axios from '../axios'
+import IdeaCard from '../components/IdeaCard'
 
 export default function Landing () {
   const [enter, setEnter] = useState(false)
+  const [trending, setTrending] = useState([])
+  const [completed, setCompleted] = useState([])
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -36,6 +39,19 @@ export default function Landing () {
       document.body.style.overflow = 'unset'
     }
   }, [enter])
+
+  const fetchTrending = () => {
+
+  }
+
+  const fetchCompleted = () => {
+
+  }
+
+  useEffect(() => {
+    fetchTrending()
+    fetchCompleted()
+  }, [])
 
   return (
     <div className='z-2'>
@@ -70,11 +86,19 @@ export default function Landing () {
 
         <div>
           <h2 className='font-36 font-bold'>Trending Ideas</h2>
-          <div className='mt-5 flex flex-row gap-4 flex-wrap' />
+          <div className='mt-5 flex flex-row gap-4 flex-wrap'>
+          {trending.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+          })}
+          </div>
         </div>
         <div className='mt-6'>
           <h2 className='font-36 font-bold'>Ideas Made Real</h2>
-          <div className='mt-5 flex flex-row gap-4 flex-wrap' />
+          <div className='mt-5 flex flex-row gap-4 flex-wrap'>
+          {completed.map((idea, index) => {
+            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+          })}
+          </div>
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? Let's find out.</p>
       </div>

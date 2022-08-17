@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setUserInfo, logout } from '../app/slices/authSlice'
@@ -8,27 +8,32 @@ import { listenForOutsideClicks } from '../utils/listenForOutsideClicks'
 import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
 
-const getAuthToken = async (cred, dispatch) => {
-  await axios
-    .post('/auth/google', {
-      token: cred
-    })
-    .then(res => {
-      console.log(res.data)
-      localStorage.setItem('email', res.data.data.email)
-      localStorage.setItem('name', res.data.data.name)
-      localStorage.setItem('familyName', res.data.data.familyName)
-      localStorage.setItem('givenName', res.data.data.givenName)
-      localStorage.setItem('googleId', res.data.data.googleId)
-      localStorage.setItem('picture', res.data.data.picture)
-      localStorage.setItem('_id', res.data.data._id)
-      localStorage.setItem('token', res.data.token)
-      dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
-    })
-}
-
 export default function Navbar () {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const getAuthToken = async (cred, dispatch) => {
+    await axios
+      .post('/auth/google', {
+        token: cred
+      })
+      .then(res => {
+        console.log(res.data)
+        localStorage.setItem('email', res.data.data.email)
+        localStorage.setItem('name', res.data.data.name)
+        localStorage.setItem('familyName', res.data.data.familyName)
+        localStorage.setItem('givenName', res.data.data.givenName)
+        localStorage.setItem('googleId', res.data.data.googleId)
+        localStorage.setItem('picture', res.data.data.picture)
+        localStorage.setItem('_id', res.data.data._id)
+        localStorage.setItem('token', res.data.token)
+        dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
+      })
+      .catch(() => {
+        dispatch(logout())
+        navigate('/')
+      })
+  }
 
   const auth = useSelector(state => state.auth)
 
@@ -71,8 +76,14 @@ export default function Navbar () {
           </div>
         : null}
       {auth.token
-        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
-          <span className='flex flex-row gap-2'>
+        ? <div id='usermenu' className={`absolute usermenu-mobile border-round-xl p-3 bg-white ideacard flex-column z-2 ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
+          <span className='flex flex-row gap-4 justify-content-center'>
+          <img src={require('../assets/bellSymbol.svg').default} alt='notif' />
+            <Link className='flex h-min' to='/comments'>
+              <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
+            </Link>
+          </span>
+          <span className='flex flex-row gap-2 mt-3'>
             <img src={require('../assets/usericon.svg').default} alt='usericon' />
             <p className='bodytext'>{auth.name}</p>
           </span>

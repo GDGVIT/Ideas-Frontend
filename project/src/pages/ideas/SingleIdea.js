@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
+import { MentionsInput, Mention } from 'react-mentions'
 
 export default function SingleIdea () {
   const { id } = useParams()
@@ -15,6 +16,19 @@ export default function SingleIdea () {
   const [newComment, getNewComment] = useState('')
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
+  const [userStrings, setUserStrings] = useState([])
+
+  const fetchUsers = useCallback( async () => {
+    await axios
+      .get('/user', {
+        headers: {
+          authorization: auth.token
+        }
+      })
+      .then(res => {
+        setUserStrings(res.data.users.map(user => ({display: user.name, id:user._id})))
+      })
+  },[auth])
 
   const getIdea = useCallback(
     async () => {
@@ -101,8 +115,9 @@ export default function SingleIdea () {
     if (auth.token) {
       getIdea()
       setUserId(auth._id)
+      fetchUsers()
     }
-  }, [auth, id, getIdea])
+  }, [auth, id, getIdea, fetchUsers])
 
   return (
     <div className='border-round-xl p-8 bg-white ideacard relative'>
@@ -136,6 +151,21 @@ export default function SingleIdea () {
       </div>
       <div className='relative mt-7'>
         <form onSubmit={submitComment}>
+        {/* <MentionsInput
+          value={newComment}
+          onChange={(e) => { getNewComment(e.target.value) }}
+          style={{ fontSize: 16 }}
+          placeholder='Add a comment...'
+          className='comment-input'
+          a11ySuggestionsListLabel={"Suggested Github users for mention"}
+          rows={1}
+        >
+          <Mention
+            displayTransform={login => `@${login}`}
+            trigger="@"
+            data={userStrings}
+          />
+        </MentionsInput> */}
           <input
             style={{ fontSize: 16 }}
             placeholder='Add a comment...' className='bodytext comment-input' value={newComment} onChange={(e) => { getNewComment(e.target.value) }}
