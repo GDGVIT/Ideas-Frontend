@@ -74,8 +74,8 @@ export default function SingleIdea () {
     })
   }
 
-  const deleteIdea = () => {
-    axios.delete
+  const deleteIdea = async () => {
+    await axios.delete
     (`/ideas/${id}`, {
       headers: {
         authorization: auth.token
@@ -83,6 +83,17 @@ export default function SingleIdea () {
     })
     .then(() => {
       navigate('/ideas')
+    })
+  }
+
+  const deleteComment = async (commentId) => {
+    await axios.delete(`/ideas/comments/${commentId}`, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+    .then(() => {
+      getIdea()
     })
   }
 
@@ -137,10 +148,12 @@ export default function SingleIdea () {
           return (
             <div key={index} className='grid gap-4'>
               <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-              <div>
+              <div className='flex-grow-1'>
                 <p className='font-20'>{comment.authorName}</p>
                 <p className='mt-1 bodytext font-16'>{comment.body}</p>
               </div>
+              {comment.author && comment.author._id === userId &&
+                <img onClick={() => deleteComment(comment._id)} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
         })}
