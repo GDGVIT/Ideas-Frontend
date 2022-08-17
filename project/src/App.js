@@ -3,6 +3,8 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import GuardedRoute from './components/GuardedRoute'
 import { useDispatch, useSelector } from 'react-redux'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { initialiseStore } from './app/slices/authSlice'
 
@@ -27,6 +29,17 @@ function App () {
 
   return (
     <div className='App'>
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover 
+      />
       <Routes>
         <Route exact path='/' element={<Landing />} />
         <Route exact path='/ideas/new/' element={<GuardedRoute auth={auth} />}>

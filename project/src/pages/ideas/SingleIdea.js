@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 import { MentionsInput, Mention } from 'react-mentions'
+import { toast } from 'react-toastify';
 
 export default function SingleIdea () {
   const { id } = useParams()
@@ -17,6 +18,7 @@ export default function SingleIdea () {
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
   const [userStrings, setUserStrings] = useState([])
+  const [warned, setWarned] = useState(false)
 
   const fetchUsers = useCallback( async () => {
     await axios
@@ -88,6 +90,11 @@ export default function SingleIdea () {
     })
   }
 
+  const deleteWarn = () => {
+    toast.warn('Click again to delete.')
+    setWarned(true)
+  }
+
   const deleteIdea = async () => {
     await axios.delete
     (`/ideas/${id}`, {
@@ -96,6 +103,7 @@ export default function SingleIdea () {
       }
     })
     .then(() => {
+      toast.success('Idea deleted :(')
       navigate('/ideas')
     })
   }
@@ -139,8 +147,9 @@ export default function SingleIdea () {
           {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
             <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
           </Link>}
-          {idea.author && idea.author._id === userId &&
-            <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+          {idea.author && idea.author._id === userId && warned ? 
+          <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
+            <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description}</p>

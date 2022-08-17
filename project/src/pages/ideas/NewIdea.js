@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify';
 
 export default function NewIdea () {
   const [title, setTitle] = useState('')
@@ -34,6 +35,7 @@ export default function NewIdea () {
         setTags([])
         setTagInput('')
         fetchUserPosts()
+        toast("Idea submitted!")
       })
       .catch(e => console.log(e))
   }

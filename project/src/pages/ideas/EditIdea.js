@@ -2,6 +2,7 @@ import React, { useState,useEffect,useCallback } from 'react'
 import axios from '../../axios'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 export default function EditIdea() {
   const { id } = useParams()
@@ -33,6 +34,7 @@ export default function EditIdea() {
         setTitle('')
         setTags([])
         setTagInput('')
+        toast.success('Idea edited!')
         navigate(`/ideas/${id}`)
       })
       .catch(e => console.log(e))
