@@ -108,6 +108,7 @@ export default function Ideas () {
 
   const onInput = (e) => {
     console.log(e)
+    setSearch(e.detail.textContent)
     const prefix = e.detail.prefix
 
     if (prefix) {
@@ -144,11 +145,13 @@ export default function Ideas () {
   return (
     <div className='grid gap-4'>
       <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
-        <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3'>
+        {auth.token ? 
+        <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3 mb-6'>
           {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
           <p>{auth.name}</p>
         </div>
-        <div className={`mt-6 border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
+        : null}
+        <div className={`border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
           <div className='flex flex-column gap-2 mb-4'>
             <p className='font-20'>Sort By:</p>
             <label>

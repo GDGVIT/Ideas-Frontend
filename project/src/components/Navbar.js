@@ -88,7 +88,9 @@ export default function Navbar () {
         {auth.token
           ? <>
             <img src={require('../assets/bellSymbol.svg').default} alt='notif' />
-            <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
+            <Link className='flex h-min' to='/comments'>
+              <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
+            </Link>
             <img alt='pfp' className='pfp' onClick={userMenu} width={33} src={auth.picture} referrerPolicy='no-referrer' />
           </>
           : <GoogleLogin
