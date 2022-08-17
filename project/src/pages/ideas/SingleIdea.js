@@ -1,6 +1,6 @@
 import axios from '../../axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 
@@ -14,6 +14,7 @@ export default function SingleIdea () {
   const [comments, setComments] = useState([])
   const [newComment, getNewComment] = useState('')
   const [userId, setUserId] = useState('')
+  const navigate = useNavigate()
 
   const getIdea = useCallback(
     async () => {
@@ -73,6 +74,18 @@ export default function SingleIdea () {
     })
   }
 
+  const deleteIdea = () => {
+    axios.delete
+    (`/ideas/${id}`, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+    .then(() => {
+      navigate('/ideas')
+    })
+  }
+
   useEffect(() => {
     if (auth.token) {
       getIdea()
@@ -100,6 +113,8 @@ export default function SingleIdea () {
           {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
             <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
           </Link>}
+          {idea.author && idea.author._id === userId &&
+            <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description}</p>
