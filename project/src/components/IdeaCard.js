@@ -54,8 +54,8 @@ export default function IdeaCard ({ name, color, author, description, tags, date
           return <p className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div> : null }
-      {comments ? 
-      <div className='mt-6 px-6 flex flex-column gap-4'>
+      {comments && comments.length ? 
+      <div className='mt-6 flex flex-column gap-4'>
         {comments.map((comment, index) => {
           return (
             <div key={index} className='grid gap-4'>

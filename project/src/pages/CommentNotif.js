@@ -71,7 +71,7 @@ export default function CommentNotif() {
         <div className='mt-4 flex flex-column gap-3'>
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return (
-              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length}></IdeaCard>
+              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments}></IdeaCard>
             )
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
