@@ -3,6 +3,7 @@ import axios from '../axios'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import IdeaCard from '../components/IdeaCard'
+import Skeleton from 'react-loading-skeleton'
 
 export default function CommentNotif() {
   const [ownComments, setOwnComments] = useState([])
@@ -49,24 +50,24 @@ export default function CommentNotif() {
       <div className="md:col-5 col-12">
         <h1 className='text-xl'>Your Comments</h1>
         <div className='mt-4 flex flex-column gap-3'>
-        {ownComments.map((comment, index) => {
+        {ownComments.length ? ownComments.map((comment, index) => {
           return (
             <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
               <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
               <p className='bodytext'>{comment.body}</p>
             </div>
           )
-        })}
+        }) : <Skeleton className='w-11' height={10} count={25} />}
         </div>
       </div>
       <div className="md:col-7 col-12">
         <h1 className='text-xl'>Comments on your Ideas</h1>
         <div className='mt-4 flex flex-column gap-3'>
-          {userIdeas.map((idea, index) => {
+          {userIdeas.length ? userIdeas.map((idea, index) => {
             return (
               <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length}></IdeaCard>
             )
-          })}
+          }) : <Skeleton height={15} count={25} />}
         </div>
       </div>
     </div>

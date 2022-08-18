@@ -45,6 +45,7 @@ body {
     sans-serif;
   background-image: url("../src/assets/noise.png");
   background-repeat: repeat;
+  background-attachment: fixed;
 }
 
 a {
