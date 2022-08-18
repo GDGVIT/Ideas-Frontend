@@ -4,6 +4,7 @@ import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
+import styles from './ideas.css'
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
@@ -50,6 +51,7 @@ export default function Ideas () {
   const tagifyRef = useRef()
 
   const auth = useSelector(state => state.auth)
+  const authRef = useRef(auth)
 
   useEffect(() => {
     const fetchIdeas = async () => {
@@ -76,6 +78,7 @@ export default function Ideas () {
         })
     }
     if (auth.token) {
+      authRef.current = auth
       fetchIdeas()
       fetchUsers()
       document.getElementById('mainpfp').src = auth.picture
@@ -91,7 +94,7 @@ export default function Ideas () {
             setSearch(async search => {
               await axios.get('/ideas', {
                 headers: {
-                  authorization: localStorage.getItem('token')
+                  authorization: authRef.current.token
                 },
                 params: {
                   order,
@@ -211,7 +214,7 @@ export default function Ideas () {
               onChange={onChange}
               placeholder='hint: type @ or #'
               tagifyRef={tagifyRef}
-              className='flex-grow-1'
+              className={styles.tagify}
               onKeydown={(e) => searchIdeas(e, user, auth)}
             />
             <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />

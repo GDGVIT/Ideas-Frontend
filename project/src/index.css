@@ -9,18 +9,6 @@
   --linecolor: #b1b1b1;
 }
 
-.tagify {
-  --tags-border-color: #e5e5e500;
-  --tag-border-radius: 181px;
-  --tag-inset-shadow-size: 1.6em;
-
-  background-color: white;
-  border-radius: 18px;
-  padding: 15px 15px 15px 60px;
-  max-width: 100%;
-  overflow-x: scroll;
-}
-
 .sition {
   transition: linear 1s;
 }

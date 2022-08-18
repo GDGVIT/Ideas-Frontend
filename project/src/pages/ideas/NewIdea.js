@@ -35,7 +35,7 @@ export default function NewIdea () {
         setTags([])
         setTagInput('')
         fetchUserPosts()
-        toast("Idea submitted!")
+        toast.success("Idea submitted!")
       })
       .catch(e => console.log(e))
   }

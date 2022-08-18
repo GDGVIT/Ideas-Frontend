@@ -1,11 +1,12 @@
 import axios from '../../axios'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
-import { MentionsInput, Mention } from 'react-mentions'
 import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton'
+import styles from './singleIdea.css'
+import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 
 export default function SingleIdea () {
   const { id } = useParams()
@@ -20,6 +21,29 @@ export default function SingleIdea () {
   const navigate = useNavigate()
   const [userStrings, setUserStrings] = useState([])
   const [warned, setWarned] = useState(false)
+  const commentRef = useRef(newComment)
+  const authRef = useRef(auth)
+
+  const tagifyRef = useRef()
+  const enterRef = useRef(true)
+
+  const [tagSettings, setTagSettings] = useState({
+    pattern: /@/,
+    dropdown: {
+      enabled: 1,
+      position: 'text'
+    },
+  })
+
+  const onInput = (e) => {
+    console.log(e)
+    const prefix = e.detail.prefix
+    if (prefix === '@') {
+      enterRef.current = false
+    }
+    getNewComment(e.detail.textContent)
+    commentRef.current = e.detail.textContent
+  }
 
   const fetchUsers = useCallback( async () => {
     await axios
@@ -29,7 +53,11 @@ export default function SingleIdea () {
         }
       })
       .then(res => {
-        setUserStrings(res.data.users.map(user => ({display: user.name, id:user._id})))
+        setUserStrings(res.data.users.map(a => a.name))
+        setUserStrings(state => {
+          tagifyRef.current.whitelist = state
+          return state
+        })
       })
   },[auth])
 
@@ -38,7 +66,7 @@ export default function SingleIdea () {
       await axios
         .get(`/ideas/${id}`, {
           headers: {
-            authorization: auth.token
+            authorization: authRef.current.token
           }
         })
         .then(res => {
@@ -56,17 +84,18 @@ export default function SingleIdea () {
   const submitComment = async (e) => {
     e.preventDefault()
     const commentObject = {
-      commentBody: newComment
+      commentBody: commentRef.current
     }
     if (commentObject.commentBody !== '') {
-      await axios
+      axios
         .post(`/ideas/${id}/comments`, commentObject, {
           headers: {
-            authorization: auth.token
+            authorization: authRef.current.token
           }
         }).then(() => {
           getNewComment('')
           getIdea()
+          document.getElementsByClassName('tagify__input')[0].innerHTML = null;
         })
     }
   }
@@ -122,6 +151,7 @@ export default function SingleIdea () {
 
   useEffect(() => {
     if (auth.token) {
+      authRef.current = auth
       getIdea()
       setUserId(auth._id)
       fetchUsers()
@@ -160,28 +190,19 @@ export default function SingleIdea () {
         })}
       </div>
       <div className='relative mt-7'>
-        <form onSubmit={submitComment}>
-        {/* <MentionsInput
-          value={newComment}
-          onChange={(e) => { getNewComment(e.target.value) }}
-          style={{ fontSize: 16 }}
+        <MixedTags
+          autoFocus
+          settings={tagSettings}
+          onInput={onInput}
           placeholder='Add a comment...'
-          className='comment-input'
-          a11ySuggestionsListLabel={"Suggested Github users for mention"}
-          rows={1}
-        >
-          <Mention
-            displayTransform={login => `@${login}`}
-            trigger="@"
-            data={userStrings}
-          />
-        </MentionsInput> */}
-          <input
-            style={{ fontSize: 16 }}
-            placeholder='Add a comment...' className='bodytext comment-input' value={newComment} onChange={(e) => { getNewComment(e.target.value) }}
-          />
-        </form>
-        <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0' />
+          tagifyRef={tagifyRef}
+          className={styles.tagifyComments}
+          id='comment-input'
+        />
+        <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
+        <img src={require('../../assets/tick.png')} height={28} alt='tickIcon'
+        onClick={submitComment} 
+        className='comment-icon absolute top-50 right-0 pr-1' />
       </div>
       <div className='mt-6 px-6 flex flex-column gap-4'>
         {comments.length ? comments.map((comment, index) => {
