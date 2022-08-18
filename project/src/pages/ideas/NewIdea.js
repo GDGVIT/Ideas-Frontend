@@ -3,6 +3,7 @@ import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
+import Skeleton from 'react-loading-skeleton'
 
 export default function NewIdea () {
   const [title, setTitle] = useState('')
@@ -11,6 +12,7 @@ export default function NewIdea () {
   const [tagInput, setTagInput] = useState('')
   const [userIdeas, setUserIdeas] = useState([])
   const [isKeyReleased, setIsKeyReleased] = useState(false)
+  const [ideaLoad, setIdeaLoad] = useState(true)
 
   const auth = useSelector(state => state.auth)
 
@@ -51,6 +53,7 @@ export default function NewIdea () {
         .then((res) => {
           console.log(res.data)
           setUserIdeas(res.data.ideas)
+          setIdeaLoad(false)
         })
         .catch(e => console.log(e))
     }, [auth]
@@ -128,7 +131,7 @@ export default function NewIdea () {
       </div>
       <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem top-0 right-0 shelf-position sm:block hidden' />
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden' />
-      <div className='mt-8 grid gap-4'>
+      <div className='mt-8 grid gap-4 flex-grow-1 flex'>
         <div className='md:col-4 h-min col-12 md:sticky top-0'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl relative font-medium'>
             Your previous Ideas
@@ -136,11 +139,12 @@ export default function NewIdea () {
           </h1>
           <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
+        {!ideaLoad ?
         <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
-          {userIdeas.map((idea, index) => {
+          {userIdeas.length ? userIdeas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          })}
-        </div>
+          }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+        </div> : <Skeleton className='flex-grow-1' containerClassName='col' count={25} height={10}/>}
       </div>
     </div>
   )

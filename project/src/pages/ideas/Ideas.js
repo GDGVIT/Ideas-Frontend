@@ -15,6 +15,7 @@ export default function Ideas () {
   const [sort, setSort] = useState('')
   const [order, setOrder] = useState('')
   const [showFilters, setShowFilters] = useState(false)
+  const [ideasloading,setIdeasloading] = useState(true)
   const [tagSettings, setTagSettings] = useState({
     pattern: /@|#/,
     dropdown: {
@@ -63,6 +64,7 @@ export default function Ideas () {
         })
         .then(res => {
           setIdeas(res.data.ideas)
+          setIdeasloading(false)
         })
     }
     const fetchUsers = async () => {
@@ -221,12 +223,13 @@ export default function Ideas () {
             <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-3 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
           </form>
         </div>
+        {!ideasloading ?
         <div className='flex flex-column gap-5'>
           {ideas.length ? ideas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })
-          : <Skeleton height={10} count={50}/>}
-        </div>
+          : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+        </div> : <Skeleton height={10} count={50} /> }
       </div>
     </div>
   )

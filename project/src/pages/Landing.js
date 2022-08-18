@@ -6,6 +6,7 @@ import { setUserInfo, logout } from '../app/slices/authSlice'
 import axios from '../axios'
 import IdeaCard from '../components/IdeaCard'
 import {enterstore} from '../app/slices/blackSlice'
+import Skeleton from 'react-loading-skeleton'
 
 export default function Landing () {
   const [enter, setEnter] = useState(false)
@@ -14,6 +15,8 @@ export default function Landing () {
   const auth = useSelector(state => state.auth)
   const black = useSelector(state => state.black)
   const dispatch = useDispatch()
+  const [trendload, setTrendload] = useState(true)
+  const [realload, setRealload] = useState(true)
 
   const getAuthToken = async (cred, dispatch) => {
     await axios
@@ -34,6 +37,10 @@ export default function Landing () {
       })
   }
 
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  }
+
   useEffect(() => {
     if (black.entered) {
       setEnter(true)
@@ -42,22 +49,37 @@ export default function Landing () {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
+      fetchTrending()
+      fetchCompleted()
       dispatch(enterstore())
     }
   }, [enter, black, dispatch])
 
   const fetchTrending = () => {
-
+    axios.get('/ideas',{headers: {
+      authorization: auth.token
+    },
+    params: {
+      trending:true
+    }})
+    .then((res) => {
+      setTrending(res.data.ideas)
+      setTrendload(false)
+    })
   }
 
   const fetchCompleted = () => {
-
+    axios.get('/ideas',{headers: {
+      authorization: auth.token
+    },
+    params: {
+      madeReal:true
+    }})
+    .then((res) => {
+      setCompleted(res.data.ideas)
+      setRealload(false)
+    })
   }
-
-  useEffect(() => {
-    fetchTrending()
-    fetchCompleted()
-  }, [])
 
   return (
     <div className='z-2'>
@@ -92,19 +114,21 @@ export default function Landing () {
 
         <div>
           <h2 className='font-36 font-bold'>Trending Ideas</h2>
+          {!trendload ? 
           <div className='mt-5 flex flex-row gap-4 flex-wrap'>
           {trending.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
-          </div>
+          </div> : <Skeleton count={10} />}
         </div>
         <div className='mt-6'>
           <h2 className='font-36 font-bold'>Ideas Made Real</h2>
+          {!realload ? 
           <div className='mt-5 flex flex-row gap-4 flex-wrap'>
           {completed.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
-          </div>
+          </div>: <Skeleton count={10}/>}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? Let's find out.</p>
       </div>

@@ -8,6 +8,8 @@ import Skeleton from 'react-loading-skeleton'
 export default function CommentNotif() {
   const [ownComments, setOwnComments] = useState([])
   const [userIdeas, setUserIdeas] = useState([])
+  const [ownCommentsLoading, setOwnCommentLoading] = useState(true)
+  const [userIdeasLoading, setUserIdeasLoading] = useState(true)
 
   const auth = useSelector(state => state.auth)
 
@@ -19,6 +21,7 @@ export default function CommentNotif() {
     })
     .then((res) => {
       setOwnComments(res.data.comments)
+      setOwnCommentLoading(false)
     })
   },[auth])
 
@@ -33,6 +36,7 @@ export default function CommentNotif() {
         .then((res) => {
           console.log(res.data)
           setUserIdeas(res.data.ideas)
+          setUserIdeasLoading(false)
         })
         .catch(e => console.log(e))
     }, [auth]
@@ -49,26 +53,28 @@ export default function CommentNotif() {
     <div className='grid md:gap-0 gap-6'>
       <div className="md:col-5 col-12">
         <h1 className='text-xl'>Your Comments</h1>
+        {!ownCommentsLoading ? 
         <div className='mt-4 flex flex-column gap-3'>
-        {ownComments.length ? ownComments.map((comment, index) => {
+        {!ownCommentsLoading ? ownComments.map((comment, index) => {
           return (
             <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
               <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
               <p className='bodytext'>{comment.body}</p>
             </div>
           )
-        }) : <Skeleton className='w-11' height={10} count={25} />}
-        </div>
+        }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+        </div> : <Skeleton className='w-11 mt-4' height={10} count={25} />}
       </div>
       <div className="md:col-7 col-12">
         <h1 className='text-xl'>Comments on your Ideas</h1>
+        {!userIdeasLoading ?
         <div className='mt-4 flex flex-column gap-3'>
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return (
               <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length}></IdeaCard>
             )
-          }) : <Skeleton height={15} count={25} />}
-        </div>
+          }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+        </div> : <Skeleton className='mt-4' height={10} count={25} />}
       </div>
     </div>
   )
