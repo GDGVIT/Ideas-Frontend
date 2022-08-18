@@ -252,6 +252,19 @@ textarea {
   margin-left: 6rem;
 }
 
+.line {
+  height: auto;
+  max-width: 100%;
+}
+
+.redline {
+  margin-top: -5rem;
+}
+
+.blueline {
+  margin-top: 38rem;
+}
+
 .cross-button {
   background: none;
   color: white;
@@ -261,6 +274,11 @@ textarea {
   transition: all 1s ease;
 }
 
+.hanging-lights-position {
+  margin-top: 3rem;
+  margin-right: 9rem;
+}
+
 @media screen and (max-width: 1248px) {
   .board-position {
     left: 50rem;
@@ -268,6 +286,14 @@ textarea {
 
   .plantshelf-position {
     margin-left: 34rem;
+  }
+
+  .blueline {
+    margin-top: 38rem;
+  }
+
+  .redline {
+    margin-top: 5rem;
   }
 }
 
@@ -288,6 +314,10 @@ textarea {
   .landing-circle {
     width: 8.5rem;
   }
+
+  .blueline {
+    margin-top: 35rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -307,11 +337,21 @@ textarea {
     padding-right: 0 !important;
   }
 
+  .blueline {
+    margin-top: 25rem;
+  }
+
   .landing-font {
     font-size: 46px;
   }
 
   .landing-circle {
     width: 6.4rem;
+  }
+}
+
+@media screen and (min-width:1700px) {
+  .line {
+    visibility: hidden;
   }
 }

@@ -15,6 +15,7 @@ import NewIdea from './pages/ideas/NewIdea'
 import SingleIdea from './pages/ideas/SingleIdea'
 import EditIdea from './pages/ideas/EditIdea'
 import CommentNotif from './pages/CommentNotif'
+import HowInfo from './pages/ideas/HowInfo'
 
 function App () {
   const dispatch = useDispatch()
@@ -52,6 +53,7 @@ function App () {
         <Route exact path='/ideas/' element={<Ideas />} />
         <Route path='/ideas/:id' element={<SingleIdea />} />
         <Route path='/ideas/edit/:id' element={<EditIdea />} />
+        <Route path='/how' element={<HowInfo />} />
       </Routes>
     </div>
   )

@@ -130,7 +130,7 @@ export default function Landing () {
           })}
           </div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
         </div>
-        <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? Let's find out.</p>
+        <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{'color':'#4D96FF'}} to='/how'>Let's find out.</Link></p>
       </div>
     </div>
   )
