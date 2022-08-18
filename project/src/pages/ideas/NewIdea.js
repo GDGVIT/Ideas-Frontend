@@ -93,6 +93,7 @@ export default function NewIdea () {
     if (auth.token) {
       fetchUserPosts()
     }
+    window.scrollTo(0, 0);
   }, [auth, fetchUserPosts])
 
   return (

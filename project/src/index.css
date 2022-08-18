@@ -4,6 +4,7 @@
   --blue: #3994ff;
   --yellow: #f0b501;
   --green: #6bcb77;
+  --red: #FF6B6B;
   --bodytext: #575757;
   --datetext: #8d8d8d;
   --linecolor: #b1b1b1;
@@ -135,6 +136,34 @@ textarea {
   transform: translate(0, -50%);
 }
 
+.how-number {
+  transform: translate(-52%, -38%);
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.how-number-right {
+  transform: translate(52%, -38%);
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue)
+}
+
+.green {
+  color: var(--green)
+}
+
+.yellow {
+  color: var(--yellow)
+}
+
 .comment-input:focus {
   outline: none;
 }
@@ -168,6 +197,10 @@ textarea {
 
 .font-74 {
   font-size: 74px;
+}
+
+.font-118 {
+  font-size: 118px;
 }
 
 .font-36 {
