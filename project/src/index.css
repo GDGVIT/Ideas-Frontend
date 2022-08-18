@@ -81,6 +81,10 @@ h6 {
   padding: 3rem 6rem;
 }
 
+.pfp-nav:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 3rem 2rem;
@@ -198,6 +202,7 @@ textarea {
 .logout-button:hover {
   background-color: rgb(255 45 45);
   color: white;
+  cursor: pointer;
 }
 
 .ideasearch-input {

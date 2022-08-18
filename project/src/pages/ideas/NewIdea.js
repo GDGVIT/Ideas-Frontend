@@ -144,7 +144,7 @@ export default function NewIdea () {
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
-        </div> : <Skeleton className='flex-grow-1' containerClassName='col' count={25} height={10}/>}
+        </div> : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5}/>}
       </div>
     </div>
   )

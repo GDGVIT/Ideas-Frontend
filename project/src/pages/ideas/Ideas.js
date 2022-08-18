@@ -229,7 +229,7 @@ export default function Ideas () {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })
           : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
-        </div> : <Skeleton height={10} count={50} /> }
+        </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
       </div>
     </div>
   )

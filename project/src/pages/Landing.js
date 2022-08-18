@@ -119,7 +119,7 @@ export default function Landing () {
           {trending.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
-          </div> : <Skeleton count={10} />}
+          </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
         <div className='mt-6'>
           <h2 className='font-36 font-bold'>Ideas Made Real</h2>
@@ -128,7 +128,7 @@ export default function Landing () {
           {completed.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
-          </div>: <Skeleton count={10}/>}
+          </div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? Let's find out.</p>
       </div>

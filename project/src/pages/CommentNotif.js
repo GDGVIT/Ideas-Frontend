@@ -63,7 +63,7 @@ export default function CommentNotif() {
             </div>
           )
         }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
-        </div> : <Skeleton className='w-11 mt-4' height={10} count={25} />}
+        </div> : <Skeleton className='w-11 mt-4 border-round-xl' height={100} count={25} />}
       </div>
       <div className="md:col-7 col-12">
         <h1 className='text-xl'>Comments on your Ideas</h1>
@@ -74,7 +74,7 @@ export default function CommentNotif() {
               <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length}></IdeaCard>
             )
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
-        </div> : <Skeleton className='mt-4' height={10} count={25} />}
+        </div> : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
     </div>
   )
