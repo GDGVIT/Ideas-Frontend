@@ -117,7 +117,7 @@ export default function Landing () {
           {!trendload ? 
           <div className='mt-5 flex flex-row gap-4 flex-wrap'>
           {trending.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard fixedWidth={true} key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
@@ -126,7 +126,7 @@ export default function Landing () {
           {!realload ? 
           <div className='mt-5 flex flex-row gap-4 flex-wrap'>
           {completed.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard fixedWidth key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
         </div>

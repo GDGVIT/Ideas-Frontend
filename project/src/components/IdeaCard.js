@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import axios from '../axios'
 import { useSelector } from 'react-redux'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry }) {
   const auth = useSelector(state => state.auth)
 
   const [heartFull, setHeartFull] = useState(hearted)
@@ -32,7 +32,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   date = dayjs(date).format('DD-MM-YYYY')
   return (
-    <div className='flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative'>
+    <div className={`border-round-xl py-4 px-5 bg-white ideacard relative ${masonry ? 'brick' : 'flex-grow-1'} ${fixedWidth ? 'w-20rem' : null}`}>
       {!disabled ?
       <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
         <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>

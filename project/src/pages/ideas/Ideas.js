@@ -149,10 +149,10 @@ export default function Ideas () {
   }, [])
 
   return (
-    <div className='grid gap-4'>
+    <div className='grid md:gap-4 gap-2'>
       <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
         {auth.token ? 
-        <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3 mb-6'>
+        <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3 md:mb-6 mb-4'>
           {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
           <p>{auth.name}</p>
         </div>
@@ -206,7 +206,7 @@ export default function Ideas () {
           </div>
         </div>
       </div>
-      <div className='col-12 md:col flex flex-column gap-6'>
+      <div className='col-12 md:col flex flex-column md:gap-6 gap-5'>
         <div className='align-items-center relative w-full flex gap-4 flex-row'>
           <form className='relative flex-grow-1'>
             <MixedTags

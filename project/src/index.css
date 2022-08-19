@@ -132,6 +132,17 @@ textarea {
   padding-bottom: 0.6rem;
 }
 
+.masonry {
+  column-count: 2;
+  column-gap: 1em;
+}
+
+.brick {
+  /* Masonry bricks or child elements */
+  display: inline-block;
+  width: 100%;
+}
+
 .comment-icon {
   transform: translate(0, -50%);
 }
@@ -331,6 +342,7 @@ textarea {
 }
 
 @media screen and (max-width: 1024px) {
+
   .plantshelf-position {
     margin-left: 23rem;
     margin-top: 38rem;
