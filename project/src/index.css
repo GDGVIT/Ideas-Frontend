@@ -203,7 +203,7 @@ textarea {
 }
 
 .landing-font {
-  font-size: 74px;
+  font-size: 54px;
 }
 
 .font-74 {
@@ -278,6 +278,11 @@ textarea {
   margin-left: 39rem;
 }
 
+.books-position {
+  margin-top: 4rem;
+  margin-left: 59rem;
+}
+
 .lamp-position {
   left: 0;
   right: 0;
@@ -323,6 +328,27 @@ textarea {
   margin-right: 9rem;
 }
 
+.landing-circle {
+  width: 8.5rem;
+  top: -0.4rem;
+  left: -0.7rem;
+}
+
+.brick1-position {
+  margin-top: -1rem;
+  margin-right: 0.5rem;
+}
+
+.brick2-position {
+  margin-top: 30%;
+  margin-left: -4rem;
+}
+
+.brick3-position {
+  margin-top: 2.5rem;
+  margin-right: 4rem;
+}
+
 @media screen and (max-width: 1248px) {
   .board-position {
     left: 50rem;
@@ -338,6 +364,11 @@ textarea {
 
   .redline {
     margin-top: 5rem;
+  }
+
+  .books-position {
+    margin-top: 4rem;
+    margin-left: 49rem;
   }
 }
 
@@ -358,6 +389,8 @@ textarea {
 
   .landing-circle {
     width: 8.5rem;
+    top: -0.5rem;
+    left: -0.7rem;
   }
 
   .blueline {
@@ -372,6 +405,14 @@ textarea {
 
   .tagify {
     padding-right: 60px;
+  }
+
+  .books-position {
+    margin-left: 29rem;
+  }
+
+  .plantshelf-position {
+    margin-top: 30rem;
   }
 }
 
@@ -391,12 +432,26 @@ textarea {
   }
 
   .landing-circle {
-    width: 6.4rem;
+    width: 7rem;
+    top: -0.3rem;
+    left: -0.6rem;
+  }
+
+  .plantshelf-position {
+    margin-left: 15rem;
+    margin-top: 35rem;
   }
 }
 
 @media screen and (min-width:1700px) {
   .line {
     visibility: hidden;
+  }
+}
+
+@media screen and (max-width:413px) {
+  .plantshelf-position {
+    margin-left: 10rem;
+    margin-top: 45rem;
   }
 }

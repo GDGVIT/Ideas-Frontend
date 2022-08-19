@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './ideas.css'
+import { Link } from 'react-router-dom'
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
@@ -152,9 +153,20 @@ export default function Ideas () {
     <div className='grid md:gap-4 gap-2'>
       <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
         {auth.token ? 
-        <div className='flex-grow-1 flex flex-row border-round-xl p-3 bg-white ideacard align-items-center gap-3 md:mb-6 mb-4'>
-          {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
-          <p>{auth.name}</p>
+        <div className='flex-grow-1 flex flex-column border-round-xl p-3 bg-white ideacard justify-content-center align-items-center gap-3 md:mb-6 mb-4'>
+          <div className="flex flex-row align-items-center justify-content-evenly w-full gap-2">
+            <div className='flex flex-row align-items-center gap-3 mb-1'>
+            {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
+            <p>{auth.name}</p>
+            </div>
+            <div className='flex flex-column align-items-center'>
+            <p className='font-24 blue font-bold'>6</p>
+            <p className='font-20'>ideas</p>
+            </div>
+          </div>
+          <Link to='/ideas/new'>
+            <button className='primary-button font-20'>Add an Idea</button>
+          </Link>
         </div>
         : null}
         <div className={`border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>

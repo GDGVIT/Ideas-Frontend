@@ -45,7 +45,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         <p className='font-16 datetext'>{date}</p>
       </div> :null }
       {!disabled ?
-      <Link to={`/ideas/${ideaId}`}><p className='font-24'>{name}</p></Link> : <p className='font-24'>{name}</p>}
+      <Link to={`/ideas/${ideaId}`}><p className='md:font-24 font-20'>{name}</p></Link> : <p className='md:font-24 font-20'>{name}</p>}
       {description ? 
       <p style={{ fontSize: 16 }} className='mt-3 font-16 bodytext'>{description}</p> : null}
       {!disabled ? 

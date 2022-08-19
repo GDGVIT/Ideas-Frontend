@@ -141,7 +141,9 @@ export default function NewIdea () {
           <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
         {!ideaLoad ?
-        <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5'>
+        <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5 relative'>
+          <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
+          <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}

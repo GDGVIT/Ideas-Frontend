@@ -168,7 +168,7 @@ export default function SingleIdea () {
       <div className='flex flex-row'>
         <div className='flex-grow-1'>
           <div className='flex gap-1 sm:flex-row flex-column sm:align-items-center'>
-            <p className='bodytext font-20'>{idea.authorName}</p>
+            <p className='bodytext md:font-20 font-16'>{idea.authorName}</p>
             <p className='font-20 sm:block hidden bodytext'>{idea.authorName?`|`:null}</p>
             <p className='font-16 datetext'>{date}</p>
           </div>
@@ -180,15 +180,15 @@ export default function SingleIdea () {
               {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
                 <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
               </Link>}
-              {idea.author && idea.author._id === userId && warned ? 
+              {idea.author && idea.author._id === userId && (warned ? 
               <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
-                <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+                <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>)}
             </div>
           </div>
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description || <Skeleton/>}</p>
-      <div className='font-20 text-white mt-5 flex flex-row flex-wrap gap-2'>
+      <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}

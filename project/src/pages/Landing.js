@@ -84,15 +84,16 @@ export default function Landing () {
   return (
     <div className='z-2'>
       <div className={`${enter || black.entered ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.92)' }} />
-      <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-10rem md:w-8rem w-6rem mx-auto lamp-position' />
+      <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-8rem w-6rem mx-auto lamp-position' />
       <div className='flex flex-column w-screen relative px-6 rem-mar' style={{ overflow: 'hidden', marginLeft: '-6rem' }}>
-        <img src={require('../assets/plantshelf.png')} alt='plantshelf' className='absolute h-6rem plantshelf-position md:block hidden' />
+        <img src={require('../assets/plantshelf.png')} alt='plantshelf' className='absolute h-6rem plantshelf-position' />
+        <img src={require('../assets/books.png')} alt='plantshelf' className='absolute h-5rem books-position sm:block hidden' />
         <img src={require('../assets/board.png')} alt='plantshelf' className='absolute lg:h-18rem md:h-15rem board-position md:block hidden' />
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
         <div className={`${enter ? null : 'text-white'} hero lg:w-6 md:w-8 w-12 z-5`} id='hero'>
           <h1 className='landing-font  relative'>
             DSC Idea Hub
-            <img className='landing-circle absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../assets/drawCircle2.svg').default} alt='stroke' />
+            <img className='landing-circle absolute' src={require('../assets/drawCircle2.svg').default} alt='stroke' />
           </h1>
           <p className='mt-5'>DSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
           </p>
@@ -112,7 +113,8 @@ export default function Landing () {
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
         </div>
 
-        <div>
+        <div className='relative'>
+          <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
           <h2 className='font-36 font-bold'>Trending Ideas</h2>
           {!trendload ? 
           <div className='mt-5 flex flex-row gap-4 flex-wrap'>
