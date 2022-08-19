@@ -161,28 +161,30 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
-    <div className='border-round-xl p-8 bg-white ideacard relative'>
+    <div className='border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
       <Link to='/ideas'>
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
       </Link>
-      <div className='flex flex-row gap-8'>
+      <div className='flex flex-row'>
         <div className='flex-grow-1'>
-          <div className='flex gap-1 flex-row align-items-center'>
+          <div className='flex gap-1 sm:flex-row flex-column sm:align-items-center'>
             <p className='bodytext font-20'>{idea.authorName}</p>
-            <p className='font-20 bodytext'>{idea.authorName?`|`:null}</p>
+            <p className='font-20 sm:block hidden bodytext'>{idea.authorName?`|`:null}</p>
             <p className='font-16 datetext'>{date}</p>
           </div>
-          <h1 className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
-        </div>
-        <div className='flex flex-row gap-2 h-min mt-auto align-items-center'>
-          <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
-          {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
-          {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
-            <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
-          </Link>}
-          {idea.author && idea.author._id === userId && warned ? 
-          <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
-            <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+          <div className='flex flex-row justify-content-between'>
+            <h1 className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
+            <div className='flex flex-row gap-2 h-min mt-auto align-items-center'>
+              <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
+              {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
+              {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
+                <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
+              </Link>}
+              {idea.author && idea.author._id === userId && warned ? 
+              <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
+                <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+            </div>
+          </div>
         </div>
       </div>
       <p className='mt-4 bodytext font-16'>{idea.description || <Skeleton/>}</p>
@@ -207,17 +209,17 @@ export default function SingleIdea () {
         className='comment-icon absolute top-50 right-0 pr-1' />
       </div>
       {!commentsLoading ?
-      <div className='mt-6 px-6 flex flex-column gap-4'>
+      <div className='mt-6 md:px-6 px-2 flex flex-column gap-4'>
         {comments.length ? comments.map((comment, index) => {
           return (
-            <div key={index} className='grid gap-4'>
-              <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+            <div key={index} className='grid md:gap-4 gap-2'>
+              <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div className='flex-grow-1'>
-                <p className='font-20'>{comment.authorName}</p>
+                <p className='md:font-20 font-16'>{comment.authorName}</p>
                 <p className='mt-1 bodytext font-16'>{comment.body}</p>
               </div>
               {comment.author && comment.author._id === userId &&
-                <img onClick={() => deleteComment(comment._id)} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+                <img onClick={() => deleteComment(comment._id)} className='pl-2' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
         }) : <p>No comments yet.</p>}
