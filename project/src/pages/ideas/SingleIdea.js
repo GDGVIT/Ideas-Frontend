@@ -17,6 +17,7 @@ export default function SingleIdea () {
   const [hearted, setHearted] = useState(false)
   const [comments, setComments] = useState([])
   const [newComment, getNewComment] = useState('')
+  const [submitCommentLoading, setSubmitCommentLoading] = useState(false)
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
   const [userStrings, setUserStrings] = useState([])
@@ -89,6 +90,7 @@ export default function SingleIdea () {
   )
 
   const submitComment = async (e) => {
+    setSubmitCommentLoading(true)
     e.preventDefault()
     const commentObject = {
       commentBody: commentRef.current
@@ -103,6 +105,10 @@ export default function SingleIdea () {
           getNewComment('')
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null;
+          toast.success("Comment submitted!")
+          setSubmitCommentLoading(false)
+        }).catch(() => {
+          setSubmitCommentLoading(false)
         })
     }
   }
@@ -210,9 +216,11 @@ export default function SingleIdea () {
           onChange={onChange}
         />
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
+        {!submitCommentLoading ?
         <img src={require('../../assets/tick.png')} height={28} alt='tickIcon'
         onClick={submitComment} 
-        className='comment-icon absolute top-50 right-0 pr-1' />
+        className='comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
+        className='comment-icon absolute top-50 right-0 pr-1' />} 
       </div>
       {!commentsLoading ?
       <div className='mt-6 md:px-6 px-2 flex flex-column gap-4'>
