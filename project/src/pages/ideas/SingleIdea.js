@@ -37,13 +37,18 @@ export default function SingleIdea () {
   })
 
   const onInput = (e) => {
-    console.log(e)
+    console.log(e.detail)
     const prefix = e.detail.prefix
     if (prefix === '@') {
       enterRef.current = false
     }
     getNewComment(e.detail.textContent)
     commentRef.current = e.detail.textContent
+  }
+
+  const onChange = (e) => {
+    getNewComment(e.detail.value)
+    commentRef.current = e.detail.value
   }
 
   const fetchUsers = useCallback( async () => {
@@ -202,6 +207,7 @@ export default function SingleIdea () {
           tagifyRef={tagifyRef}
           className={styles.tagifyComments}
           id='comment-input'
+          onChange={onChange}
         />
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
         <img src={require('../../assets/tick.png')} height={28} alt='tickIcon'
