@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
 import { useSelector } from 'react-redux'
 
@@ -32,11 +32,14 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   date = dayjs(date).format('DD-MM-YYYY')
   return (
-    <div className={`border-round-xl py-4 px-5 bg-white ideacard relative ${masonry ? 'brick' : 'flex-grow-1'} ${fixedWidth ? 'w-20rem' : null}`}>
+    <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 p-3' : null}`}>
+    <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
+    <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative h-full`}>
       {!disabled ?
       <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
         <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
-        {heartFull ? <img onClick={() => sendVote(0)} src={require('../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />}
+        {heartFull ? <img onClick={(e) => {e.stopPropagation();e.preventDefault();sendVote(0);
+        }} src={require('../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={(e) => {e.stopPropagation();e.preventDefault();sendVote(1)}} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />}
       </div> : null}
       {author ? 
       <div className='bodytext font-16 grid gap-1 md:w-11 w-8 flex-row align-items-center mb-3'>
@@ -44,8 +47,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         <p>|</p>
         <p className='font-16 datetext'>{date}</p>
       </div> :null }
-      {!disabled ?
-      <Link to={`/ideas/${ideaId}`}><p className='md:font-24 font-20'>{name}</p></Link> : <p className='md:font-24 font-20'>{name}</p>}
+      <p className='md:font-24 font-20'>{name}</p>
       {description ? 
       <p style={{ fontSize: 16 }} className='mt-3 font-16 bodytext'>{description}</p> : null}
       {!disabled ? 
@@ -68,6 +70,8 @@ export default function IdeaCard ({ name, color, author, description, tags, date
           )
         })}
       </div> : null}
+    </div>
+    </ConditionalLink>
     </div>
   )
 }

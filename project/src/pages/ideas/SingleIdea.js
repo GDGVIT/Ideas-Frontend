@@ -212,7 +212,7 @@ export default function SingleIdea () {
       <div className='mt-6 md:px-6 px-2 flex flex-column gap-4'>
         {comments.length ? comments.map((comment, index) => {
           return (
-            <div key={index} className='grid md:gap-4 gap-2'>
+            <div key={index} className='flex flex-row md:gap-4 gap-2'>
               <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div className='flex-grow-1'>
                 <p className='md:font-20 font-16'>{comment.authorName}</p>

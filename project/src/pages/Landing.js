@@ -117,18 +117,18 @@ export default function Landing () {
           <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
           <h2 className='font-36 font-bold'>Trending Ideas</h2>
           {!trendload ? 
-          <div className='mt-5 flex flex-row gap-4 flex-wrap'>
+          <div className='mt-5 flex flex-row flex-wrap'>
           {trending.map((idea, index) => {
-            return <IdeaCard fixedWidth={true} key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard masonry key={index} name={idea.title} description={idea.description} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
         <div className='mt-6'>
           <h2 className='font-36 font-bold'>Ideas Made Real</h2>
           {!realload ? 
-          <div className='mt-5 flex flex-row gap-4 flex-wrap'>
+          <div className='mt-5 flex flex-row flex-wrap'>
           {completed.map((idea, index) => {
-            return <IdeaCard fixedWidth key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard masonry key={index} name={idea.title} description={idea.description} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
         </div>
