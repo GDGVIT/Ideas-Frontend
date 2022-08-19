@@ -179,7 +179,7 @@ export default function SingleIdea () {
           </div>
           <div className='flex flex-row justify-content-between'>
             <h1 className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
-            <div className='flex flex-row gap-2 h-min mt-auto align-items-center'>
+            <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
               {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
@@ -229,7 +229,7 @@ export default function SingleIdea () {
             </div>
           )
         }) : <p>No comments yet.</p>}
-      </div> : <div className='mt-6'><Skeleton height={10} count={10} /></div>}
+      </div> : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
   )
 }

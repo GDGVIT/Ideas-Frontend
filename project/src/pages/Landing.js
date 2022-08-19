@@ -5,7 +5,7 @@ import { GoogleLogin } from '@react-oauth/google'
 import { setUserInfo, logout } from '../app/slices/authSlice'
 import axios from '../axios'
 import IdeaCard from '../components/IdeaCard'
-import {enterstore} from '../app/slices/blackSlice'
+import {enterstore, initialiseEnter} from '../app/slices/blackSlice'
 import Skeleton from 'react-loading-skeleton'
 
 export default function Landing () {
@@ -42,6 +42,7 @@ export default function Landing () {
   }
 
   useEffect(() => {
+    dispatch(initialiseEnter())
     if (black.entered) {
       setEnter(true)
     }
