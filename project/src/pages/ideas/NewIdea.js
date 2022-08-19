@@ -107,8 +107,8 @@ export default function NewIdea () {
               Title
             </label>
             <input value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
-            <label htmlFor='desc-input'>Description</label>
-            <textarea value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+            <label htmlFor='desc-input'>Description <span className='font-16 bodytext'>{description.length ? `${500-description.length} characters remaining` : null}</span></label>
+            <textarea maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             <label htmlFor='tag-input'>Tags</label>
             <div className='flex align-items-center flex-row flex-wrap gap-3'>
               {tags.map((tag, index) => tag

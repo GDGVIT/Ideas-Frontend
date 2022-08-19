@@ -59,9 +59,9 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         {comments.map((comment, index) => {
           return (
             <div key={index} className='grid gap-4'>
-              <img width={43} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+              <img width={20} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div className='flex-grow-1'>
-                <p className='font-20'>{comment.authorName}</p>
+                <p className='font-16'>{comment.authorName}</p>
                 <p className='mt-1 bodytext font-16'>{comment.body}</p>
               </div>
             </div>

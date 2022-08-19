@@ -20,6 +20,7 @@ export default function SingleIdea () {
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
   const [userStrings, setUserStrings] = useState([])
+  const [commentsLoading, setCommentsLoading] = useState(true)
   const [warned, setWarned] = useState(false)
   const commentRef = useRef(newComment)
   const authRef = useRef(auth)
@@ -77,6 +78,7 @@ export default function SingleIdea () {
             setHearted(true)
           }
           setComments(res.data.comments)
+          setCommentsLoading(false)
         })
     }, [auth, id]
   )
@@ -204,6 +206,7 @@ export default function SingleIdea () {
         onClick={submitComment} 
         className='comment-icon absolute top-50 right-0 pr-1' />
       </div>
+      {!commentsLoading ?
       <div className='mt-6 px-6 flex flex-column gap-4'>
         {comments.length ? comments.map((comment, index) => {
           return (
@@ -217,8 +220,8 @@ export default function SingleIdea () {
                 <img onClick={() => deleteComment(comment._id)} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
-        }) : <Skeleton height={10} count={10} />}
-      </div>
+        }) : <p>No comments yet.</p>}
+      </div> : <div className='mt-6'><Skeleton height={10} count={10} /></div>}
     </div>
   )
 }
