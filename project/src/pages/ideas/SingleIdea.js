@@ -144,6 +144,7 @@ export default function SingleIdea () {
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null;
           toast.success("Comment submitted!")
+          setUserMentions([])
           setSubmitCommentLoading(false)
         }).catch(() => {
           setSubmitCommentLoading(false)
@@ -257,7 +258,7 @@ export default function SingleIdea () {
         />
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
         {!submitCommentLoading ?
-        <img src={require('../../assets/tick.png')} height={28} alt='tickIcon'
+        <img src={require('../../assets/shuttle.png')} height={28} alt='tickIcon'
         onClick={submitComment} 
         className='button comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
         className='comment-icon absolute top-50 right-0 pr-1' />} 
