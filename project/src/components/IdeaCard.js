@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId }) {
   const auth = useSelector(state => state.auth)
 
   const [heartFull, setHeartFull] = useState(hearted)
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
+  const [userId, setUserId] = useState('')
 
   const sendVote = (add) => {
     let voteType
@@ -30,6 +32,10 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     })
   }
 
+  useEffect(() => {
+    setUserId(auth._id)
+  }, [auth])
+
   date = dayjs(date).format('DD-MM-YYYY')
   return (
     <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 p-3' : null}`}>
@@ -41,6 +47,9 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         {heartFull ? <img onClick={(e) => {e.stopPropagation();e.preventDefault();sendVote(0);
         }} src={require('../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={(e) => {e.stopPropagation();e.preventDefault();sendVote(1)}} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />}
       </div> : null}
+      {author && authorId === userId && <Link className='flex absolute bottom-0 right-0 m-3' to={`/ideas/edit/${ideaId}`}>
+        <img className='pl-2 m-auto' src={require('../assets/edit-icon.svg').default} alt='edit'></img>
+      </Link>}
       {author ? 
       <div className='bodytext font-16 grid gap-1 md:w-11 w-8 flex-row align-items-center mb-3'>
         <p>{author}</p>

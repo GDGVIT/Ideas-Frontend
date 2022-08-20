@@ -73,12 +73,12 @@ export default function SingleIdea () {
   },[auth])
 
   const mentionReplacement = (match) => {
-    let mention = JSON.parse(match)
-    return `<span class='green'>${mention.value}</span>`
+    let mention = JSON.parse(match.slice(2,match.length-2))
+    return `@ <span class='green'>${mention.value}</span>`
   }
 
   function doRegex(input) {
-    let regex = /\{([^}]+)\}/gm;
+    let regex = /\[\[\{([^}]+)\}]]/gm;
     if (regex.test(input)) {
       return input.replaceAll(regex, mentionReplacement);
     } else {

@@ -151,10 +151,10 @@ export default function Ideas () {
 
   return (
     <div className='grid md:gap-4 gap-2'>
-      <div className='h-min md:sticky top-0 xl:col-4 md:col-5 col-12'>
+      <div className='h-min md:sticky top-0 lg:col-3 md:col-4 col-12'>
         {auth.token ? 
         <div className='flex-grow-1 flex flex-column border-round-xl p-3 bg-white ideacard justify-content-center align-items-center gap-3 md:mb-6 mb-4'>
-          <div className="flex flex-row align-items-center justify-content-evenly w-full gap-2">
+          <div className="flex flex-row align-items-center justify-content-evenly w-full gap-2 flex-wrap">
             <div className='flex flex-row align-items-center gap-3 mb-1'>
             {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
             <p>{auth.name}</p>
@@ -165,13 +165,13 @@ export default function Ideas () {
             </div>
           </div>
           <Link to='/ideas/new'>
-            <button className='primary-button font-20'>Add an Idea</button>
+            <button className='primary-button lg:font-20 font-16'>Add an Idea</button>
           </Link>
         </div>
         : null}
         <div className={`border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
           <div className='flex flex-column gap-2 mb-4'>
-            <p className='font-20'>Sort By:</p>
+            <p className='md:font-20 font-16'>Sort By:</p>
             <label>
               <input
                 type='radio'
@@ -194,7 +194,7 @@ export default function Ideas () {
             </label>
           </div>
           <div className='flex flex-column gap-2'>
-            <p className='font-20'>Order:</p>
+            <p className='md:font-20 font-16'>Order:</p>
             <label>
               <input
                 type='radio'
@@ -238,7 +238,7 @@ export default function Ideas () {
         {!ideasloading ?
         <div className='flex flex-column gap-5'>
           {ideas.length ? ideas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} author={idea.author === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })
           : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }

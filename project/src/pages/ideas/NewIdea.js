@@ -145,7 +145,7 @@ export default function NewIdea () {
           <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
           <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
           {userIdeas.length ? userIdeas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5}/>}
       </div>
