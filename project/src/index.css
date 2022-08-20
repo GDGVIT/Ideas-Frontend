@@ -32,7 +32,8 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  background-image: url("../src/assets/noise.png");
+  background-image: url("../src/assets/texture.png");
+  background-size: 1008px 1350px;
   background-repeat: repeat;
   background-attachment: fixed;
 }
@@ -59,7 +60,8 @@ header {
   width: max-content;
 }
 
-.primary-button:hover {
+.primary-button:hover,
+.button:hover {
   cursor: pointer;
 }
 

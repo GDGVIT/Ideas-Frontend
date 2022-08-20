@@ -21,10 +21,12 @@ export default function SingleIdea () {
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
   const [userStrings, setUserStrings] = useState([])
+  const [users, setUsers] = useState([])
   const [commentsLoading, setCommentsLoading] = useState(true)
   const [warned, setWarned] = useState(false)
   const commentRef = useRef(newComment)
   const authRef = useRef(auth)
+  const [userMentions, setUserMentions] = useState([])
 
   const tagifyRef = useRef()
   const enterRef = useRef(true)
@@ -60,6 +62,7 @@ export default function SingleIdea () {
         }
       })
       .then(res => {
+        setUsers(res.data.users)
         setUserStrings(res.data.users.map(a => a.name))
         setUserStrings(state => {
           tagifyRef.current.whitelist = state
@@ -67,6 +70,35 @@ export default function SingleIdea () {
         })
       })
   },[auth])
+
+  const mentionReplacement = (match) => {
+    let mention = JSON.parse(match)
+    return `<span class='green'>${mention.value}</span>`
+  }
+
+  function doRegex(input) {
+    let regex = /\{([^}]+)\}/gm;
+    if (regex.test(input)) {
+      return input.replaceAll(regex, mentionReplacement);
+    } else {
+      return input
+    }
+  }
+
+  const doSubmitRegex = (input) => {
+    let regex = /\{([^}]+)\}/gm
+    // const regex = /Java[a-z]*/gi
+      let mentions = input.matchAll(regex)
+      // console.log(Array.from(mentions))
+      for (let mention of mentions) {
+        console.log(mention)
+        let mentionedName = JSON.parse(mention[0]).value
+        console.log(mentionedName)
+        const mentionId = users.find(u => u.name === mentionedName)
+        console.log(mentionId)
+        setUserMentions(userMentions => [...userMentions, mentionId._id])
+      }
+  }
 
   const getIdea = useCallback(
     async () => {
@@ -83,6 +115,10 @@ export default function SingleIdea () {
           if (res.data.idea.upvotes.includes(auth._id)) {
             setHearted(true)
           }
+          for (let i = 0; i<res.data.comments.length ; i++) {
+            res.data.comments[i].body = doRegex(res.data.comments[i].body);
+            console.log(res.data.comments[i].body)
+          }
           setComments(res.data.comments)
           setCommentsLoading(false)
         })
@@ -92,8 +128,10 @@ export default function SingleIdea () {
   const submitComment = async (e) => {
     setSubmitCommentLoading(true)
     e.preventDefault()
+    doSubmitRegex(commentRef.current)
     const commentObject = {
-      commentBody: commentRef.current
+      commentBody: commentRef.current,
+      mentions: userMentions
     }
     if (commentObject.commentBody !== '') {
       axios
@@ -110,6 +148,8 @@ export default function SingleIdea () {
         }).catch(() => {
           setSubmitCommentLoading(false)
         })
+    } else {
+      setSubmitCommentLoading(false)
     }
   }
 
@@ -187,13 +227,13 @@ export default function SingleIdea () {
             <h1 className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
             <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
-              {hearted ? <img onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
+              {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
               {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
                 <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
               </Link>}
               {idea.author && idea.author._id === userId && (warned ? 
-              <img onClick={deleteIdea} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
-                <img onClick={deleteWarn} className='pl-2' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>)}
+              <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
+                <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>)}
             </div>
           </div>
         </div>
@@ -219,7 +259,7 @@ export default function SingleIdea () {
         {!submitCommentLoading ?
         <img src={require('../../assets/tick.png')} height={28} alt='tickIcon'
         onClick={submitComment} 
-        className='comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
+        className='button comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
         className='comment-icon absolute top-50 right-0 pr-1' />} 
       </div>
       {!commentsLoading ?
@@ -230,10 +270,10 @@ export default function SingleIdea () {
               <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div className='flex-grow-1'>
                 <p className='md:font-20 font-16'>{comment.authorName}</p>
-                <p className='mt-1 bodytext font-16'>{comment.body}</p>
+                <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{__html:comment.body}}></span>
               </div>
               {comment.author && comment.author._id === userId &&
-                <img onClick={() => deleteComment(comment._id)} className='pl-2' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
+                <img onClick={() => deleteComment(comment._id)} className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
         }) : <p>No comments yet.</p>}
