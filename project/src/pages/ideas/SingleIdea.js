@@ -97,7 +97,7 @@ export default function SingleIdea () {
         console.log(mentionedName)
         const mentionId = users.find(u => u.name === mentionedName)
         console.log(mentionId)
-        setUserMentions(userMentions => [...userMentions,{_id:mentionId._id, username:mentionedName}])
+        setUserMentions(userMentions => [...userMentions,{_id:mentionId._id, userName:mentionedName}])
         mentionsRef.current.push({_id:mentionId._id, username:mentionedName})
       }
   }
@@ -260,7 +260,7 @@ export default function SingleIdea () {
         />
         <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
         {!submitCommentLoading ?
-        <img src={require('../../assets/shuttle.png')} height={28} alt='tickIcon'
+        <img src={require('../../assets/send-icon.png')} height={28} alt='tickIcon'
         onClick={submitComment} 
         className='button comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
         className='comment-icon absolute top-50 right-0 pr-1' />} 

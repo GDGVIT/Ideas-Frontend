@@ -56,6 +56,21 @@ export default function Ideas () {
   const authRef = useRef(auth)
 
   useEffect(() => {
+    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown',((e) => {
+      if (e.keyCode === 13 && !e.shiftKey)
+      {
+        console.log(e)
+        // prevent default behavior
+        e.preventDefault();
+        //alert("ok");
+        return false;
+      }
+    }))
+
+    document.getElementsByClassName('tagify')[0].style.borderRadius = '18px'
+  },[])
+
+  useEffect(() => {
     const fetchIdeas = async () => {
       await axios
         .get('/ideas', {
@@ -90,7 +105,7 @@ export default function Ideas () {
 
   const searchIdeas = (e, userName, authState) => {
     e.preventDefault()
-    if (e.detail.originalEvent.key === 'Enter') {
+
       setUser(user => {
         setOrder(order => {
           setSort(sort => {
@@ -109,8 +124,7 @@ export default function Ideas () {
             })
           })
         })
-      })
-    }  
+      }) 
   }
 
   const onInput = (e) => {
@@ -223,15 +237,17 @@ export default function Ideas () {
           <form className='relative flex-grow-1'>
             <MixedTags
               autoFocus
+              id='area'
               settings={tagSettings}
               onInput={onInput}
               onChange={onChange}
               placeholder='hint: type @ or #'
+              styles={{'borderRadius':'18px'}}
               tagifyRef={tagifyRef}
-              className={styles.tagify}
-              onKeydown={(e) => searchIdeas(e, user, auth)}
+              className='radius'
             />
             <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+            <img className='button absolute top-0 bottom-0 right-0 mr-2 my-auto' onClick={e =>searchIdeas(e)} src={require('../../assets/send-icon.png')} alt='searchglass' />
             <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-3 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
           </form>
         </div>

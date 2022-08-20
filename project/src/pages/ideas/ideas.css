@@ -8,4 +8,10 @@
     padding: 15px 15px 15px 60px;
     max-width: 100%;
     overflow-x: scroll;
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+}
+
+.radius {
+    border-radius: 18px !important;
 }
