@@ -4,6 +4,7 @@ import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useCallback } from 'react'
 
 export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId }) {
   const auth = useSelector(state => state.auth)
@@ -11,20 +12,21 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   const [heartFull, setHeartFull] = useState(hearted)
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
   const [userId, setUserId] = useState('')
+  const [mentionComments, setMentionComments] = useState([])
 
   const mentionReplacement = (match) => {
     let mention = JSON.parse(match.slice(2,match.length-2))
     return `@ <span class='green'>${mention.value}</span>`
   }
 
-  function doRegex(input) {
+  const doRegex = useCallback((input) => {
     let regex = /\[\[\{([^}]+)\}]]/gm;
     if (regex.test(input)) {
       return input.replaceAll(regex, mentionReplacement);
     } else {
       return input
     }
-  }
+  },[])
 
   const sendVote = (add) => {
     let voteType
@@ -48,13 +50,18 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   useEffect(() => {
     setUserId(auth._id)
+  }, [auth])
+
+  useEffect(() => {
     if (comments) {
       for (let i = 0; i<comments.length ; i++) {
         comments[i].body = doRegex(comments[i].body);
-        console.log(comments[i].body)
+        setMentionComments(mentionComments => [...mentionComments,comments[i]])
+        setMentionComments(mentionComments => new Set(mentionComments))
+        setMentionComments(mentionComments => Array.from(mentionComments))
       }
     }
-  }, [auth])
+  },[])
 
   date = dayjs(date).format('DD-MM-YYYY')
   return (
@@ -85,9 +92,9 @@ export default function IdeaCard ({ name, color, author, description, tags, date
           return <p className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div> : null }
-      {comments && comments.length ? 
+      {comments && mentionComments.length ? 
       <div className='mt-6 flex flex-column gap-4'>
-        {comments.map((comment, index) => {
+        {mentionComments.map((comment, index) => {
           return (
             <div key={index} className='grid gap-4'>
               <img width={20} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
