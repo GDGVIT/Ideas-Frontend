@@ -27,6 +27,7 @@ export default function SingleIdea () {
   const commentRef = useRef(newComment)
   const authRef = useRef(auth)
   const [userMentions, setUserMentions] = useState([])
+  const mentionsRef = useRef(userMentions)
 
   const tagifyRef = useRef()
   const enterRef = useRef(true)
@@ -96,7 +97,8 @@ export default function SingleIdea () {
         console.log(mentionedName)
         const mentionId = users.find(u => u.name === mentionedName)
         console.log(mentionId)
-        setUserMentions(userMentions => [...userMentions, mentionId._id])
+        setUserMentions(userMentions => [...userMentions,{_id:mentionId._id, username:mentionedName}])
+        mentionsRef.current.push({_id:mentionId._id, username:mentionedName})
       }
   }
 
@@ -131,7 +133,7 @@ export default function SingleIdea () {
     doSubmitRegex(commentRef.current)
     const commentObject = {
       commentBody: commentRef.current,
-      mentions: userMentions
+      mentions: mentionsRef.current
     }
     if (commentObject.commentBody !== '') {
       axios
@@ -144,7 +146,7 @@ export default function SingleIdea () {
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null;
           toast.success("Comment submitted!")
-          setUserMentions([])
+          // setUserMentions([])
           setSubmitCommentLoading(false)
         }).catch(() => {
           setSubmitCommentLoading(false)
