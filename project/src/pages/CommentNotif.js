@@ -20,10 +20,28 @@ export default function CommentNotif() {
       }
     })
     .then((res) => {
+      for (let i = 0; i<res.data.comments.length ; i++) {
+        res.data.comments[i].body = doRegex(res.data.comments[i].body);
+        console.log(res.data.comments[i].body)
+      }
       setOwnComments(res.data.comments)
       setOwnCommentLoading(false)
     })
   },[auth])
+
+  const mentionReplacement = (match) => {
+    let mention = JSON.parse(match.slice(2,match.length-2))
+    return `@ <span class='green'>${mention.value}</span>`
+  }
+
+  function doRegex(input) {
+    let regex = /\[\[\{([^}]+)\}]]/gm;
+    if (regex.test(input)) {
+      return input.replaceAll(regex, mentionReplacement);
+    } else {
+      return input
+    }
+  }
 
   const fetchUserPosts = useCallback(
     async () => {
@@ -59,7 +77,7 @@ export default function CommentNotif() {
           return (
             <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
               <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
-              <p className='bodytext'>{comment.body}</p>
+              <span dangerouslySetInnerHTML={{__html:comment.body}} className='bodytext'></span>
             </div>
           )
         }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}

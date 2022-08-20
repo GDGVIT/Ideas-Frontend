@@ -206,6 +206,19 @@ export default function SingleIdea () {
   }
 
   useEffect(() => {
+    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown',((e) => {
+      if (e.keyCode === 13 && !e.shiftKey)
+      {
+        console.log(e)
+        // prevent default behavior
+        e.preventDefault();
+        //alert("ok");
+        return false;
+      }
+    }))
+  },[])
+
+  useEffect(() => {
     if (auth.token) {
       authRef.current = auth
       getIdea()

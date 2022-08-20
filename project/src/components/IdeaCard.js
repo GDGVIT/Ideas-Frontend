@@ -12,6 +12,20 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
   const [userId, setUserId] = useState('')
 
+  const mentionReplacement = (match) => {
+    let mention = JSON.parse(match.slice(2,match.length-2))
+    return `@ <span class='green'>${mention.value}</span>`
+  }
+
+  function doRegex(input) {
+    let regex = /\[\[\{([^}]+)\}]]/gm;
+    if (regex.test(input)) {
+      return input.replaceAll(regex, mentionReplacement);
+    } else {
+      return input
+    }
+  }
+
   const sendVote = (add) => {
     let voteType
     if (add) {
@@ -34,6 +48,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   useEffect(() => {
     setUserId(auth._id)
+    if (comments) {
+      for (let i = 0; i<comments.length ; i++) {
+        comments[i].body = doRegex(comments[i].body);
+        console.log(comments[i].body)
+      }
+    }
   }, [auth])
 
   date = dayjs(date).format('DD-MM-YYYY')
@@ -73,7 +93,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
               <img width={20} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
               <div className='flex-grow-1'>
                 <p className='font-16'>{comment.authorName}</p>
-                <p className='mt-1 bodytext font-16'>{comment.body}</p>
+                <span dangerouslySetInnerHTML={{__html:comment.body}} className='mt-1 bodytext font-16'></span>
               </div>
             </div>
           )

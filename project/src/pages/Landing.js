@@ -112,6 +112,7 @@ export default function Landing () {
             }}
           />
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
+          <Link className='block mt-4' style={{'color':'#4D96FF'}} to='/how'>How does this work?</Link>
         </div>
 
         <div className='relative'>
