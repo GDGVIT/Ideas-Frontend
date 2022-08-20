@@ -92,7 +92,7 @@ export default function Landing () {
         <img src={require('../assets/board.png')} alt='plantshelf' className='absolute lg:h-18rem md:h-15rem board-position md:block hidden' />
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
         <div className={`${enter ? null : 'text-white'} hero lg:w-6 md:w-8 w-12 z-5`} id='hero'>
-          <h1 className='landing-font  relative'>
+          <h1 className='g-bold landing-font  relative'>
             DSC Idea Hub
             <img className='landing-circle absolute' src={require('../assets/drawCircle2.svg').default} alt='stroke' />
           </h1>
@@ -117,7 +117,7 @@ export default function Landing () {
 
         <div className='relative'>
           <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
-          <h2 className='font-36 font-bold'>Trending Ideas</h2>
+          <h2 className='font-36 g-bold'>Trending Ideas</h2>
           {!trendload ? 
           <div className='mt-5 flex flex-row flex-wrap'>
           {trending.map((idea, index) => {
@@ -126,7 +126,7 @@ export default function Landing () {
           </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
         <div className='mt-6'>
-          <h2 className='font-36 font-bold'>Ideas Made Real</h2>
+          <h2 className='font-36 g-bold'>Ideas Made Real</h2>
           {!realload ? 
           <div className='mt-5 flex flex-row flex-wrap'>
           {completed.map((idea, index) => {

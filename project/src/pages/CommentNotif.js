@@ -70,7 +70,7 @@ export default function CommentNotif() {
   return (
     <div className='negmar-ideas grid md:gap-0 gap-6'>
       <div className="md:col-5 col-12">
-        <h1 className='text-xl'>Your Comments</h1>
+        <h1 className='g-bold text-xl'>Your Comments</h1>
         {!ownCommentsLoading ? 
         <div className='mt-4 flex flex-column gap-3'>
         {!ownCommentsLoading ? ownComments.map((comment, index) => {
@@ -84,7 +84,7 @@ export default function CommentNotif() {
         </div> : <Skeleton className='w-11 mt-4 border-round-xl' height={100} count={25} />}
       </div>
       <div className="md:col-7 col-12">
-        <h1 className='text-xl'>Comments on your Ideas</h1>
+        <h1 className='g-bold text-xl'>Comments on your Ideas</h1>
         {!userIdeasLoading ?
         <div className='mt-4 flex flex-column gap-3'>
           {userIdeas.length ? userIdeas.map((idea, index) => {

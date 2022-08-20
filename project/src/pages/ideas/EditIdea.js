@@ -96,7 +96,7 @@ export default function EditIdea() {
     <div>
       <div className='mt-6 grid gap-3 relative'>
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
-          <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium'>Edit Idea</h1>
+          <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Edit Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
             <label className='relative' htmlFor='title-input'>
               <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
