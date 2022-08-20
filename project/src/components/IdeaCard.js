@@ -65,7 +65,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   date = dayjs(date).format('DD-MM-YYYY')
   return (
-    <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 p-3' : null}`}>
+    <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
     <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
     <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative h-full`}>
       {!disabled ?
