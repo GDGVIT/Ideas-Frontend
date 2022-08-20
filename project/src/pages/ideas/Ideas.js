@@ -164,7 +164,7 @@ export default function Ideas () {
   }, [])
 
   return (
-    <div className='grid md:gap-4 gap-2'>
+    <div className='negmar-ideas grid md:gap-4 gap-2'>
       <div className='h-min md:sticky top-0 lg:col-3 md:col-4 col-12'>
         {auth.token ? 
         <div className='flex-grow-1 flex flex-column border-round-xl p-3 bg-white ideacard justify-content-center align-items-center gap-3 md:mb-6 mb-4'>
@@ -248,7 +248,7 @@ export default function Ideas () {
             />
             <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
             <img className='button absolute top-0 bottom-0 right-0 mr-2 my-auto' onClick={e =>searchIdeas(e)} src={require('../../assets/send-icon.png')} alt='searchglass' />
-            <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-3 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
+            <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-7 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
           </form>
         </div>
         {!ideasloading ?

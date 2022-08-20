@@ -106,20 +106,20 @@
 }
 
 .hero {
-  padding-top: 10rem;
-  padding-bottom: 20rem;
+  margin-top: 10rem;
+  margin-bottom: 20rem;
 }
 
 @media (max-width: 1024px) {
   .hero {
-    padding-top: 8rem;
-    padding-bottom: 20rem;
+    margin-top: 8rem;
+    margin-bottom: 20rem;
   }
 }
 
 @media (max-width: 800px) {
   .hero {
-    padding-top: 8rem;
-    padding-bottom: 16rem;
+    margin-top: 8rem;
+    margin-bottom: 16rem;
   }
 }

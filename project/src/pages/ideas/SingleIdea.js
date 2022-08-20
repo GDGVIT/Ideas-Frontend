@@ -228,7 +228,7 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
-    <div className='border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
+    <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
       <Link to='/ideas'>
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
       </Link>

@@ -68,7 +68,7 @@ export default function CommentNotif() {
   }, [auth, fetchOwnComments, fetchUserPosts])
 
   return (
-    <div className='grid md:gap-0 gap-6'>
+    <div className='negmar-ideas grid md:gap-0 gap-6'>
       <div className="md:col-5 col-12">
         <h1 className='text-xl'>Your Comments</h1>
         {!ownCommentsLoading ? 

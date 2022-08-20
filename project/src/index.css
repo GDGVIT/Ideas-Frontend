@@ -84,6 +84,11 @@ h6 {
   padding: 3rem 6rem;
 }
 
+.negmar-ideas {
+  margin-left: -3rem !important;
+  margin-right: -3rem !important;
+}
+
 .pfp-nav:hover {
   cursor: pointer;
 }
@@ -91,6 +96,11 @@ h6 {
 @media screen and (max-width: 600px) {
   .container {
     padding: 3rem 2rem;
+  }
+
+  .negmar-ideas {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
   }
 }
 
@@ -134,15 +144,11 @@ textarea {
   padding-bottom: 0.6rem;
 }
 
-.masonry {
-  column-count: 2;
-  column-gap: 1em;
-}
 
-.brick {
-  /* Masonry bricks or child elements */
-  display: inline-block;
-  width: 100%;
+
+.masonry-container {
+  columns: 4;
+  column-gap: 1rem;
 }
 
 .comment-icon {
