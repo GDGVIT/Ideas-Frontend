@@ -52,7 +52,9 @@ export default function NewIdea () {
         })
         .then((res) => {
           console.log(res.data)
-          setUserIdeas(res.data.ideas)
+          setUserIdeas(res.data.ideas.sort(function(a,b){
+            return new Date(b.createdOn) - new Date(a.createdOn);
+          }))
           setIdeaLoad(false)
         })
         .catch(e => console.log(e))

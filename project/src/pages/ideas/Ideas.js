@@ -79,7 +79,9 @@ export default function Ideas () {
           }
         })
         .then(res => {
-          setIdeas(res.data.ideas)
+          setIdeas(res.data.ideas.sort(function(a,b){
+            return new Date(b.createdOn) - new Date(a.createdOn);
+          }))
           setIdeasloading(false)
         })
     }

@@ -24,7 +24,7 @@ export default function CommentNotif() {
         res.data.comments[i].body = doRegex(res.data.comments[i].body);
         console.log(res.data.comments[i].body)
       }
-      setOwnComments(res.data.comments)
+      setOwnComments(res.data.comments.reverse())
       setOwnCommentLoading(false)
     })
   },[auth])
@@ -53,7 +53,9 @@ export default function CommentNotif() {
         })
         .then((res) => {
           console.log(res.data)
-          setUserIdeas(res.data.ideas)
+          setUserIdeas(res.data.ideas.sort(function(a,b){
+            return new Date(b.createdOn) - new Date(a.createdOn);
+          }))
           setUserIdeasLoading(false)
         })
         .catch(e => console.log(e))
@@ -89,7 +91,7 @@ export default function CommentNotif() {
         <div className='mt-4 flex flex-column gap-3'>
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return (
-              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments}></IdeaCard>
+              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()}></IdeaCard>
             )
           }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}

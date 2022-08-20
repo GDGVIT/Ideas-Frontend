@@ -121,7 +121,7 @@ export default function SingleIdea () {
             res.data.comments[i].body = doRegex(res.data.comments[i].body);
             console.log(res.data.comments[i].body)
           }
-          setComments(res.data.comments)
+          setComments(res.data.comments.reverse())
           setCommentsLoading(false)
         })
     }, [auth, id]
