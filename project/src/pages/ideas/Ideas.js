@@ -74,11 +74,7 @@ export default function Ideas () {
   useEffect(() => {
     const fetchIdeas = async () => {
       await axios
-        .get('/ideas', {
-          headers: {
-            authorization: auth.token
-          }
-        })
+        .get('/ideas')
         .then(res => {
           setIdeas(res.data.ideas.sort(function(a,b){
             return new Date(b.createdOn) - new Date(a.createdOn);
@@ -88,11 +84,7 @@ export default function Ideas () {
     }
     const fetchUsers = async () => {
       await axios
-        .get('/user', {
-          headers: {
-            authorization: auth.token
-          }
-        })
+        .get('/user')
         .then(res => {
           setUserList(res.data.users)
           setUserStrings(res.data.users.map(a => a.name))
@@ -104,16 +96,16 @@ export default function Ideas () {
           authorization: auth.token
         }
       }).then(res => {
-        setIdeaCount(res.data.ideaCount)
+        setIdeaCount(res.data.user.ideaCount)
       })
     }
     if (auth.token) {
       authRef.current = auth
-      fetchIdeas()
-      fetchUsers()
       getIdeaCount()
       document.getElementById('mainpfp').src = auth.picture
     }
+    fetchIdeas()
+    fetchUsers()
   }, [auth])
 
   const searchIdeas = (e, userName, authState) => {
