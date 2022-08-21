@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
+import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton'
 
 export default function NewIdea () {
+  const location = useLocation()
   const [title, setTitle] = useState('')
   const [description, setDesc] = useState('')
   const [tags, setTags] = useState([])
@@ -13,10 +15,13 @@ export default function NewIdea () {
   const [userIdeas, setUserIdeas] = useState([])
   const [isKeyReleased, setIsKeyReleased] = useState(false)
   const [ideaLoad, setIdeaLoad] = useState(true)
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const prevRef = useRef(null)
 
   const auth = useSelector(state => state.auth)
 
   const handleSubmit = async (e) => {
+    setSubmitLoading(true)
     e.preventDefault()
     const postObject = {
       idea: {
@@ -40,6 +45,7 @@ export default function NewIdea () {
         toast.success("Idea submitted!")
       })
       .catch(e => console.log(e))
+    setSubmitLoading(false)
   }
 
   const fetchUserPosts = useCallback(
@@ -91,6 +97,17 @@ export default function NewIdea () {
     setTags(prevState => prevState.filter((tag, i) => i !== index))
   }
 
+  const scrollToPrevious = () => {
+    console.log("h")
+    prevRef.current.scrollIntoView(true)
+  }
+
+  useEffect(() => {
+    if (location.state?.toPrevious) {
+      scrollToPrevious()
+    }
+  }, [location])
+
   useEffect(() => {
     if (auth.token) {
       fetchUserPosts()
@@ -125,7 +142,7 @@ export default function NewIdea () {
                 }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
               />
             </div>
-            <button type='submit' disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            <button type='submit' disabled={!title || !description || !tags} className={((submitLoading || !title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
@@ -134,7 +151,7 @@ export default function NewIdea () {
       </div>
       <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem top-0 right-0 shelf-position sm:block hidden' />
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden' />
-      <div className='mt-8 grid gap-4 flex-grow-1 flex'>
+      <div ref={prevRef} className='mt-8 grid gap-4 flex-grow-1 flex'>
         <div className='md:col-4 h-min col-12 md:sticky top-0'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl relative g-bold font-medium'>
             Your previous Ideas

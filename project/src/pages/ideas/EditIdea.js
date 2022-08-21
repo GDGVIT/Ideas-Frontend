@@ -13,8 +13,10 @@ export default function EditIdea() {
   const [tagInput, setTagInput] = useState('')
   const [isKeyReleased, setIsKeyReleased] = useState(false)
   const navigate = useNavigate()
+  const [submitLoading, setSubmitLoading] = useState(false)
 
   const handleSubmit = async (e) => {
+    setSubmitLoading(true)
     e.preventDefault()
     const postObject = {
       idea: {
@@ -38,6 +40,7 @@ export default function EditIdea() {
         navigate(`/ideas/${id}`)
       })
       .catch(e => console.log(e))
+    setSubmitLoading(false)
   }
 
   const getIdea = useCallback(
@@ -119,7 +122,7 @@ export default function EditIdea() {
                 }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
               />
             </div>
-            <button type='submit' disabled={!title || !description || !tags} className={((!title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            <button type='submit' disabled={!title || !description || !tags} className={((submitLoading || !title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />

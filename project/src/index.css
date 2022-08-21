@@ -371,6 +371,11 @@ textarea {
   margin-right: 0.5rem;
 }
 
+.ideagrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
 .brick2-position {
   margin-top: 30%;
   margin-left: -4rem;

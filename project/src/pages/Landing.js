@@ -120,9 +120,9 @@ export default function Landing () {
           <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Trending Ideas</h2>
           {!trendload ? 
-          <div className='mt-5 flex flex-row flex-wrap'>
+          <div className='mt-5 ideagrid gap-5'>
           {trending.map((idea, index) => {
-            return <IdeaCard masonry key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
@@ -130,9 +130,9 @@ export default function Landing () {
           <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Ideas Made Real</h2>
           {!realload ? 
-          <div className='mt-5 flex flex-row flex-wrap'>
+          <div className='mt-5 ideagrid gap-5'>
           {completed.map((idea, index) => {
-            return <IdeaCard masonry key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           </div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
         </div>

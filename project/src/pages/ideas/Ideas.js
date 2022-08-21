@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import axios from '../../axios'
+import dayjs from 'dayjs'
 import IdeaCard from '../../components/IdeaCard'
 import { useSelector } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
@@ -15,7 +16,8 @@ export default function Ideas () {
   const [tagStrings, setTagStrings] = useState([])
   const [sort, setSort] = useState('')
   const [order, setOrder] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
+  const [fromDate, setFromDate] = useState()
+  const [toDate, setToDate] = useState()
   const [ideasloading,setIdeasloading] = useState(true)
   const [tagSettings, setTagSettings] = useState({
     pattern: /@|#/,
@@ -69,6 +71,7 @@ export default function Ideas () {
     }))
 
     document.getElementsByClassName('tagify')[0].style.borderRadius = '18px'
+    document.getElementsByClassName('tagify')[0].style.paddingLeft = '1rem'
   },[])
 
   useEffect(() => {
@@ -102,7 +105,6 @@ export default function Ideas () {
     if (auth.token) {
       authRef.current = auth
       getIdeaCount()
-      document.getElementById('mainpfp').src = auth.picture
     }
     fetchIdeas()
     fetchUsers()
@@ -112,16 +114,16 @@ export default function Ideas () {
     e.preventDefault()
 
       setUser(user => {
-        setOrder(order => {
-          setSort(sort => {
+        setFromDate(from => {
+          setToDate(to => {
             setSearch(async search => {
               await axios.get('/ideas', {
                 headers: {
                   authorization: authRef.current.token
                 },
                 params: {
-                  order,
-                  sortBy: sort,
+                  endDate: to,
+                  startDate: from,
                   user: user,
                   query: search
                 }
@@ -170,76 +172,17 @@ export default function Ideas () {
 
   return (
     <div className='negmar-ideas grid md:gap-4 gap-2'>
-      <div className='h-min md:sticky top-0 lg:col-3 md:col-4 col-12'>
-        {auth.token ? 
-        <div className='flex-grow-1 flex flex-column border-round-xl p-3 bg-white ideacard justify-content-center align-items-center gap-3 md:mb-6 mb-4'>
-          <div className="flex flex-row align-items-center justify-content-evenly w-full gap-2 flex-wrap">
-            <div className='flex flex-row align-items-center gap-3 mb-1'>
-            {auth.picture && <img className='pfp' id='mainpfp' width={60} alt='pfp' src={auth.picture} referrerPolicy='no-referrer' />}
-            <p>{auth.name}</p>
-            </div>
-            <div className='flex flex-column align-items-center'>
-            <p className='font-24 blue font-bold'>{ideaCount}</p>
-            <p className='font-20'>ideas</p>
-            </div>
-          </div>
-          <Link to='/ideas/new'>
-            <button className='primary-button lg:font-20 font-16'>Add an Idea</button>
-          </Link>
-        </div>
-        : null}
-        <div className={`border-round-xl p-3 bg-white ideacard md:block ${showFilters ? 'block' : 'hidden'} filterDiv`}>
-          <div className='flex flex-column gap-2 mb-4'>
-            <p className='md:font-20 font-16'>Sort By:</p>
-            <label>
-              <input
-                type='radio'
-                value='hearts'
-                checked={sort === 'hearts'}
-                className='form-check-input'
-                onChange={e => setSort(e.target.value)}
-              />
-              Hearts
-            </label>
-            <label>
-              <input
-                type='radio'
-                value='date'
-                checked={sort === 'date'}
-                className='form-check-input'
-                onChange={e => setSort(e.target.value)}
-              />
-              Date
-            </label>
-          </div>
-          <div className='flex flex-column gap-2'>
-            <p className='md:font-20 font-16'>Order:</p>
-            <label>
-              <input
-                type='radio'
-                value='asc'
-                checked={order === 'asc'}
-                className='form-check-input'
-                onChange={e => setOrder(e.target.value)}
-              />
-              Ascending
-            </label>
-            <label>
-              <input
-                type='radio'
-                value='desc'
-                checked={order === 'desc'}
-                className='form-check-input'
-                onChange={e => setOrder(e.target.value)}
-              />
-              Descending
-            </label>
-          </div>
-        </div>
-      </div>
       <div className='col-12 md:col flex flex-column md:gap-6 gap-5'>
-        <div className='align-items-center relative w-full flex gap-4 flex-row'>
-          <form className='relative flex-grow-1'>
+        <div className='align-items-center relative w-full flex gap-3 flex-row'>
+          <form className='relative flex-grow-1 flex flex-row gap-4'>
+            <Link className='flex' to='/ideas/new' state={{
+              toPrevious:true
+            }}>
+            <div className='flex m-auto'>
+              <p className='m-auto font-20'><span className='font-24 blue font-bold'>{ideaCount}</span> ideas</p>
+            </div>
+            </Link>
+            <div className='relative flex-grow-1'>
             <MixedTags
               autoFocus
               id='area'
@@ -251,15 +194,24 @@ export default function Ideas () {
               tagifyRef={tagifyRef}
               className='radius'
             />
-            <img className='absolute top-0 bottom-0 left-0 ml-3 my-auto' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
-            <img className='button absolute top-0 bottom-0 right-0 mr-2 my-auto' onClick={e =>searchIdeas(e)} src={require('../../assets/send-icon.png')} alt='searchglass' />
-            <img onClick={() => setShowFilters(!showFilters)} className='absolute top-0 bottom-0 right-0 mr-7 my-auto md:hidden block' src={require('../../assets/filter-icon.png')} alt='filter' />
+            <img className='button absolute top-0 bottom-0 right-0 mr-3 my-auto' onClick={e =>searchIdeas(e)} src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+            </div>
           </form>
         </div>
+        <div className='flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
+          <span className='flex flex-row gap-2'>
+            <label htmlFor='date-from'>From</label>
+            <input value={fromDate} onChange={(e) => { setFromDate(e.target.value) }}  type='date' name='date-from' id='date-from' />
+          </span>
+          <span className='flex flex-row gap-2'>
+            <label htmlFor='date-to'>To</label>
+            <input value={toDate} onChange={(e) => { setToDate(e.target.value) }} type='date' name='date-to' id='date-to' />
+          </span>
+        </div>
         {!ideasloading ?
-        <div className='flex flex-column gap-5'>
+        <div className='ideagrid gap-5'>
           {ideas.length ? ideas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })
           : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
