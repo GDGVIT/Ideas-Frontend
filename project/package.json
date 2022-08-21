@@ -13,6 +13,7 @@
     "dayjs": "^1.11.4",
     "primeflex": "^3.2.1",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.1.0",
     "react-mentions": "^4.4.7",

@@ -7,6 +7,8 @@ import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './ideas.css'
 import { Link } from 'react-router-dom'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
@@ -116,18 +118,21 @@ export default function Ideas () {
       setUser(user => {
         setFromDate(from => {
           setToDate(to => {
-            setSearch(async search => {
-              await axios.get('/ideas', {
-                headers: {
-                  authorization: authRef.current.token
-                },
-                params: {
-                  endDate: to,
-                  startDate: from,
-                  user: user,
-                  query: search
-                }
-              }).then(res => setIdeas(res.data.ideas))
+            setTags (tags => {
+              setSearch(async search => {
+                await axios.get('/ideas', {
+                  headers: {
+                    authorization: authRef.current.token
+                  },
+                  params: {
+                    endDate: to,
+                    startDate: from,
+                    user: user,
+                    query: search,
+                    tags:tags.join()
+                  }
+                }).then(res => setIdeas(res.data.ideas))
+              })
             })
           })
         })
@@ -199,13 +204,13 @@ export default function Ideas () {
           </form>
         </div>
         <div className='flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
-          <span className='flex flex-row gap-2'>
-            <label htmlFor='date-from'>From</label>
-            <input value={fromDate} onChange={(e) => { setFromDate(e.target.value) }}  type='date' name='date-from' id='date-from' />
+          <span className='flex flex-row'>
+            <label className='mr-2' htmlFor='date-from'>From</label>
+            <DatePicker selected={fromDate} onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' />
           </span>
-          <span className='flex flex-row gap-2'>
-            <label htmlFor='date-to'>To</label>
-            <input value={toDate} onChange={(e) => { setToDate(e.target.value) }} type='date' name='date-to' id='date-to' />
+          <span className='flex flex-row'>
+            <label className='mr-2' htmlFor='date-to'>To</label>
+            <DatePicker selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' id='date-to' />
           </span>
         </div>
         {!ideasloading ?
