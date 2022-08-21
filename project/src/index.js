@@ -6,6 +6,7 @@ import { store } from './app/store'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
+import './index-second.css'
 import 'primeflex/primeflex.css'
 
 import Layout from './components/Layout'
