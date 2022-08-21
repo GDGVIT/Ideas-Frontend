@@ -70,6 +70,16 @@ header {
   box-shadow: 0 2px 11px 2px rgb(0 0 0 / 20%);
 }
 
+.primary-button-green {
+  background-color: var(--green);
+  border-radius: 18px;
+  border: 0;
+  color: white;
+  margin-top: 0.5rem;
+  height: min-content;
+  padding: 0.55rem 1rem;
+}
+
 .primary-button {
   background-color: #3994ff;
   border-radius: 10px;
@@ -370,6 +380,15 @@ textarea {
 .brick1-position {
   margin-top: -1rem;
   margin-right: 0.5rem;
+}
+
+.react-datepicker__input-container > input {
+  border-radius: 10px;
+  border: none;
+  border: 0.5px solid var(--linecolor);
+  padding: 0.2rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
 }
 
 .searchbg {

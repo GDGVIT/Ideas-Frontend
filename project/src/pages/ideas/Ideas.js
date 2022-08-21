@@ -52,7 +52,7 @@ export default function Ideas () {
     }
   }
   const [user, setUser] = useState('')
-  const [tags, setTags] = useState()
+  const [tags, setTags] = useState([])
   const [ideaCount, setIdeaCount] = useState(0)
 
   const tagifyRef = useRef()
@@ -131,7 +131,15 @@ export default function Ideas () {
                     query: search,
                     tags:tags.join()
                   }
-                }).then(res => setIdeas(res.data.ideas))
+                }).then(res => setIdeas(res.data.ideas.sort(function(a,b){
+                  return new Date(b.createdOn) - new Date(a.createdOn);
+                })))
+                .then(() => {
+                  setUser('')
+                  setFromDate()
+                  setToDate()
+                  setTags([])
+                })
               })
             })
           })
@@ -200,18 +208,21 @@ export default function Ideas () {
               tagifyRef={tagifyRef}
               className='radius'
             />
-            <img className='button absolute top-0 bottom-0 right-0 mr-3 my-auto' onClick={e =>searchIdeas(e)} src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+            <button onClick={e =>{e.preventDefault();searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 mr-2 my-auto flex flex-row align-items-center gap-2 primary-button-green'>
+            <p className='font-16'>Search</p>
+            <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+            </button>
             </div>
           </form>
         </div>
         <div className='mt-3 flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-from'>From</label>
-            <DatePicker selected={fromDate} onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' />
+            <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' />
           </span>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-to'>To</label>
-            <DatePicker selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' id='date-to' />
+            <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' id='date-to' />
           </span>
         </div>
         </div>
