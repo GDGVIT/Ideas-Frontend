@@ -305,6 +305,11 @@ textarea {
   margin-left: 39rem;
 }
 
+.cupboard-position {
+  margin-top: -2.5rem;
+  margin-right: 30rem;
+}
+
 .books-position {
   margin-top: 4rem;
   margin-left: 59rem;
@@ -320,7 +325,7 @@ textarea {
 
 .board-position {
   top: 15rem;
-  left: 64rem;
+  left: 78rem;
 }
 
 .landing-person-position {
@@ -376,9 +381,25 @@ textarea {
   margin-right: 4rem;
 }
 
+.web-position {
+  top: 30%;
+  margin-left: -3rem;
+}
+
+@media screen and (max-width:1400px) {
+  .board-position {
+    left: 64rem;
+  }
+}
+
 @media screen and (max-width: 1248px) {
   .board-position {
     left: 50rem;
+  }
+
+  .cupboard-position {
+    margin-top: -2rem;
+    margin-right: 20rem;
   }
 
   .plantshelf-position {
@@ -423,11 +444,21 @@ textarea {
   .blueline {
     margin-top: 35rem;
   }
+
+  .cupboard-position {
+    margin-top: -1.8rem;
+    margin-right: 12rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .frame-position {
     margin-right: 6rem;
+  }
+
+  .cupboard-position {
+    margin-top: -1.8rem;
+    margin-right: 5rem;
   }
 
   .tagify {
@@ -479,6 +510,6 @@ textarea {
 @media screen and (max-width:413px) {
   .plantshelf-position {
     margin-left: 10rem;
-    margin-top: 45rem;
+    margin-top: 40rem;
   }
 }

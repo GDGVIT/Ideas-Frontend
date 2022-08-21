@@ -49,6 +49,7 @@ export default function Ideas () {
   }
   const [user, setUser] = useState('')
   const [tags, setTags] = useState()
+  const [ideaCount, setIdeaCount] = useState(0)
 
   const tagifyRef = useRef()
 
@@ -97,10 +98,20 @@ export default function Ideas () {
           setUserStrings(res.data.users.map(a => a.name))
         })
     }
+    const getIdeaCount = () => {
+      axios.get(`/user/${auth._id}`, {
+        headers: {
+          authorization: auth.token
+        }
+      }).then(res => {
+        setIdeaCount(res.data.ideaCount)
+      })
+    }
     if (auth.token) {
       authRef.current = auth
       fetchIdeas()
       fetchUsers()
+      getIdeaCount()
       document.getElementById('mainpfp').src = auth.picture
     }
   }, [auth])
@@ -176,7 +187,7 @@ export default function Ideas () {
             <p>{auth.name}</p>
             </div>
             <div className='flex flex-column align-items-center'>
-            <p className='font-24 blue font-bold'>6</p>
+            <p className='font-24 blue font-bold'>{ideaCount}</p>
             <p className='font-20'>ideas</p>
             </div>
           </div>

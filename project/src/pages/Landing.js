@@ -117,6 +117,7 @@ export default function Landing () {
 
         <div className='relative'>
           <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
+          <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Trending Ideas</h2>
           {!trendload ? 
           <div className='mt-5 flex flex-row flex-wrap'>
@@ -125,7 +126,8 @@ export default function Landing () {
           })}
           </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
         </div>
-        <div className='mt-6'>
+        <div className='mt-6 relative'>
+          <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Ideas Made Real</h2>
           {!realload ? 
           <div className='mt-5 flex flex-row flex-wrap'>
