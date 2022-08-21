@@ -177,7 +177,8 @@ export default function Ideas () {
 
   return (
     <div className='negmar-ideas grid md:gap-4 gap-2'>
-      <div className='col-12 md:col flex flex-column md:gap-6 gap-5'>
+      <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
+        <div className='searchbg z-2 sticky top-0'>
         <div className='align-items-center relative w-full flex gap-3 flex-row'>
           <form className='relative flex-grow-1 flex flex-row gap-4'>
             <Link className='flex' to='/ideas/new' state={{
@@ -203,7 +204,7 @@ export default function Ideas () {
             </div>
           </form>
         </div>
-        <div className='flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
+        <div className='mt-3 flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-from'>From</label>
             <DatePicker selected={fromDate} onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' />
@@ -212,6 +213,7 @@ export default function Ideas () {
             <label className='mr-2' htmlFor='date-to'>To</label>
             <DatePicker selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' id='date-to' />
           </span>
+        </div>
         </div>
         {!ideasloading ?
         <div className='ideagrid gap-5'>
