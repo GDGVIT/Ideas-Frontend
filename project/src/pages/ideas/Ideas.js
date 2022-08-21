@@ -189,11 +189,11 @@ export default function Ideas () {
         <div className='searchbg z-2 sticky top-0'>
         <div className='align-items-center relative w-full flex gap-3 flex-row'>
           <form className='relative flex-grow-1 flex flex-row gap-4'>
-            <Link className='flex' to='/ideas/new' state={{
+            <Link className='sm:flex hidden' to='/ideas/new' state={{
               toPrevious:true
             }}>
             <div className='flex m-auto'>
-              <p className='m-auto font-20'><span className='font-24 blue font-bold'>{ideaCount}</span> ideas</p>
+              <p className='m-auto md:font-20 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
             </div>
             </Link>
             <div className='relative flex-grow-1'>
@@ -215,14 +215,14 @@ export default function Ideas () {
             </div>
           </form>
         </div>
-        <div className='mt-3 flex flex-row gap-4 md:justify-content-end justify-content-center flex-wrap'>
+        <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-from'>From</label>
-            <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' />
+            <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' className='date-picker' />
           </span>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-to'>To</label>
-            <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' id='date-to' />
+            <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' id='date-to' />
           </span>
         </div>
         </div>

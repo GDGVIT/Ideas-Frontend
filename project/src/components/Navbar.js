@@ -65,9 +65,9 @@ export default function Navbar () {
   }
 
   return (
-    <header ref={menuRef} className='bg-white px-4 py-2 flex justify-content-between relative z-1'>
+    <header ref={menuRef} className='bg-white md:px-4 px-3 py-2 flex justify-content-between relative z-3'>
       {auth.token
-        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-2 ${menuHidden ? 'hidden' : 'flex'}`}>
+        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-3 ${menuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-2'>
             <img src={require('../assets/usericon.svg').default} alt='usericon' />
             <p className='bodytext'>{auth.name}</p>
@@ -90,9 +90,9 @@ export default function Navbar () {
           <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
         </div>
         : null}
-      <div className='flex md:gap-5 gap-3 align-items-center'>
+      <div className='flex md:gap-5 sm:gap-3 gap-2 align-items-center'>
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
-        <Link className='bodytext font-16' to='/'>Home</Link>
+        <Link className='bodytext md:font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
         <Link to='/ideas/new'>
             <button className='primary-button lg:font-20 py-2 px-3 font-16'>Add an Idea</button>
