@@ -73,6 +73,7 @@ header {
 .primary-button-green {
   background-color: var(--green);
   border-radius: 18px;
+  font-family: "Gilroy-Medium";
   border: 0;
   color: white;
   margin-top: 0.5rem;
