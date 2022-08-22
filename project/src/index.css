@@ -105,6 +105,14 @@ header {
   opacity: 0.6;
 }
 
+.read-toggle {
+  display: none;
+}
+
+.mentioncard:hover > .read-toggle {
+  display: block;
+}
+
 .disabled-button:hover {
   cursor: default;
 }

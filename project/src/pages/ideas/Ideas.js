@@ -260,11 +260,12 @@ export default function Ideas () {
           })
           : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
-        {limitCount <= ideas.length ? <p onClick={async (e) => {
+        {limitCount <= ideas.length ? <button onClick={async (e) => {
+          e.preventDefault()
           setMoreLoading(true)
           searchIdeas(e, limitCount+12)
           setLimitCount(limitCount+12)
-          }} className='button mt-4 blue text-center'>Load more...</p> : moreLoading ? <p className='mt-4 blue text-center'>Fetching...</p> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
+          }} className='button primary-button font-16 mx-auto mt-4 text-center'>Load more...</button> : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>
   )
