@@ -93,10 +93,10 @@ export default function Landing () {
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
         <div className={`${enter ? null : 'text-white'} hero lg:w-6 md:w-8 w-12 z-5`} id='hero'>
           <h1 className='g-bold landing-font  relative'>
-            DSC Idea Hub
+            GDSC Idea Hub
             <img className='landing-circle absolute' src={require('../assets/drawCircle2.svg').default} alt='stroke' />
           </h1>
-          <p className='mt-5'>DSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
+          <p className='mt-5'>GDSC VIT is all about working constructively to find solutions to real-life problems faced by communities. We would love to receive unique ideas from you. The best ones may be nominated as team projects!
           </p>
           <p className='mt-5'>"Everything Begins With An Idea" – Earl Nightingale</p>
           {enter
