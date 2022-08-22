@@ -1,14 +1,14 @@
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap";
 
-/* @font-face {
+@font-face {
   font-family: "Gilroy-Bold";
-  src: local("Gilroy-Bold"), url("./assets/fonts/Gilroy-Bold.ttf") format("truetype");
+  src: local("Gilroy-Bold"), url("./assets/gilroy/Gilroy-Bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Gilroy-Medium";
-  src: local("Gilroy-Medium"), url("./assets/fonts/Gilroy-Medium.ttf") format("truetype");
-} */
+  src: local("Gilroy-Medium"), url("./assets/gilroy/Gilroy-Medium.ttf") format("truetype");
+}
 
 :root {
   --blue: #3994ff;
@@ -43,7 +43,7 @@ body {
     "Helvetica Neue",
     sans-serif;
   background-image: url("../src/assets/texture.png");
-  background-size: 1008px 1350px;
+  background-size: 220px 300px;
   background-repeat: repeat;
   background-attachment: fixed;
   background-color: #fcfcfc;
@@ -372,9 +372,9 @@ textarea {
 }
 
 .landing-circle {
-  width: 8.1rem;
-  top: -0.8rem;
-  left: -0.7rem;
+  width: 10.1rem;
+  top: -1.5rem;
+  left: -0.35rem;
 }
 
 .brick1-position {
@@ -393,7 +393,7 @@ textarea {
 
 .searchbg {
   background-image: url("../src/assets/texture.png");
-  background-size: 1008px 1350px;
+  background-size: 220px 300px;
   background-repeat: repeat;
   background-color: #fcfcfc;
   margin: -0.5rem;
@@ -473,9 +473,9 @@ textarea {
   }
 
   .landing-circle {
-    width: 8.1rem;
-    top: -0.8rem;
-    left: -0.7rem;
+    width: 10.1rem;
+    top: -1.5rem;
+    left: -0.35rem;
   }
 
   .blueline {
@@ -527,9 +527,9 @@ textarea {
   }
 
   .landing-circle {
-    width: 6.8rem;
-    top: -0.7rem;
-    left: -0.6rem;
+    width: 8.7rem;
+    top: -1.2rem;
+    left: -0.28rem;
   }
 
   .plantshelf-position {
