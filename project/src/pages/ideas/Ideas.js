@@ -69,6 +69,7 @@ export default function Ideas () {
         console.log(e)
         // prevent default behavior
         e.preventDefault();
+        searchIdeas(e)
         //alert("ok");
         return false;
       }
@@ -245,7 +246,7 @@ export default function Ideas () {
           setMoreLoading(true)
           searchIdeas(e, limitCount+12)
           setLimitCount(limitCount+12)
-          }} className='button mt-4 blue text-center'>Load more...</p> : moreLoading ? <p className='mt-4 blue text-center'>Fetching...</p> : null}
+          }} className='button mt-4 blue text-center'>Load more...</p> : moreLoading ? <p className='mt-4 blue text-center'>Fetching...</p> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>
   )

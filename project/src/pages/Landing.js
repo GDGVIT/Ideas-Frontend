@@ -64,7 +64,9 @@ export default function Landing () {
       trending:true
     }})
     .then((res) => {
-      setTrending(res.data.ideas)
+      setTrending(res.data.ideas.sort(function(a,b){
+        return new Date(b.createdOn) - new Date(a.createdOn);
+      }))
       setTrendload(false)
     })
   }
@@ -77,7 +79,9 @@ export default function Landing () {
       madeReal:true
     }})
     .then((res) => {
-      setCompleted(res.data.ideas)
+      setCompleted(res.data.ideas.sort(function(a,b){
+        return new Date(b.createdOn) - new Date(a.createdOn);
+      }))
       setRealload(false)
     })
   }
@@ -127,7 +131,7 @@ export default function Landing () {
             return <IdeaCard key={index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           <span className='grid-space-span'></span>
-          </div></div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10} />}
+          </div></div> : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
         </div>
         <div className='mt-6 relative'>
           <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
@@ -140,7 +144,7 @@ export default function Landing () {
             return <IdeaCard key={index} name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           <span className='grid-space-span'></span>
-          </div></div>: <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={10}/>}
+          </div></div>: <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1}/>}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{'color':'#4D96FF'}} to='/how'>Let's find out.</Link></p>
       </div>
