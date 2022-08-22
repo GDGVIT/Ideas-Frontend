@@ -384,10 +384,10 @@ textarea {
 }
 
 .react-datepicker__input-container > input {
-  border-radius: 10px;
+  border-radius: 6px;
   border: none;
   border: 0.5px solid var(--linecolor);
-  padding: 0.2rem;
+  padding: 0.3rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
 }

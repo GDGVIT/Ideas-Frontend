@@ -12,6 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
+  const [limitCount, setLimitCount] = useState(12)
+  const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
   const [userStrings, setUserStrings] = useState([])
@@ -79,7 +81,12 @@ export default function Ideas () {
   useEffect(() => {
     const fetchIdeas = async () => {
       await axios
-        .get('/ideas')
+        .get('/ideas', {
+          params: {
+            limit:12
+          }
+        }
+        )
         .then(res => {
           setIdeas(res.data.ideas.sort(function(a,b){
             return new Date(b.createdOn) - new Date(a.createdOn);
@@ -112,7 +119,7 @@ export default function Ideas () {
     fetchUsers()
   }, [auth])
 
-  const searchIdeas = (e, userName, authState) => {
+  const searchIdeas = (e, limit) => {
     e.preventDefault()
 
       setUser(user => {
@@ -129,16 +136,15 @@ export default function Ideas () {
                     startDate: from,
                     user: user,
                     query: search,
-                    tags:tags.join()
+                    tags:tags.join(),
+                    limit
                   }
                 }).then(res => setIdeas(res.data.ideas.sort(function(a,b){
                   return new Date(b.createdOn) - new Date(a.createdOn);
-                })))
-                .then(() => {
-                  setUser('')
-                  setFromDate()
-                  setToDate()
+                }))).then(() => {
                   setTags([])
+                  setIdeasloading(false)
+                  setMoreLoading(false)
                 })
               })
             })
@@ -192,8 +198,9 @@ export default function Ideas () {
           {auth.token ? <Link className='sm:flex hidden' to='/ideas/new' state={{
               toPrevious:true
             }}> 
-            <div className='flex m-auto'>
-              <p className='m-auto md:font-20 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
+            <div className='flex flex-column m-auto'>
+              <p className='bodytext font-16'>You have</p>
+              <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
             </div>
             </Link> : null}
             <div className='relative flex-grow-1'>
@@ -208,7 +215,8 @@ export default function Ideas () {
               tagifyRef={tagifyRef}
               className='radius'
             />
-            <button onClick={e =>{e.preventDefault();searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 mr-2 my-auto flex flex-row align-items-center gap-2 primary-button-green'>
+            <button onClick={e =>{e.preventDefault();
+              setIdeasloading(true);searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 mr-2 my-auto flex flex-row align-items-center gap-2 primary-button-green'>
             <p className='font-16'>Search</p>
             <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
             </button>
@@ -233,6 +241,11 @@ export default function Ideas () {
           })
           : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
+        {limitCount <= ideas.length ? <p onClick={async (e) => {
+          setMoreLoading(true)
+          searchIdeas(e, limitCount+12)
+          setLimitCount(limitCount+12)
+          }} className='button mt-4 blue text-center'>Load more...</p> : moreLoading ? <p className='mt-4 blue text-center'>Fetching...</p> : null}
       </div>
     </div>
   )

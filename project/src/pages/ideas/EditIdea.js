@@ -101,13 +101,19 @@ export default function EditIdea() {
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Edit Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
+            <div className='flex flex-column gap-2'>
             <label className='relative' htmlFor='title-input'>
               <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
               Title
             </label>
             <input value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
-            <label htmlFor='desc-input'>Description</label>
-            <textarea value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+            </div>
+            <div className='flex flex-column gap-2'>
+            <label htmlFor='desc-input'>Description 
+            <span className='font-16 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length<200 ? '200 characters minimum' :null}</span></label>
+            <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+            </div>
+            <div className='flex flex-column gap-2'>
             <label htmlFor='tag-input'>Tags</label>
             <div className='flex align-items-center flex-row flex-wrap gap-3'>
               {tags.map((tag, index) => tag
@@ -122,7 +128,8 @@ export default function EditIdea() {
                 }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
               />
             </div>
-            <button type='submit' disabled={!title || !description || !tags} className={((submitLoading || !title || !description || !tags) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            </div>
+            <button type='submit' disabled={!title || !description || !tags || description.length<200} className={((submitLoading || !title || !description || !tags || description.length<200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
