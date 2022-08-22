@@ -124,12 +124,13 @@ export default function NewIdea () {
             <div className='flex flex-column gap-2'>
             <label className='relative' htmlFor='title-input'>
               <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
-              Title
+              Title 
+              <span className='ml-3 font-16 bodytext'>{title.length ? `${50-title.length} characters remaining` : null}</span>
             </label>
-            <input value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
+            <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
             </div>
             <div className='flex flex-column gap-2'>
-            <label htmlFor='desc-input'>Description <span className='font-16 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length<200 ? '200 characters minimum' :null}</span></label>
+            <label htmlFor='desc-input'>Description<span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length && description.length<200 ? `${200-description.length} more characters minimum` :null}</span></label>
             <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
             <div className='flex flex-column gap-2'>

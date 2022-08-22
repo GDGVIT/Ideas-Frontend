@@ -105,11 +105,7 @@ export default function SingleIdea () {
   const getIdea = useCallback(
     async () => {
       await axios
-        .get(`/ideas/${id}`, {
-          headers: {
-            authorization: authRef.current.token
-          }
-        })
+        .get(`/ideas/${id}`)
         .then(res => {
           setIdea(res.data.idea)
           setDate(dayjs(res.data.idea.createdOn).format('DD-MM-YYYY'))
@@ -148,7 +144,10 @@ export default function SingleIdea () {
           toast.success("Comment submitted!")
           // setUserMentions([])
           setSubmitCommentLoading(false)
-        }).catch(() => {
+        }).catch((e) => {
+          if (e.response.status === 401) {
+            toast.error("You need to be logged in to comment.")
+          }
           setSubmitCommentLoading(false)
         })
     } else {
@@ -219,9 +218,9 @@ export default function SingleIdea () {
   },[])
 
   useEffect(() => {
+    getIdea()
     if (auth.token) {
       authRef.current = auth
-      getIdea()
       setUserId(auth._id)
       fetchUsers()
     }

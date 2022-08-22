@@ -18,6 +18,7 @@ import SingleIdea from './pages/ideas/SingleIdea'
 import EditIdea from './pages/ideas/EditIdea'
 import CommentNotif from './pages/CommentNotif'
 import HowInfo from './pages/ideas/HowInfo'
+import MentionNotif from './pages/MentionNotif'
 
 function App () {
   const dispatch = useDispatch()
@@ -54,8 +55,13 @@ function App () {
         </Route>
         <Route exact path='/ideas/' element={<Ideas />} />
         <Route path='/ideas/:id' element={<SingleIdea />} />
-        <Route path='/ideas/edit/:id' element={<EditIdea />} />
+        <Route path='/ideas/edit/:id' element={<GuardedRoute auth={auth} />}>
+          <Route path='/ideas/edit/:id' element={<EditIdea />} />
+        </Route>
         <Route path='/how' element={<HowInfo />} />
+        <Route exact path='/mentions' element={<GuardedRoute auth={auth} />}>
+          <Route exact path='/mentions' element={<MentionNotif />} />
+        </Route>
       </Routes>
     </div>
   )

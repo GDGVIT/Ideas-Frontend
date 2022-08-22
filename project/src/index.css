@@ -97,6 +97,14 @@ header {
   cursor: pointer;
 }
 
+.disabled-button {
+  opacity: 0.6;
+}
+
+.disabled-button:hover {
+  cursor: default;
+}
+
 p,
 h1,
 h2,
@@ -134,10 +142,6 @@ h6 {
     margin-left: -0.5rem !important;
     margin-right: -0.5rem !important;
   }
-}
-
-.disabled-button {
-  opacity: 0.6;
 }
 
 .bodytext {
