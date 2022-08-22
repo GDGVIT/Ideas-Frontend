@@ -47,7 +47,7 @@ export default function MentionCard({author="Dorian", name='Default', pfp, comme
         <p className='mb-1 bodytext'>{author}</p>
         <p className='font-20 g-med'>{name}</p>
       </div>
-      <div className='md:py-6 md:px-6 px-5 py-6 sm:col-7 col-12 flex flex-column'>
+      <div className='md:py-6 md:px-6 px-5 py-5 sm:col-7 col-12 flex flex-column'>
         <p className='sm:hidden flex flex-column mb-3 font-20 g-med'>{name}</p>
         <div className='flex flex-row md:gap-4 gap-3 my-auto'>
           <img className='w-3rem pfp' src={pfp} alt='pfp' referrerPolicy='no-referrer' />

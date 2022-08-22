@@ -32,7 +32,7 @@ export default function MentionNotif() {
     <div className='flex flex-column gap-4'>
       <h1 className='g-bold text-xl'>Notifications</h1>
       {!loading ? notifs.map((notif, index) => {
-        return <MentionCard commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} ideaId={notif.parentIdeaId}></MentionCard>
+        return <MentionCard key={index} commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} ideaId={notif.parentIdeaId}></MentionCard>
       }) : <Skeleton containerClassName='flex flex-column gap-1' height={100} count={5} />}
     </div>
   )

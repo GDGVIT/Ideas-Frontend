@@ -83,7 +83,7 @@ export default function Navbar () {
           <span className='flex flex-row gap-4 justify-content-center'>
           <Link className='flex h-min' to='/mentions'>
             {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
-          <img src={require('../assets/BellSymbol.svg').default} alt='notif' />}</Link>
+          <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}</Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>
@@ -108,7 +108,7 @@ export default function Navbar () {
           ? <>
           <Link className='flex h-min' to='/mentions'>
             {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
-          <img src={require('../assets/BellSymbol.svg').default} alt='notif' />}</Link>
+          <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}</Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>
