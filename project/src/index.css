@@ -421,6 +421,10 @@ textarea {
   ;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .horigrid::-webkit-scrollbar {
   display: none;
 }
