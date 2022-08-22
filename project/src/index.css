@@ -408,6 +408,25 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
+.horigrid-container {
+  margin-left: -3rem;
+  margin-right: -3rem;
+}
+
+.horigrid {
+  display: flex;
+  flex-direction: row;
+  ;
+}
+
+.horigrid::-webkit-scrollbar {
+  display: none;
+}
+
+.horiitem {
+  width: 300px;
+}
+
 .brick2-position {
   margin-top: 30%;
   margin-left: -4rem;

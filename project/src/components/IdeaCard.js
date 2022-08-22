@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useCallback } from 'react'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid }) {
   const auth = useSelector(state => state.auth)
 
   const [heartFull, setHeartFull] = useState(hearted)
@@ -67,7 +67,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   return (
     <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
     <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-    <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-25rem' : 'h-full'}`}>
+    <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-25rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-25rem h-30rem' :null}`}>
       {!disabled ?
       <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
         <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>

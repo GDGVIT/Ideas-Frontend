@@ -189,13 +189,13 @@ export default function Ideas () {
         <div className='searchbg z-2 sticky top-0'>
         <div className='align-items-center relative w-full flex gap-3 flex-row'>
           <form className='relative flex-grow-1 flex flex-row gap-4'>
-            <Link className='sm:flex hidden' to='/ideas/new' state={{
+          {auth.token ? <Link className='sm:flex hidden' to='/ideas/new' state={{
               toPrevious:true
-            }}>
+            }}> 
             <div className='flex m-auto'>
               <p className='m-auto md:font-20 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
             </div>
-            </Link>
+            </Link> : null}
             <div className='relative flex-grow-1'>
             <MixedTags
               autoFocus

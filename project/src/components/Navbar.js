@@ -94,9 +94,9 @@ export default function Navbar () {
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link className='bodytext md:font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
-        <Link to='/ideas/new'>
+        {auth.token ? <Link to='/ideas/new'>
             <button className='primary-button lg:font-20 py-2 px-3 font-16'>Add an Idea</button>
-          </Link>
+          </Link> : null}
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token
