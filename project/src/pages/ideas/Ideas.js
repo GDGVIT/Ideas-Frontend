@@ -7,8 +7,8 @@ import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './ideas.css'
 import { Link } from 'react-router-dom'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 export default function Ideas () {
   const [ideas, setIdeas] = useState([])
@@ -215,7 +215,7 @@ export default function Ideas () {
             </div>
           </form>
         </div>
-        <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
+        {/* <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
           <span className='flex flex-row'>
             <label className='mr-2' htmlFor='date-from'>From</label>
             <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' className='date-picker' />
@@ -224,7 +224,7 @@ export default function Ideas () {
             <label className='mr-2' htmlFor='date-to'>To</label>
             <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' id='date-to' />
           </span>
-        </div>
+        </div> */}
         </div>
         {!ideasloading ?
         <div className='ideagrid gap-5'>
