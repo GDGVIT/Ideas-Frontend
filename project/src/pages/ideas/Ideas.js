@@ -69,7 +69,8 @@ export default function Ideas () {
         console.log(e)
         // prevent default behavior
         e.preventDefault();
-        searchIdeas(e)
+        setIdeasloading(true);
+        searchIdeas(e,12)
         //alert("ok");
         return false;
       }
@@ -217,7 +218,7 @@ export default function Ideas () {
               className='radius'
             />
             <button onClick={e =>{e.preventDefault();
-              setIdeasloading(true);searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 mr-2 my-auto flex flex-row align-items-center gap-2 primary-button-green'>
+              setIdeasloading(true);searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'>
             <p className='font-16'>Search</p>
             <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
             </button>
