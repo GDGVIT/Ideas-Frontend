@@ -7,6 +7,7 @@ import axios from '../axios'
 import IdeaCard from '../components/IdeaCard'
 import {enterstore, initialiseEnter} from '../app/slices/blackSlice'
 import Skeleton from 'react-loading-skeleton'
+import { setStatus } from '../app/slices/notifSlice'
 
 export default function Landing () {
   const [enter, setEnter] = useState(false)
@@ -17,6 +18,21 @@ export default function Landing () {
   const dispatch = useDispatch()
   const [trendload, setTrendload] = useState(true)
   const [realload, setRealload] = useState(true)
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   const getAuthToken = async (cred, dispatch) => {
     await axios

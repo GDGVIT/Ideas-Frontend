@@ -2,11 +2,13 @@ import React, { useEffect, useState, useCallback, useRef } from 'react'
 import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton'
+import { setStatus } from '../../app/slices/notifSlice'
 
 export default function NewIdea () {
+  const dispatch = useDispatch()
   const location = useLocation()
   const [title, setTitle] = useState('')
   const [description, setDesc] = useState('')
@@ -19,6 +21,21 @@ export default function NewIdea () {
   const prevRef = useRef(null)
 
   const auth = useSelector(state => state.auth)
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   const handleSubmit = async (e) => {
     setSubmitLoading(true)

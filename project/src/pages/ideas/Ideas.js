@@ -2,15 +2,17 @@ import React, { useCallback, useEffect, useState, useRef } from 'react'
 import axios from '../../axios'
 import dayjs from 'dayjs'
 import IdeaCard from '../../components/IdeaCard'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './ideas.css'
 import { Link } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { setStatus } from '../../app/slices/notifSlice'
 
 export default function Ideas () {
+  const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
   const [limitCount, setLimitCount] = useState(12)
   const [moreLoading, setMoreLoading] = useState(false)
@@ -61,6 +63,21 @@ export default function Ideas () {
 
   const auth = useSelector(state => state.auth)
   const authRef = useRef(auth)
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   useEffect(() => {
     document.getElementsByClassName('tagify__input')[0].addEventListener('keydown',((e) => {

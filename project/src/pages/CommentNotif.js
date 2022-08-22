@@ -1,17 +1,34 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import axios from '../axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import IdeaCard from '../components/IdeaCard'
 import Skeleton from 'react-loading-skeleton'
+import { setStatus } from '../app/slices/notifSlice'
 
 export default function CommentNotif() {
+  const dispatch = useDispatch()
   const [ownComments, setOwnComments] = useState([])
   const [userIdeas, setUserIdeas] = useState([])
   const [ownCommentsLoading, setOwnCommentLoading] = useState(true)
   const [userIdeasLoading, setUserIdeasLoading] = useState(true)
 
   const auth = useSelector(state => state.auth)
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   const fetchOwnComments = useCallback(() => {
     axios.get(`/user/${auth._id}/comments`, {

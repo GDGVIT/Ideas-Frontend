@@ -1,10 +1,12 @@
 import React, { useState,useEffect,useCallback } from 'react'
 import axios from '../../axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { setStatus } from '../../app/slices/notifSlice'
 import { toast } from 'react-toastify';
 
 export default function EditIdea() {
+  const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
   const [title, setTitle] = useState('')
@@ -14,6 +16,21 @@ export default function EditIdea() {
   const [isKeyReleased, setIsKeyReleased] = useState(false)
   const navigate = useNavigate()
   const [submitLoading, setSubmitLoading] = useState(false)
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   const handleSubmit = async (e) => {
     setSubmitLoading(true)

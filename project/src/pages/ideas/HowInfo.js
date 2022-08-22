@@ -1,10 +1,29 @@
 import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { setStatus } from '../../app/slices/notifSlice';
+import axios from '../../axios';
 
 export default function HowInfo() {
+  const dispatch = useDispatch
   useEffect(() => {
     window.scrollTo(0, 0);
   },[])
+  const auth = useSelector(state => state.auth)
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
   return (
     <div>
       <img src={require('../../assets/hanging-lights.png')} alt='lights' className='absolute h-10rem top-0 right-0 hanging-lights-position sm:block hidden' />

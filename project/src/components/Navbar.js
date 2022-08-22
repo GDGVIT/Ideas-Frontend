@@ -36,12 +36,15 @@ export default function Navbar () {
   }
 
   const auth = useSelector(state => state.auth)
+  const notif = useSelector
+  (state=>state.notif)
 
   const [menuHidden, setMenuHidden] = useState(true)
   const [phoneMenuHidden, setPhoneMenuHidden] = useState(true)
 
   const menuRef = useRef(null)
   const [listening, setListening] = useState(false)
+  const [unread, setUnread] = useState(false)
 
   useEffect(listenForOutsideClicks(
     listening,
@@ -78,7 +81,9 @@ export default function Navbar () {
       {auth.token
         ? <div id='usermenu' className={`absolute usermenu-mobile border-round-xl p-3 bg-white ideacard flex-column z-2 ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-4 justify-content-center'>
-          {/* <img src={require('../assets/bellSymbol.svg').default} alt='notif' /> */}
+          <Link className='flex h-min' to='/mentions'>
+            {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
+          <img src={require('../assets/BellSymbol.svg').default} alt='notif' />}</Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>
@@ -101,7 +106,9 @@ export default function Navbar () {
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token
           ? <>
-            {/* <img src={require('../assets/bellSymbol.svg').default} alt='notif' /> */}
+          <Link className='flex h-min' to='/mentions'>
+            {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
+          <img src={require('../assets/BellSymbol.svg').default} alt='notif' />}</Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>

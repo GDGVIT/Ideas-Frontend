@@ -92,6 +92,10 @@ header {
   font-family: "Gilroy-Medium";
 }
 
+.border-right {
+  border-right: 0.8px solid var(--linecolor);
+}
+
 .primary-button:hover,
 .button:hover {
   cursor: pointer;
@@ -230,7 +234,6 @@ textarea {
 }
 
 .font-20 {
-  size: 20px;
   font-size: 20px;
 }
 

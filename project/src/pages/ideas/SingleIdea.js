@@ -1,14 +1,16 @@
 import axios from '../../axios'
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton'
 import styles from './singleIdea.css'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
+import { setStatus } from '../../app/slices/notifSlice'
 
 export default function SingleIdea () {
+  const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
   const [idea, setIdea] = useState({ tags: [] })
@@ -39,6 +41,21 @@ export default function SingleIdea () {
       position: 'text'
     },
   })
+
+  useEffect(()=>{
+    const getNotifs = () => {
+      axios.get('/notifications', {
+        headers: {
+          authorization:auth.token
+        }
+      }).then(res => {
+        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+      })
+    }
+    if (auth.token) {
+      getNotifs()
+    }
+  },[auth, dispatch])
 
   const onInput = (e) => {
     console.log(e.detail)
