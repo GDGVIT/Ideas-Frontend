@@ -271,15 +271,14 @@ export default function SingleIdea () {
           id='comment-input'
           onChange={onChange}
         />
-        <img src={require('../../assets/messageSymbol.svg').default} alt='commentIcon' className='comment-icon absolute top-50 left-0 pl-1' />
         {!submitCommentLoading ?
-        <img src={require('../../assets/send-icon.png')} height={28} alt='tickIcon'
+        <img src={require('../../assets/messageSymbol.svg').default} alt='tickIcon'
         onClick={submitComment} 
         className='button comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
         className='comment-icon absolute top-50 right-0 pr-1' />} 
       </div>
       {!commentsLoading ?
-      <div className='mt-6 md:px-6 px-2 flex flex-column gap-4'>
+      <div className='mt-6 flex flex-column gap-4'>
         {comments.length ? comments.map((comment, index) => {
           return (
             <div key={index} className='flex flex-row md:gap-4 gap-2'>
