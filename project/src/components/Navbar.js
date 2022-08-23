@@ -37,7 +37,7 @@ export default function Navbar () {
 
   const auth = useSelector(state => state.auth)
   const notif = useSelector
-  (state=>state.notif)
+  (state => state.notif)
 
   const [menuHidden, setMenuHidden] = useState(true)
   const [phoneMenuHidden, setPhoneMenuHidden] = useState(true)
@@ -69,7 +69,7 @@ export default function Navbar () {
   const black = useSelector(state => state.black)
 
   return (
-    <header ref={menuRef} className={`bg-white md:px-4 px-3 py-2 flex justify-content-between align-items-center relative ${black.entered ? 'z-5' :'z-3'}`}>
+    <header ref={menuRef} className={`bg-white md:px-4 px-3 py-2 flex justify-content-between align-items-center relative ${black.entered ? 'z-5' : 'z-3'}`}>
       {auth.token
         ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-5 ${menuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-2'>
@@ -80,11 +80,13 @@ export default function Navbar () {
           </div>
         : null}
       {auth.token
-        ? <div id='usermenu' style={{'transform':'translateZ(10px)'}} className={`absolute usermenu-mobile border-round-xl z-5 p-3 bg-white ideacard flex-column ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
+        ? <div id='usermenu' style={{ transform: 'translateZ(10px)' }} className={`absolute usermenu-mobile border-round-xl z-5 p-3 bg-white ideacard flex-column ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-4 justify-content-center'>
-          <Link className='flex h-min' to='/mentions'>
-            {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
-          <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}</Link>
+            <Link className='flex h-min' to='/mentions'>
+              {notif && notif.unreads
+                ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' />
+                : <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}
+            </Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>
@@ -100,21 +102,25 @@ export default function Navbar () {
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link className='bodytext md:font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
-        {auth.token ? <Link to='/ideas/new'>
+        {auth.token
+          ? <Link to='/ideas/new'>
             <button className='primary-button lg:font-20 py-2 px-3 font-16'>Add an Idea</button>
-          </Link> : null}
+          </Link>
+          : null}
       </div>
       <div className='md:flex hidden md:gap-5 gap-3 align-items-center'>
         {auth.token
           ? <>
-          <Link className='flex h-min' to='/mentions'>
-            {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
-          <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}</Link>
+            <Link className='flex h-min' to='/mentions'>
+              {notif && notif.unreads
+                ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' />
+                : <img src={require('../assets/bellSymbol.svg').default} alt='notif' />}
+            </Link>
             <Link className='flex h-min' to='/comments'>
               <img src={require('../assets/messageSymbol.svg').default} alt='mess' />
             </Link>
             <span className='flex'>
-            <img alt='pfp' className='pfp pfp-nav' onClick={userMenu} width={33} src={auth.picture} referrerPolicy='no-referrer' />
+              <img alt='pfp' className='pfp pfp-nav' onClick={userMenu} width={33} src={auth.picture} referrerPolicy='no-referrer' />
             </span>
           </>
           : <GoogleLogin

@@ -14,7 +14,7 @@ export const blackSlice = createSlice({
     enterstore: (state) => {
       localStorage.setItem('entered', true)
       state.entered = true
-    },
+    }
   }
 })
 

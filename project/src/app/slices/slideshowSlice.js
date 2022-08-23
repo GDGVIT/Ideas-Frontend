@@ -5,8 +5,8 @@ export const slideshowSlice = createSlice({
   initialState: {
     trendingEnd: 1,
     realEnd: 1,
-    trendingStart:0,
-    realStart:0
+    trendingStart: 0,
+    realStart: 0
   },
   reducers: {
     setTrendingIndexEnd: (state, action) => {
@@ -20,7 +20,7 @@ export const slideshowSlice = createSlice({
     },
     setRealIndexStart: (state, action) => {
       state.realStart = action.payload
-    },
+    }
   }
 })
 

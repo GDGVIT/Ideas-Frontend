@@ -5,8 +5,8 @@ import './assets/gilroy/Gilroy-Medium.ttf'
 import { Routes, Route } from 'react-router-dom'
 import GuardedRoute from './components/GuardedRoute'
 import { useDispatch, useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import { initialiseStore } from './app/slices/authSlice'
@@ -25,17 +25,17 @@ function App () {
 
   const authState = useSelector(state => state.auth)
 
-  const [auth,setAuth] = useState(authState)
+  const [auth, setAuth] = useState(authState)
 
   useEffect(() => {
     dispatch(initialiseStore())
     setAuth(authState)
-  }, [dispatch,authState])
+  }, [dispatch, authState])
 
   return (
     <div className='App'>
-      <ToastContainer 
-        position="top-right"
+      <ToastContainer
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -44,7 +44,7 @@ function App () {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme='colored' 
+        theme='colored'
       />
       <Routes>
         <Route exact path='/' element={<Landing />} />

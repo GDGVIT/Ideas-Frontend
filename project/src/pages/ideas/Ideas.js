@@ -7,8 +7,8 @@ import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './ideas.css'
 import { Link } from 'react-router-dom'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import { setStatus } from '../../app/slices/notifSlice'
 
 export default function Ideas () {
@@ -24,7 +24,7 @@ export default function Ideas () {
   const [order, setOrder] = useState('')
   const [fromDate, setFromDate] = useState()
   const [toDate, setToDate] = useState()
-  const [ideasloading,setIdeasloading] = useState(true)
+  const [ideasloading, setIdeasloading] = useState(true)
   const [tagSettings, setTagSettings] = useState({
     pattern: /@|#/,
     dropdown: {
@@ -64,11 +64,11 @@ export default function Ideas () {
   const auth = useSelector(state => state.auth)
   const authRef = useRef(auth)
 
-  useEffect(()=>{
+  useEffect(() => {
     const getNotifs = () => {
       axios.get('/notifications', {
         headers: {
-          authorization:auth.token
+          authorization: auth.token
         }
       }).then(res => {
         dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
@@ -77,38 +77,37 @@ export default function Ideas () {
     if (auth.token) {
       getNotifs()
     }
-  },[auth, dispatch])
+  }, [auth, dispatch])
 
   useEffect(() => {
-    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown',((e) => {
-      if (e.keyCode === 13 && !e.shiftKey)
-      {
+    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown', (e) => {
+      if (e.keyCode === 13 && !e.shiftKey) {
         console.log(e)
         // prevent default behavior
-        e.preventDefault();
+        e.preventDefault()
         // setIdeasloading(true);
         // searchIdeas(e,12)
-        //alert("ok");
-        return false;
+        // alert("ok");
+        return false
       }
-    }))
+    })
 
     document.getElementsByClassName('tagify')[0].style.borderRadius = '18px'
     document.getElementsByClassName('tagify')[0].style.paddingLeft = '1rem'
-  },[])
+  }, [])
 
   useEffect(() => {
     const fetchIdeas = async () => {
       await axios
         .get('/ideas', {
           params: {
-            limit:12
+            limit: 12
           }
         }
         )
         .then(res => {
-          setIdeas(res.data.ideas.sort(function(a,b){
-            return new Date(b.createdOn) - new Date(a.createdOn);
+          setIdeas(res.data.ideas.sort(function (a, b) {
+            return new Date(b.createdOn) - new Date(a.createdOn)
           }))
           setIdeasloading(false)
         })
@@ -141,58 +140,58 @@ export default function Ideas () {
   const searchIdeas = (e, limit) => {
     e.preventDefault()
 
-      setUser(user => {
-        setFromDate(from => {
-          setToDate(to => {
-            setTags (tags => {
-              setSearch(async search => {
-                if (tags.length) {
-                  for (let i = 0; i<tags.length; i++) {
-                    search = search.replace(tags[i],'')
-                  }
+    setUser(user => {
+      setFromDate(from => {
+        setToDate(to => {
+          setTags(tags => {
+            setSearch(async search => {
+              if (tags.length) {
+                for (let i = 0; i < tags.length; i++) {
+                  search = search.replace(tags[i], '')
                 }
-                if (user) search = search.replace(user,'')
-                await axios.get('/ideas', {
-                  headers: {
-                    authorization: authRef.current.token
-                  },
-                  params: {
-                    endDate: to,
-                    startDate: from,
-                    user: user,
-                    query: search,
-                    tags:tags.join(),
-                    limit
-                  }
-                }).then(res => {
-                  if (!res.data.searchResults) {
-                    setIdeas(res.data.ideas.sort(function(a,b){
-                      return new Date(b.createdOn) - new Date(a.createdOn);
-                      }))
-                  } else {
-                    let arr = res.data.searchResults.sort(function(a,b) {
-                      return b.score - a.score;
-                    })
-                    arr = arr.map((idea, index) => {
-                      return idea.idea
-                    })
-                    setIdeas(arr)
-                  }
-                }).then(() => {
-                  setIdeasloading(false)
-                  setMoreLoading(false)
-                  setSearch(search)
-                })
-                return search
+              }
+              if (user) search = search.replace(user, '')
+              await axios.get('/ideas', {
+                headers: {
+                  authorization: authRef.current.token
+                },
+                params: {
+                  endDate: to,
+                  startDate: from,
+                  user,
+                  query: search,
+                  tags: tags.join(),
+                  limit
+                }
+              }).then(res => {
+                if (!res.data.searchResults) {
+                  setIdeas(res.data.ideas.sort(function (a, b) {
+                    return new Date(b.createdOn) - new Date(a.createdOn)
+                  }))
+                } else {
+                  let arr = res.data.searchResults.sort(function (a, b) {
+                    return b.score - a.score
+                  })
+                  arr = arr.map((idea, index) => {
+                    return idea.idea
+                  })
+                  setIdeas(arr)
+                }
+              }).then(() => {
+                setIdeasloading(false)
+                setMoreLoading(false)
+                setSearch(search)
               })
-              return tags
+              return search
             })
-            return to
+            return tags
           })
-          return from
+          return to
         })
-        return user
+        return from
       })
+      return user
+    })
   }
 
   const onInput = (e) => {
@@ -237,7 +236,7 @@ export default function Ideas () {
     if (e.detail.data.prefix === '@') {
       setUser('')
     } else if (e.detail.data.prefix === '#') {
-        setTags(tags.filter((tag) => tag !== e.detail.data.value))
+      setTags(tags.filter((tag) => tag !== e.detail.data.value))
     }
   }, [])
 
@@ -245,61 +244,76 @@ export default function Ideas () {
     <div className='negmar-ideas grid md:gap-4 gap-2'>
       <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
         <div className='searchbg z-2 sticky top-0'>
-        <div className='align-items-center relative w-full flex gap-3 flex-row'>
-          <form className='relative flex-grow-1 flex flex-row gap-4'>
-          {auth.token ? <Link className='sm:flex hidden' to='/ideas/new' state={{
-              toPrevious:true
-            }}> 
-            <div className='flex flex-column m-auto'>
-              <p className='bodytext font-16'>You have</p>
-              <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
-            </div>
-            </Link> : null}
-            <div className='relative flex-grow-1'>
-            <MixedTags
-              autoFocus
-              id='area'
-              settings={tagSettings}
-              onInput={onInput}
-              onChange={onChange}
-              placeholder='hint: type @ or #'
-              styles={{'borderRadius':'18px'}}
-              tagifyRef={tagifyRef}
-              className='radius'
-              onRemove={onRemove}
-            />
-            <button onClick={e =>{e.preventDefault();
-              setIdeasloading(true);searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'>
-            <p className='font-16'>Search</p>
-            <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
-            </button>
-            </div>
-          </form>
+          <div className='align-items-center relative w-full flex gap-3 flex-row'>
+            <form className='relative flex-grow-1 flex flex-row gap-4'>
+              {auth.token
+                ? <Link
+                    className='sm:flex hidden' to='/ideas/new' state={{
+                      toPrevious: true
+                    }}
+                  >
+                  <div className='flex flex-column m-auto'>
+                    <p className='bodytext font-16'>You have</p>
+                    <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
+                  </div>
+                </Link>
+                : null}
+              <div className='relative flex-grow-1'>
+                <MixedTags
+                  autoFocus
+                  id='area'
+                  settings={tagSettings}
+                  onInput={onInput}
+                  onChange={onChange}
+                  placeholder='hint: type @ or #'
+                  styles={{ borderRadius: '18px' }}
+                  tagifyRef={tagifyRef}
+                  className='radius'
+                  onRemove={onRemove}
+                />
+                <button
+                  onClick={e => {
+                    e.preventDefault()
+                    setIdeasloading(true); searchIdeas(e)
+                  }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
+                >
+                  <p className='font-16'>Search</p>
+                  <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
+            <span className='flex flex-row'>
+              <label className='mr-2' htmlFor='date-from'>From</label>
+              <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }} name='date-from' id='date-from' className='date-picker' />
+            </span>
+            <span className='flex flex-row'>
+              <label className='mr-2' htmlFor='date-to'>To</label>
+              <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' id='date-to' />
+            </span>
+          </div>
         </div>
-        <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
-          <span className='flex flex-row'>
-            <label className='mr-2' htmlFor='date-from'>From</label>
-            <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }}  name='date-from' id='date-from' className='date-picker' />
-          </span>
-          <span className='flex flex-row'>
-            <label className='mr-2' htmlFor='date-to'>To</label>
-            <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' id='date-to' />
-          </span>
-        </div>
-        </div>
-        {!ideasloading ?
-        <div className='ideagrid gap-5'>
-          {ideas.length ? ideas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          })
-          : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
-        </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
-        {limitCount <= ideas.length ? <button onClick={async (e) => {
-          e.preventDefault()
-          setMoreLoading(true)
-          searchIdeas(e, limitCount+12)
-          setLimitCount(limitCount+12)
-          }} className='button primary-button font-16 mx-auto mt-4 text-center'>Load more...</button> : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
+        {!ideasloading
+          ? <div className='ideagrid gap-5'>
+            {ideas.length
+              ? ideas.map((idea, index) => {
+                return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+              })
+              : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
+          </div>
+          : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} />}
+        {limitCount <= ideas.length
+          ? <button
+              onClick={async (e) => {
+                e.preventDefault()
+                setMoreLoading(true)
+                searchIdeas(e, limitCount + 12)
+                setLimitCount(limitCount + 12)
+              }} className='button primary-button font-16 mx-auto mt-4 text-center'
+            >Load more...
+          </button>
+          : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>
   )

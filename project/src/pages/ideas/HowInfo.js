@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import { setStatus } from '../../app/slices/notifSlice';
-import axios from '../../axios';
+import { useSelector, useDispatch } from 'react-redux'
+import { setStatus } from '../../app/slices/notifSlice'
+import axios from '../../axios'
 
-export default function HowInfo() {
+export default function HowInfo () {
   const dispatch = useDispatch
   useEffect(() => {
-    window.scrollTo(0, 0);
-  },[])
+    window.scrollTo(0, 0)
+  }, [])
   const auth = useSelector(state => state.auth)
-  useEffect(()=>{
+  useEffect(() => {
     const getNotifs = () => {
       axios.get('/notifications', {
         headers: {
-          authorization:auth.token
+          authorization: auth.token
         }
       }).then(res => {
         dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
@@ -23,13 +23,13 @@ export default function HowInfo() {
     if (auth.token) {
       getNotifs()
     }
-  },[auth, dispatch])
+  }, [auth, dispatch])
   return (
     <div>
       <img src={require('../../assets/hanging-lights.png')} alt='lights' className='absolute h-10rem top-0 right-0 hanging-lights-position sm:block hidden' />
       <img src={require('../../assets/redline.png')} alt='line1' className='absolute line redline top-0 right-0' />
       <img src={require('../../assets/blueline.png')} alt='line2' className='absolute line blueline top-0 right-0' />
-      <div className="flex flex-column gap-8 mt-8">
+      <div className='flex flex-column gap-8 mt-8'>
         <div className='flex flex-column relative'>
           <p className='absolute font-118 top-0 left-0 g-bold how-number red'>1</p>
           <h1 className='relative z-2 font-24 g-bold static'>SUBMIT YOUR IDEA</h1>

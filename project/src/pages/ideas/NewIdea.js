@@ -3,7 +3,7 @@ import axios from '../../axios'
 import IdeaCard from '../../components/IdeaCard'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../../app/slices/notifSlice'
 
@@ -22,11 +22,11 @@ export default function NewIdea () {
 
   const auth = useSelector(state => state.auth)
 
-  useEffect(()=>{
+  useEffect(() => {
     const getNotifs = () => {
       axios.get('/notifications', {
         headers: {
-          authorization:auth.token
+          authorization: auth.token
         }
       }).then(res => {
         dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
@@ -35,12 +35,12 @@ export default function NewIdea () {
     if (auth.token) {
       getNotifs()
     }
-  },[auth, dispatch])
+  }, [auth, dispatch])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!title || !description || description.length<200) {
-      toast.error("Title and description are necessary.")
+    if (!title || !description || description.length < 200) {
+      toast.error('Title and description are necessary.')
     } else {
       setSubmitLoading(true)
       const postObject = {
@@ -62,7 +62,7 @@ export default function NewIdea () {
           setTags([])
           setTagInput('')
           fetchUserPosts()
-          toast.success("Idea submitted!")
+          toast.success('Idea submitted!')
         })
         .catch(e => console.log(e))
       setSubmitLoading(false)
@@ -79,8 +79,8 @@ export default function NewIdea () {
         })
         .then((res) => {
           console.log(res.data)
-          setUserIdeas(res.data.ideas.sort(function(a,b){
-            return new Date(b.createdOn) - new Date(a.createdOn);
+          setUserIdeas(res.data.ideas.sort(function (a, b) {
+            return new Date(b.createdOn) - new Date(a.createdOn)
           }))
           setIdeaLoad(false)
         })
@@ -119,7 +119,7 @@ export default function NewIdea () {
   }
 
   const scrollToPrevious = () => {
-    console.log("h")
+    console.log('h')
     prevRef.current.scrollIntoView(true)
   }
 
@@ -133,7 +133,7 @@ export default function NewIdea () {
     if (auth.token) {
       fetchUserPosts()
     }
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }, [auth, fetchUserPosts])
 
   return (
@@ -143,34 +143,34 @@ export default function NewIdea () {
           <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Add an Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
             <div className='flex flex-column'>
-            <label className='relative' htmlFor='title-input'>
-              <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
-              Title* 
-              <span className='ml-3 font-16 bodytext'>{title.length ? `${50-title.length} characters remaining` : null}</span>
-            </label>
-            <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
+              <label className='relative' htmlFor='title-input'>
+                <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
+                Title*
+                <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
+              </label>
+              <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
             <div className='flex flex-column'>
-            <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length && description.length<200 ? `${200-description.length} more characters minimum` :null}</span></label>
-            <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+              <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
+              <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
             <div className='flex flex-column'>
-            <label htmlFor='tag-input'>Tags</label>
-            <div className='flex align-items-center flex-row flex-wrap gap-3'>
-              {tags.map((tag, index) => tag
-                ? <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501','fontSize':'14px' }} key={index}>
-                  <button style={{'fontSize':'14px'}} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
-                  {tag}
-                </div>
-                : null)}
-              <input
-                value={tagInput} onChange={(e) => {
-                  setTagInput(e.target.value)
-                }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
-              />
+              <label htmlFor='tag-input'>Tags</label>
+              <div className='flex align-items-center flex-row flex-wrap gap-3'>
+                {tags.map((tag, index) => tag
+                  ? <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501', fontSize: '14px' }} key={index}>
+                    <button style={{ fontSize: '14px' }} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
+                    {tag}
+                    </div>
+                  : null)}
+                <input
+                  value={tagInput} onChange={(e) => {
+                    setTagInput(e.target.value)
+                  }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
+                />
+              </div>
             </div>
-            </div>
-            <button type='submit' className={((submitLoading || !title || !description || !tags || description.length<200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5 font-16'}>Submit</button>
+            <button type='submit' className={((submitLoading || !title || !description || !tags || description.length < 200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5 font-16'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
@@ -187,14 +187,17 @@ export default function NewIdea () {
           </h1>
           <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
-        {!ideaLoad ?
-        <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5 relative'>
-          <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
-          <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
-          {userIdeas.length ? userIdeas.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          }) : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
-        </div> : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5}/>}
+        {!ideaLoad
+          ? <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5 relative'>
+            <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
+            <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
+            {userIdeas.length
+              ? userIdeas.map((idea, index) => {
+                return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+              })
+              : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
+          </div>
+          : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5} />}
       </div>
     </div>
   )

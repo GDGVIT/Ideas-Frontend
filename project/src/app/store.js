@@ -7,8 +7,8 @@ import slideshowReducer from './slices/slideshowSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    black:blackReducer,
-    notif:notifReducer,
-    slideshow: slideshowReducer,
+    black: blackReducer,
+    notif: notifReducer,
+    slideshow: slideshowReducer
   }
 })

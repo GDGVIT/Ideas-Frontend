@@ -8,7 +8,7 @@ export const notifSlice = createSlice({
   reducers: {
     setStatus: (state, action) => {
       state.unreads = action.payload
-    },
+    }
   }
 })
 

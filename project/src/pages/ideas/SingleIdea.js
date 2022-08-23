@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import Skeleton from 'react-loading-skeleton'
 import styles from './singleIdea.css'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
@@ -39,14 +39,14 @@ export default function SingleIdea () {
     dropdown: {
       enabled: 1,
       position: 'text'
-    },
+    }
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     const getNotifs = () => {
       axios.get('/notifications', {
         headers: {
-          authorization:auth.token
+          authorization: auth.token
         }
       }).then(res => {
         dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
@@ -55,7 +55,7 @@ export default function SingleIdea () {
     if (auth.token) {
       getNotifs()
     }
-  },[auth, dispatch])
+  }, [auth, dispatch])
 
   const onInput = (e) => {
     console.log(e.detail)
@@ -72,7 +72,7 @@ export default function SingleIdea () {
     commentRef.current = e.detail.value
   }
 
-  const fetchUsers = useCallback( async () => {
+  const fetchUsers = useCallback(async () => {
     await axios
       .get('/user', {
         headers: {
@@ -87,36 +87,36 @@ export default function SingleIdea () {
           return state
         })
       })
-  },[auth])
+  }, [auth])
 
   const mentionReplacement = (match) => {
-    let mention = JSON.parse(match.slice(2,match.length-2))
+    const mention = JSON.parse(match.slice(2, match.length - 2))
     return `@ <span class='green'>${mention.value}</span>`
   }
 
-  function doRegex(input) {
-    let regex = /\[\[\{([^}]+)\}]]/gm;
+  function doRegex (input) {
+    const regex = /\[\[\{([^}]+)\}]]/gm
     if (regex.test(input)) {
-      return input.replaceAll(regex, mentionReplacement);
+      return input.replaceAll(regex, mentionReplacement)
     } else {
       return input
     }
   }
 
   const doSubmitRegex = (input) => {
-    let regex = /\{([^}]+)\}/gm
+    const regex = /\{([^}]+)\}/gm
     // const regex = /Java[a-z]*/gi
-      let mentions = input.matchAll(regex)
-      // console.log(Array.from(mentions))
-      for (let mention of mentions) {
-        console.log(mention)
-        let mentionedName = JSON.parse(mention[0]).value
-        console.log(mentionedName)
-        const mentionId = users.find(u => u.name === mentionedName)
-        console.log(mentionId)
-        setUserMentions(userMentions => [...userMentions,{_id:mentionId._id, userName:mentionedName}])
-        mentionsRef.current.push({_id:mentionId._id, username:mentionedName})
-      }
+    const mentions = input.matchAll(regex)
+    // console.log(Array.from(mentions))
+    for (const mention of mentions) {
+      console.log(mention)
+      const mentionedName = JSON.parse(mention[0]).value
+      console.log(mentionedName)
+      const mentionId = users.find(u => u.name === mentionedName)
+      console.log(mentionId)
+      setUserMentions(userMentions => [...userMentions, { _id: mentionId._id, userName: mentionedName }])
+      mentionsRef.current.push({ _id: mentionId._id, username: mentionedName })
+    }
   }
 
   const getIdea = useCallback(
@@ -130,8 +130,8 @@ export default function SingleIdea () {
           if (res.data.idea.upvotes.includes(auth._id)) {
             setHearted(true)
           }
-          for (let i = 0; i<res.data.comments.length ; i++) {
-            res.data.comments[i].body = doRegex(res.data.comments[i].body);
+          for (let i = 0; i < res.data.comments.length; i++) {
+            res.data.comments[i].body = doRegex(res.data.comments[i].body)
             console.log(res.data.comments[i].body)
           }
           setComments(res.data.comments.reverse())
@@ -157,13 +157,13 @@ export default function SingleIdea () {
         }).then(() => {
           getNewComment('')
           getIdea()
-          document.getElementsByClassName('tagify__input')[0].innerHTML = null;
-          toast.success("Comment submitted!")
+          document.getElementsByClassName('tagify__input')[0].innerHTML = null
+          toast.success('Comment submitted!')
           // setUserMentions([])
           setSubmitCommentLoading(false)
         }).catch((e) => {
           if (e.response.status === 401) {
-            toast.error("You need to be logged in to comment.")
+            toast.error('You need to be logged in to comment.')
           }
           setSubmitCommentLoading(false)
         })
@@ -204,10 +204,10 @@ export default function SingleIdea () {
         authorization: auth.token
       }
     })
-    .then(() => {
-      toast.success('Idea deleted :(')
-      navigate('/ideas')
-    })
+      .then(() => {
+        toast.success('Idea deleted :(')
+        navigate('/ideas')
+      })
   }
 
   const deleteComment = async (commentId) => {
@@ -216,23 +216,22 @@ export default function SingleIdea () {
         authorization: auth.token
       }
     })
-    .then(() => {
-      getIdea()
-    })
+      .then(() => {
+        getIdea()
+      })
   }
 
   useEffect(() => {
-    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown',((e) => {
-      if (e.keyCode === 13 && !e.shiftKey)
-      {
+    document.getElementsByClassName('tagify__input')[0].addEventListener('keydown', (e) => {
+      if (e.keyCode === 13 && !e.shiftKey) {
         console.log(e)
         // prevent default behavior
-        e.preventDefault();
-        //alert("ok");
-        return false;
+        e.preventDefault()
+        // alert("ok");
+        return false
       }
-    }))
-  },[])
+    })
+  }, [])
 
   useEffect(() => {
     getIdea()
@@ -252,7 +251,7 @@ export default function SingleIdea () {
         <div className='flex-grow-1'>
           <div className='flex gap-1 sm:flex-row flex-column sm:align-items-center'>
             <p className='bodytext md:font-20 font-16'>{idea.authorName}</p>
-            <p className='font-20 sm:block hidden bodytext'>{idea.authorName?`|`:null}</p>
+            <p className='font-20 sm:block hidden bodytext'>{idea.authorName ? '|' : null}</p>
             <p className='font-16 datetext'>{date}</p>
           </div>
           <div className='flex flex-row justify-content-between'>
@@ -261,16 +260,16 @@ export default function SingleIdea () {
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
               {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
-                <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit'></img>
+                <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit' />
               </Link>}
-              {idea.author && idea.author._id === userId && (warned ? 
-              <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img> :
-                <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>)}
+              {idea.author && idea.author._id === userId && (warned
+                ? <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />
+                : <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />)}
             </div>
           </div>
         </div>
       </div>
-      <p className='mt-4 bodytext font-16'>{idea.description || <Skeleton/>}</p>
+      <p className='mt-4 bodytext font-16'>{idea.description || <Skeleton />}</p>
       <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
@@ -287,28 +286,36 @@ export default function SingleIdea () {
           id='comment-input'
           onChange={onChange}
         />
-        {!submitCommentLoading ?
-        <img src={require('../../assets/messageSymbol.svg').default} alt='tickIcon'
-        onClick={submitComment} 
-        className='button comment-icon absolute top-50 right-0 pr-1' /> : <img src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon' 
-        className='comment-icon absolute top-50 right-0 pr-1' />} 
+        {!submitCommentLoading
+          ? <img
+              src={require('../../assets/messageSymbol.svg').default} alt='tickIcon'
+              onClick={submitComment}
+              className='button comment-icon absolute top-50 right-0 pr-1'
+            />
+          : <img
+              src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon'
+              className='comment-icon absolute top-50 right-0 pr-1'
+            />}
       </div>
-      {!commentsLoading ?
-      <div className='mt-6 flex flex-column gap-4'>
-        {comments.length ? comments.map((comment, index) => {
-          return (
-            <div key={index} className='flex flex-row md:gap-4 gap-2'>
-              <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-              <div className='flex-grow-1'>
-                <p className='md:font-20 font-16'>{comment.authorName}</p>
-                <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{__html:comment.body}}></span>
-              </div>
-              {comment.author && comment.author._id === userId &&
-                <img onClick={() => deleteComment(comment._id)} className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
-            </div>
-          )
-        }) : <p className='bodytext'>No comments yet 😔</p>}
-      </div> : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
+      {!commentsLoading
+        ? <div className='mt-6 flex flex-column gap-4'>
+          {comments.length
+            ? comments.map((comment, index) => {
+              return (
+                <div key={index} className='flex flex-row md:gap-4 gap-2'>
+                  <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+                  <div className='flex-grow-1'>
+                    <p className='md:font-20 font-16'>{comment.authorName}</p>
+                    <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+                  </div>
+                  {comment.author && comment.author._id === userId &&
+                    <img onClick={() => deleteComment(comment._id)} className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
+                </div>
+              )
+            })
+            : <p className='bodytext'>No comments yet 😔</p>}
+        </div>
+        : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
   )
 }
