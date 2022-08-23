@@ -161,14 +161,18 @@ export default function Ideas () {
                 }).then(res => setIdeas(res.data.ideas.sort(function(a,b){
                   return new Date(b.createdOn) - new Date(a.createdOn);
                 }))).then(() => {
-                  setTags([])
                   setIdeasloading(false)
                   setMoreLoading(false)
                 })
+                return search
               })
+              return tags
             })
+            return to
           })
+          return from
         })
+        return user
       }) 
   }
 
