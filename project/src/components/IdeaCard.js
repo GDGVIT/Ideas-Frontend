@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useCallback } from 'react'
+import { useVisibility } from "reactjs-visibility";
+import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type }) {
   const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
 
   const [heartFull, setHeartFull] = useState(hearted)
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
@@ -18,6 +21,29 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     let mention = JSON.parse(match.slice(2,match.length-2))
     return `@ <span class='green'>${mention.value}</span>`
   }
+
+  const visiOptions = {}
+
+  const handleChangeVisibility = (visible) => {
+    if (visible) { 
+      if (type === 'trending') {
+        dispatch(setTrendingIndexEnd(index))
+      } else {
+        dispatch(setRealIndexEnd(index))
+      }
+    } else {
+      if (type === 'trending') {
+        dispatch(setTrendingIndexStart(index))
+      } else {
+        dispatch(setRealIndexStart(index))
+      }
+    }
+  }
+
+  const { ref, visible } = useVisibility({
+    onChangeVisibility: handleChangeVisibility,
+    options:visiOptions,
+  });
 
   const doRegex = useCallback((input) => {
     let regex = /\[\[\{([^}]+)\}]]/gm;
@@ -65,7 +91,8 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   date = dayjs(date).format('DD-MM-YYYY')
   return (
-    <div className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
+    <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
+      {horigrid ? <span ref={ref}></span> :null}
     <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
     <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-25rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-25rem h-30rem' :null}`}>
       {!disabled ?

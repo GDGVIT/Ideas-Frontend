@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import { setUserInfo, logout } from '../app/slices/authSlice'
@@ -8,16 +8,53 @@ import IdeaCard from '../components/IdeaCard'
 import {enterstore, initialiseEnter} from '../app/slices/blackSlice'
 import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../app/slices/notifSlice'
+import { setTrendingIndexEnd, setRealIndexEnd } from '../app/slices/slideshowSlice'
 
 export default function Landing () {
+  const navigate = useNavigate()
   const [enter, setEnter] = useState(false)
   const [trending, setTrending] = useState([])
   const [completed, setCompleted] = useState([])
   const auth = useSelector(state => state.auth)
   const black = useSelector(state => state.black)
+  const slideshow = useSelector(state => state.slideshow)
   const dispatch = useDispatch()
   const [trendload, setTrendload] = useState(true)
   const [realload, setRealload] = useState(true)
+
+  const trendingScrollRight = (step) => {
+    let card;
+    if (slideshow.trendingEnd + step >=0 && slideshow.trendingEnd + step < trending.length) {
+      card = document.getElementById(`trending${slideshow.trendingEnd+step}`)
+      dispatch(setTrendingIndexEnd(slideshow.trendingEnd+step))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'center'})
+    } else if (slideshow.trendingEnd + step <0) {
+      card = document.getElementById(`trending${0}`)
+      dispatch(setTrendingIndexEnd(0))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'nearest'})
+    } else {
+      card = document.getElementById(`trending${trending.length-1}`)
+      dispatch(setTrendingIndexEnd(trending.length-1))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'nearest'})
+    }
+  }
+
+  const realScrollRight = (step) => {
+    let card;
+    if (slideshow.realEnd + step >=0 && slideshow.realEnd + step < completed.length) {
+      card = document.getElementById(`real${slideshow.realEnd+step}`)
+      dispatch(setRealIndexEnd(slideshow.realEnd+step))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'center'})
+    } else if (slideshow.realEnd + step <0) {
+      card = document.getElementById(`real${0}`)
+      dispatch(setRealIndexEnd(0))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'nearest'})
+    } else {
+      card = document.getElementById(`real${completed.length-1}`)
+      dispatch(setRealIndexEnd(completed.length-1))
+      card.scrollIntoView({behavior: "smooth", block:'nearest',inline:'nearest'})
+    }
+  }
 
   useEffect(()=>{
     const getNotifs = () => {
@@ -132,35 +169,49 @@ export default function Landing () {
             }}
           />
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
-          <Link className='w-min' style={{'color':'#4D96FF'}} to='/how'><p className='mt-4'>How does this work?</p></Link>
+          <p onClick={() => navigate('/how')} style={{'color':'#4D96FF','width':'fitContent'}} className='button mt-4'>How does this work?</p>
         </div>
 
         <div className='relative'>
           <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
-          <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Trending Ideas</h2>
           {!trendload ? 
-          <div className="horigrid-container">
-          <div className='mt-5 px-3 pb-2 horigrid overflow-auto flex-row gap-5'>
-          <span className='grid-space-span'></span>  
-          {trending.map((idea, index) => {
-            return <IdeaCard key={index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          })}
-          <span className='grid-space-span'></span>
-          </div></div> : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
+          <div className="horigrid-container relative">
+            <span onClick={() => trendingScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
+            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default}></img>
+            </span>
+            <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
+            <span className='grid-space-span'></span>  
+            {trending.map((idea, index) => {
+              return <IdeaCard type='trending' index={index} id={'trending'+index} key={'trending'+index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            })}
+            <span className='grid-space-span'></span>
+            </div>
+            <span onClick={() => trendingScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+              <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default}></img>
+            </span>
+          </div> : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
         </div>
         <div className='mt-6 relative'>
           <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
+          <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Ideas Made Real</h2>
           {!realload ? 
-          <div className="horigrid-container">
-          <div className='mt-5 px-3 pb-2 horigrid overflow-auto flex-row gap-5'>
+          <div className="horigrid-container relative">
+            <span onClick={() => realScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
+            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default}></img>
+            </span>
+          <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
           <span className='grid-space-span'></span>
           {completed.map((idea, index) => {
-            return <IdeaCard key={index} name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            return <IdeaCard type='real' index={index} id={'real'+index} key={'real'+index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })}
           <span className='grid-space-span'></span>
-          </div></div>: <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1}/>}
+          </div>
+          <span onClick={() => realScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default}></img>
+            </span>
+          </div>: <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1}/>}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{'color':'#4D96FF'}} to='/how'>Let's find out.</Link></p>
       </div>

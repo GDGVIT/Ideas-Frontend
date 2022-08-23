@@ -199,6 +199,15 @@ textarea {
   column-gap: 1rem;
 }
 
+.arrow-container:hover .arrow-icon {
+  display: block;
+}
+
+.arrow-icon {
+  display: none;
+  transform: translate(50%, -50%);
+}
+
 .comment-icon {
   transform: translate(0, -50%);
 }
@@ -459,8 +468,8 @@ textarea {
 }
 
 .web-position {
-  top: 30%;
-  margin-left: -3rem;
+  top: -10%;
+  margin-left: -7rem;
 }
 
 @media screen and (max-width:1400px) {
