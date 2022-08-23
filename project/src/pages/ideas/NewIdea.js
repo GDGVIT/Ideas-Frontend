@@ -142,24 +142,24 @@ export default function NewIdea () {
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Add an Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
-            <div className='flex flex-column gap-2'>
+            <div className='flex flex-column'>
             <label className='relative' htmlFor='title-input'>
-              <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
+              <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
               Title* 
               <span className='ml-3 font-16 bodytext'>{title.length ? `${50-title.length} characters remaining` : null}</span>
             </label>
-            <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
+            <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
-            <div className='flex flex-column gap-2'>
+            <div className='flex flex-column'>
             <label htmlFor='desc-input'>Description*<span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length && description.length<200 ? `${200-description.length} more characters minimum` :null}</span></label>
             <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
-            <div className='flex flex-column gap-2'>
+            <div className='flex flex-column'>
             <label htmlFor='tag-input'>Tags</label>
             <div className='flex align-items-center flex-row flex-wrap gap-3'>
               {tags.map((tag, index) => tag
-                ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
-                  <button type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+                ? <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501','fontSize':'14px' }} key={index}>
+                  <button style={{'fontSize':'14px'}} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
                   {tag}
                 </div>
                 : null)}
@@ -170,7 +170,7 @@ export default function NewIdea () {
               />
             </div>
             </div>
-            <button type='submit' className={((submitLoading || !title || !description || !tags || description.length<200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            <button type='submit' className={((submitLoading || !title || !description || !tags || description.length<200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5 font-16'}>Submit</button>
           </form>
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
@@ -193,7 +193,7 @@ export default function NewIdea () {
           <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
           {userIdeas.length ? userIdeas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          }) : <p className='bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
+          }) : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
         </div> : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5}/>}
       </div>
     </div>

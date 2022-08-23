@@ -35,7 +35,7 @@ function App () {
   return (
     <div className='App'>
       <ToastContainer 
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -43,7 +43,8 @@ function App () {
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover 
+        pauseOnHover
+        theme='colored' 
       />
       <Routes>
         <Route exact path='/' element={<Landing />} />

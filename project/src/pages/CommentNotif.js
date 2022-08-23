@@ -107,9 +107,8 @@ export default function CommentNotif() {
         {!userIdeasLoading ?
         <div className='mt-4 flex flex-column gap-3'>
           {userIdeas.length ? userIdeas.map((idea, index) => {
-            return (
-              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()}></IdeaCard>
-            )
+            return idea.comments.length ? 
+              <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()}></IdeaCard> : null
           }) : <p className='bodytext mt-4'>Nothing to see here, yet 😔</p>}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
