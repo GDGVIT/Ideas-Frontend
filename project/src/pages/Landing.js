@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
-import { setUserInfo, logout } from '../app/slices/authSlice'
+import { setUserInfo } from '../app/slices/authSlice'
 import axios from '../axios'
 import IdeaCard from '../components/IdeaCard'
 import { enterstore, initialiseEnter } from '../app/slices/blackSlice'
 import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../app/slices/notifSlice'
 import { setTrendingIndexEnd, setRealIndexEnd } from '../app/slices/slideshowSlice'
+import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 export default function Landing () {
   const navigate = useNavigate()
@@ -77,7 +79,6 @@ export default function Landing () {
         token: cred
       })
       .then(res => {
-        console.log(res.data)
         localStorage.setItem('email', res.data.data.email)
         localStorage.setItem('name', res.data.data.name)
         localStorage.setItem('familyName', res.data.data.familyName)
@@ -88,28 +89,16 @@ export default function Landing () {
         localStorage.setItem('token', res.data.token)
         dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
       })
+      .catch((e) => {
+        toast.error("Login failed.")
+      })
   }
 
   window.onbeforeunload = function () {
     window.scrollTo(0, 0)
   }
 
-  useEffect(() => {
-    dispatch(initialiseEnter())
-    if (black.entered) {
-      setEnter(true)
-    }
-    if (!enter) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-      fetchTrending()
-      fetchCompleted()
-      dispatch(enterstore())
-    }
-  }, [enter, black, dispatch])
-
-  const fetchTrending = () => {
+  const fetchTrending = useCallback(() => {
     axios.get('/ideas', {
       headers: {
         authorization: auth.token
@@ -124,9 +113,9 @@ export default function Landing () {
         }))
         setTrendload(false)
       })
-  }
+  },[auth])
 
-  const fetchCompleted = () => {
+  const fetchCompleted = useCallback(() => {
     axios.get('/ideas', {
       headers: {
         authorization: auth.token
@@ -141,7 +130,22 @@ export default function Landing () {
         }))
         setRealload(false)
       })
-  }
+  },[auth])
+
+  useEffect(() => {
+    dispatch(initialiseEnter())
+    if (black.entered) {
+      setEnter(true)
+    }
+    if (!enter) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+      fetchTrending()
+      fetchCompleted()
+      dispatch(enterstore())
+    }
+  }, [enter, black, dispatch, fetchCompleted, fetchTrending])
 
   return (
     <div className='z-2'>
@@ -171,7 +175,7 @@ export default function Landing () {
                     getAuthToken(credentialResponse.credential, dispatch)
                   }}
                   onError={() => {
-                    console.log('Login Failed')
+                    toast.error("Login failed.")
                   }}
                 />
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
@@ -221,7 +225,7 @@ export default function Landing () {
                 </span>
               </div>
               : <p className='bodytext mt-4'>No ideas made real yet 😔</p>
-            : <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1} />}
+            : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{ color: '#4D96FF' }} to='/how'>Let's find out.</Link></p>
       </div>

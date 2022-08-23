@@ -56,7 +56,7 @@ export default function EditIdea () {
         toast.success('Idea edited!')
         navigate(`/ideas/${id}`)
       })
-      .catch(e => console.log(e))
+      // .catch(e => console.log(e))
     setSubmitLoading(false)
   }
 

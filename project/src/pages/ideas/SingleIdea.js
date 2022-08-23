@@ -58,7 +58,6 @@ export default function SingleIdea () {
   }, [auth, dispatch])
 
   const onInput = (e) => {
-    console.log(e.detail)
     const prefix = e.detail.prefix
     if (prefix === '@') {
       enterRef.current = false
@@ -105,15 +104,10 @@ export default function SingleIdea () {
 
   const doSubmitRegex = (input) => {
     const regex = /\{([^}]+)\}/gm
-    // const regex = /Java[a-z]*/gi
     const mentions = input.matchAll(regex)
-    // console.log(Array.from(mentions))
     for (const mention of mentions) {
-      console.log(mention)
       const mentionedName = JSON.parse(mention[0]).value
-      console.log(mentionedName)
       const mentionId = users.find(u => u.name === mentionedName)
-      console.log(mentionId)
       setUserMentions(userMentions => [...userMentions, { _id: mentionId._id, userName: mentionedName }])
       mentionsRef.current.push({ _id: mentionId._id, username: mentionedName })
     }
@@ -132,7 +126,6 @@ export default function SingleIdea () {
           }
           for (let i = 0; i < res.data.comments.length; i++) {
             res.data.comments[i].body = doRegex(res.data.comments[i].body)
-            console.log(res.data.comments[i].body)
           }
           setComments(res.data.comments.reverse())
           setCommentsLoading(false)
@@ -224,10 +217,7 @@ export default function SingleIdea () {
   useEffect(() => {
     document.getElementsByClassName('tagify__input')[0].addEventListener('keydown', (e) => {
       if (e.keyCode === 13 && !e.shiftKey) {
-        console.log(e)
-        // prevent default behavior
         e.preventDefault()
-        // alert("ok");
         return false
       }
     })

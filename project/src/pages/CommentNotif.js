@@ -30,6 +30,20 @@ export default function CommentNotif () {
     }
   }, [auth, dispatch])
 
+  const mentionReplacement = (match) => {
+    const mention = JSON.parse(match.slice(2, match.length - 2))
+    return `@ <span class='green'>${mention.value}</span>`
+  }
+
+  const doRegex = useCallback((input) => {
+    const regex = /\[\[\{([^}]+)\}]]/gm
+    if (regex.test(input)) {
+      return input.replaceAll(regex, mentionReplacement)
+    } else {
+      return input
+    }
+  },[])
+
   const fetchOwnComments = useCallback(() => {
     axios.get(`/user/${auth._id}/comments`, {
       headers: {
@@ -39,26 +53,11 @@ export default function CommentNotif () {
       .then((res) => {
         for (let i = 0; i < res.data.comments.length; i++) {
           res.data.comments[i].body = doRegex(res.data.comments[i].body)
-          console.log(res.data.comments[i].body)
         }
         setOwnComments(res.data.comments.reverse())
         setOwnCommentLoading(false)
       })
-  }, [auth])
-
-  const mentionReplacement = (match) => {
-    const mention = JSON.parse(match.slice(2, match.length - 2))
-    return `@ <span class='green'>${mention.value}</span>`
-  }
-
-  function doRegex (input) {
-    const regex = /\[\[\{([^}]+)\}]]/gm
-    if (regex.test(input)) {
-      return input.replaceAll(regex, mentionReplacement)
-    } else {
-      return input
-    }
-  }
+  }, [auth, doRegex])
 
   const fetchUserPosts = useCallback(
     async () => {
@@ -69,13 +68,12 @@ export default function CommentNotif () {
           }
         })
         .then((res) => {
-          console.log(res.data)
           setUserIdeas(res.data.ideas.sort(function (a, b) {
             return new Date(b.createdOn) - new Date(a.createdOn)
           }))
           setUserIdeasLoading(false)
         })
-        .catch(e => console.log(e))
+        // .catch(e => console.log(e))
     }, [auth]
   )
 

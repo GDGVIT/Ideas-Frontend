@@ -7,6 +7,7 @@ import { listenForOutsideClicks } from '../utils/listenForOutsideClicks'
 
 import { GoogleLogin } from '@react-oauth/google'
 import axios from '../axios'
+import { toast } from 'react-toastify'
 
 export default function Navbar () {
   const dispatch = useDispatch()
@@ -18,7 +19,6 @@ export default function Navbar () {
         token: cred
       })
       .then(res => {
-        console.log(res.data)
         localStorage.setItem('email', res.data.data.email)
         localStorage.setItem('name', res.data.data.name)
         localStorage.setItem('familyName', res.data.data.familyName)
@@ -128,7 +128,7 @@ export default function Navbar () {
                 getAuthToken(credentialResponse.credential, dispatch)
               }}
               onError={() => {
-                console.log('Login Failed')
+                toast.error("Login failed.")
               }}
               useOneTap
             />}

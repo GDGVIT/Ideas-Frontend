@@ -82,12 +82,7 @@ export default function Ideas () {
   useEffect(() => {
     document.getElementsByClassName('tagify__input')[0].addEventListener('keydown', (e) => {
       if (e.keyCode === 13 && !e.shiftKey) {
-        console.log(e)
-        // prevent default behavior
         e.preventDefault()
-        // setIdeasloading(true);
-        // searchIdeas(e,12)
-        // alert("ok");
         return false
       }
     })
@@ -195,7 +190,6 @@ export default function Ideas () {
   }
 
   const onInput = (e) => {
-    console.log(e)
     const prefix = e.detail.prefix
 
     if (prefix) {
@@ -218,8 +212,6 @@ export default function Ideas () {
   }
 
   const onChange = useCallback(e => {
-    console.log(e)
-    console.log(e.detail.value)
     if (e.detail.tagify.value[e.detail.tagify.value.length - 1].prefix === '@') {
       setUser(e.detail.tagify.value[e.detail.tagify.value.length - 1].value)
     } else if (e.detail.tagify.value[e.detail.tagify.value.length - 1].prefix === '#') {
@@ -232,7 +224,6 @@ export default function Ideas () {
   }, [])
 
   const onRemove = useCallback(e => {
-    console.log(e.detail)
     if (e.detail.data.prefix === '@') {
       setUser('')
     } else if (e.detail.data.prefix === '#') {

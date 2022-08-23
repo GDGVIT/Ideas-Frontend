@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Navigate, Outlet, Route } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 const GuardedRoute = () => {
   const auth = localStorage.getItem('token')

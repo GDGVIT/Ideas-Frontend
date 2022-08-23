@@ -64,7 +64,7 @@ export default function NewIdea () {
           fetchUserPosts()
           toast.success('Idea submitted!')
         })
-        .catch(e => console.log(e))
+        // .catch(e => console.log(e))
       setSubmitLoading(false)
     }
   }
@@ -78,13 +78,12 @@ export default function NewIdea () {
           }
         })
         .then((res) => {
-          console.log(res.data)
           setUserIdeas(res.data.ideas.sort(function (a, b) {
             return new Date(b.createdOn) - new Date(a.createdOn)
           }))
           setIdeaLoad(false)
         })
-        .catch(e => console.log(e))
+        // .catch(e => console.log(e))
     }, [auth]
   )
 
@@ -119,7 +118,6 @@ export default function NewIdea () {
   }
 
   const scrollToPrevious = () => {
-    console.log('h')
     prevRef.current.scrollIntoView(true)
   }
 
