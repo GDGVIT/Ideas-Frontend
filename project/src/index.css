@@ -386,6 +386,18 @@ textarea {
 .cross-button {
   background: none;
   color: white;
+  border: 0px solid black;
+  font-size: large;
+}
+
+input,
+textarea {
+  font-family: Poppins;
+  color: black;
+}
+
+.cross-button:hover {
+  color: var(--linecolor);
 }
 
 .blackout {

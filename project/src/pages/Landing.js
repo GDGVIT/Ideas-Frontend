@@ -169,7 +169,7 @@ export default function Landing () {
             }}
           />
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
-          <p onClick={() => navigate('/how')} style={{'color':'#4D96FF','width':'fitContent'}} className='button mt-4'>How does this work?</p>
+          <p onClick={() => navigate('/how')} style={{'color':'#4D96FF','width':'fit-content'}} className='button mt-4'>How does this work?</p>
         </div>
 
         <div className='relative'>
