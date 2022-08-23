@@ -146,10 +146,12 @@ export default function Ideas () {
           setToDate(to => {
             setTags (tags => {
               setSearch(async search => {
-                for (let i = 0; i<tags.length; i++) {
-                  search = search.replace(tags[i],'')
+                if (tags.length) {
+                  for (let i = 0; i<tags.length; i++) {
+                    search = search.replace(tags[i],'')
+                  }
                 }
-                search = search.replace(user)
+                if (user) search = search.replace(user,'')
                 await axios.get('/ideas', {
                   headers: {
                     authorization: authRef.current.token
