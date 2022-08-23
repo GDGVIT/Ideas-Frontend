@@ -212,6 +212,15 @@ export default function Ideas () {
     }
   }, [])
 
+  const onRemove = useCallback(e => {
+    console.log(e.detail)
+    if (e.detail.data.prefix === '@') {
+      setUser('')
+    } else if (e.detail.data.prefix === '#') {
+        setTags(tags.filter((tag) => tag !== e.detail.data.value))
+    }
+  }, [])
+
   return (
     <div className='negmar-ideas grid md:gap-4 gap-2'>
       <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
@@ -237,6 +246,7 @@ export default function Ideas () {
               styles={{'borderRadius':'18px'}}
               tagifyRef={tagifyRef}
               className='radius'
+              onRemove={onRemove}
             />
             <button onClick={e =>{e.preventDefault();
               setIdeasloading(true);searchIdeas(e)}} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'>
