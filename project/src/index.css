@@ -254,6 +254,14 @@ textarea {
   font-size: 20px;
 }
 
+.font-12 {
+  font-size: 12px;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
 .font-16 {
   font-size: 16px;
 }
@@ -394,6 +402,7 @@ input,
 textarea {
   font-family: "Gilroy-Medium";
   color: black;
+  font-size: 16px;
 }
 
 .cross-button:hover {
@@ -577,6 +586,11 @@ textarea {
     margin-left: -2rem !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  input,
+  textarea {
+    font-size: 14px;
   }
 
   .blueline {

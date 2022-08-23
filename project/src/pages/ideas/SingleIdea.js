@@ -307,7 +307,7 @@ export default function SingleIdea () {
                 <img onClick={() => deleteComment(comment._id)} className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'></img>}
             </div>
           )
-        }) : <p>No comments yet.</p>}
+        }) : <p className='bodytext'>No comments yet 😔</p>}
       </div> : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
   )

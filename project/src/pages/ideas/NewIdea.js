@@ -151,7 +151,7 @@ export default function NewIdea () {
             <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
             <div className='flex flex-column'>
-            <label htmlFor='desc-input'>Description*<span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length && description.length<200 ? `${200-description.length} more characters minimum` :null}</span></label>
+            <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500-description.length} characters remaining` : null}{description.length && description.length<200 ? `${200-description.length} more characters minimum` :null}</span></label>
             <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
             <div className='flex flex-column'>

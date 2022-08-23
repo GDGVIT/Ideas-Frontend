@@ -69,7 +69,7 @@ export default function Navbar () {
   const black = useSelector(state => state.black)
 
   return (
-    <header ref={menuRef} className={`bg-white md:px-4 px-3 py-2 flex justify-content-between relative ${black.entered ? 'z-5' :'z-3'}`}>
+    <header ref={menuRef} className={`bg-white md:px-4 px-3 py-2 flex justify-content-between align-items-center relative ${black.entered ? 'z-5' :'z-3'}`}>
       {auth.token
         ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-5 ${menuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-2'>
@@ -127,7 +127,7 @@ export default function Navbar () {
               useOneTap
             />}
       </div>
-      <div className='md:hidden mt-1'>
+      <div className='md:hidden h-min'>
         <input type='image' src={require('../assets/hamburger.png')} onClick={phoneUserMenu} alt='ham' />
       </div>
     </header>
