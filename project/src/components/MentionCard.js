@@ -1,11 +1,13 @@
 import axios from '../axios';
 import React, {useState} from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setStatus } from '../app/slices/notifSlice';
 
 export default function MentionCard({author="Dorian", name='Default', pfp, commentAuthor='ComAuth', commentBody='howdy',_id, ideaId, readStatus}) {
 
   const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
 
   const [read, setRead] = useState(readStatus)
 
@@ -30,6 +32,18 @@ export default function MentionCard({author="Dorian", name='Default', pfp, comme
       headers: {
         authorization: auth.token
       }
+    }).then(() => {
+      getNotifs()
+    })
+  }
+
+  const getNotifs = () => {
+    axios.get('/notifications', {
+      headers: {
+        authorization:auth.token
+      }
+    }).then(res => {
+      dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
     })
   }
 
@@ -50,7 +64,7 @@ export default function MentionCard({author="Dorian", name='Default', pfp, comme
       <div className='md:py-6 md:px-6 px-5 py-5 sm:col-7 col-12 flex flex-column'>
         <p className='sm:hidden flex flex-column mb-3 font-20 g-med'>{name}</p>
         <div className='flex flex-row md:gap-4 gap-3 my-auto'>
-          <img className='w-3rem pfp' src={pfp} alt='pfp' referrerPolicy='no-referrer' />
+          <img className='w-3rem h-min pfp' src={pfp} alt='pfp' referrerPolicy='no-referrer' />
           <div className='flex-grow-1'>
             <p className='md:font-20 font-16'>{commentAuthor}</p>
             <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{__html:doRegex(commentBody)}}></span>

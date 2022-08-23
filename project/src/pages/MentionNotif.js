@@ -18,8 +18,10 @@ export default function MentionNotif() {
           authorization:auth.token
         }
       }).then(res => {
-        dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
-        setNotifs(res.data.notifications.notifications.reverse())
+        if (res.data.notifications.notifications) {
+          dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
+          setNotifs(res.data.notifications.notifications.reverse())
+        }
         setLoading(false)
       })
     }
@@ -31,9 +33,9 @@ export default function MentionNotif() {
   return (
     <div className='flex flex-column gap-4'>
       <h1 className='g-bold text-xl'>Notifications</h1>
-      {!loading ? notifs.map((notif, index) => {
-        return <MentionCard key={index} commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} ideaId={notif.parentIdeaId}></MentionCard>
-      }) : <Skeleton containerClassName='flex flex-column gap-1' height={100} count={5} />}
+      {!loading ? notifs.length ? notifs.map((notif, index) => {
+        return <MentionCard key={index} commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} name={notif.parentIdeaTitle} pfp={notif.commentAuthorPicture} author={notif.parentIdeaAuthorName} commentAuthor={notif.commentAuthorName} ideaId={notif.parentIdeaId}></MentionCard>
+      }) : <p className='bodytext font-16'>No notifications yet.</p> : <Skeleton containerClassName='flex flex-column gap-1' height={100} count={5} />}
     </div>
   )
 }
