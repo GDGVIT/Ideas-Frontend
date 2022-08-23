@@ -165,9 +165,19 @@ export default function Ideas () {
                     limit
                   }
                 }).then(res => {
+                  if (!res.data.searchResults) {
                     setIdeas(res.data.ideas.sort(function(a,b){
                       return new Date(b.createdOn) - new Date(a.createdOn);
                       }))
+                  } else {
+                    let arr = res.data.searchResults.sort(function(a,b) {
+                      return b.score - a.score;
+                    })
+                    arr = arr.map((idea, index) => {
+                      return idea.idea
+                    })
+                    setIdeas(arr)
+                  }
                 }).then(() => {
                   setIdeasloading(false)
                   setMoreLoading(false)
