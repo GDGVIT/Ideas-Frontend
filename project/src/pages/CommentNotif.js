@@ -99,7 +99,7 @@ export default function CommentNotif() {
               <span dangerouslySetInnerHTML={{__html:comment.body}} className='bodytext'></span>
             </div>
           )
-        }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+        }) : <p className='bodytext mt-4'>You haven't made any comments 😔</p>}
         </div> : <Skeleton className='w-11 mt-4 border-round-xl' height={100} count={25} />}
       </div>
       <div className="md:col-7 col-12">
@@ -110,7 +110,7 @@ export default function CommentNotif() {
             return (
               <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()}></IdeaCard>
             )
-          }) : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+          }) : <p className='bodytext mt-4'>Nothing to see here, yet 😔</p>}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
     </div>

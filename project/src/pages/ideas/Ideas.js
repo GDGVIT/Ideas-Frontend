@@ -86,8 +86,8 @@ export default function Ideas () {
         console.log(e)
         // prevent default behavior
         e.preventDefault();
-        setIdeasloading(true);
-        searchIdeas(e,12)
+        // setIdeasloading(true);
+        // searchIdeas(e,12)
         //alert("ok");
         return false;
       }
@@ -146,6 +146,10 @@ export default function Ideas () {
           setToDate(to => {
             setTags (tags => {
               setSearch(async search => {
+                for (let i = 0; i<tags.length; i++) {
+                  search = search.replace(tags[i],'')
+                }
+                search = search.replace(user)
                 await axios.get('/ideas', {
                   headers: {
                     authorization: authRef.current.token
@@ -158,11 +162,14 @@ export default function Ideas () {
                     tags:tags.join(),
                     limit
                   }
-                }).then(res => setIdeas(res.data.ideas.sort(function(a,b){
-                  return new Date(b.createdOn) - new Date(a.createdOn);
-                }))).then(() => {
+                }).then(res => {
+                    setIdeas(res.data.ideas.sort(function(a,b){
+                      return new Date(b.createdOn) - new Date(a.createdOn);
+                      }))
+                }).then(() => {
                   setIdeasloading(false)
                   setMoreLoading(false)
+                  setSearch(search)
                 })
                 return search
               })
@@ -173,12 +180,11 @@ export default function Ideas () {
           return from
         })
         return user
-      }) 
+      })
   }
 
   const onInput = (e) => {
     console.log(e)
-    setSearch(e.detail.textContent)
     const prefix = e.detail.prefix
 
     if (prefix) {
@@ -195,11 +201,13 @@ export default function Ideas () {
           return state
         })
       }
+    } else {
+      setSearch(e.detail.textContent)
     }
   }
 
   const onChange = useCallback(e => {
-    console.log(e.detail)
+    console.log(e)
     console.log(e.detail.value)
     if (e.detail.tagify.value[e.detail.tagify.value.length - 1].prefix === '@') {
       setUser(e.detail.tagify.value[e.detail.tagify.value.length - 1].value)
@@ -272,7 +280,7 @@ export default function Ideas () {
           {ideas.length ? ideas.map((idea, index) => {
             return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
           })
-          : <IdeaCard name='Oops' description='Nothing to see here.' tags={[]} disabled={true} />}
+          : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
         </div> : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} /> }
         {limitCount <= ideas.length ? <button onClick={async (e) => {
           e.preventDefault()

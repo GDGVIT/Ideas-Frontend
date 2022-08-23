@@ -196,22 +196,22 @@ export default function Landing () {
           <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
           <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Ideas Made Real</h2>
-          {!realload ? 
+          {!realload ? completed.length ? 
           <div className="horigrid-container relative">
             <span onClick={() => realScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
-            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default}></img>
+              <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default}></img>
             </span>
-          <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
-          <span className='grid-space-span'></span>
-          {completed.map((idea, index) => {
-            return <IdeaCard type='real' index={index} id={'real'+index} key={'real'+index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-          })}
-          <span className='grid-space-span'></span>
-          </div>
-          <span onClick={() => realScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
-            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default}></img>
+            <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
+            <span className='grid-space-span'></span>
+            {completed.map((idea, index) => {
+              return <IdeaCard type='real' index={index} id={'real'+index} key={'real'+index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+            })}
+            <span className='grid-space-span'></span>
+            </div>
+            <span onClick={() => realScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+              <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default}></img>
             </span>
-          </div>: <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1}/>}
+          </div>: <p className='bodytext mt-4'>No ideas made real yet 😔</p> : <Skeleton containerClassName='flex flex-column gap- mt-4' className='border-round-xl' height={200} count={1}/>}
         </div>
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{'color':'#4D96FF'}} to='/how'>Let's find out.</Link></p>
       </div>

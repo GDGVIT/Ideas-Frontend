@@ -110,7 +110,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         <p>|</p>
         <p className='font-16 datetext'>{date}</p>
       </div> :null }
-      <p className='md:font-24 font-20 g-med'>{name}</p>
+      <p style={{'wordBreak':'break-all'}} className='md:font-24 font-20 g-med'>{name}</p>
       {description ? 
       <p style={{ fontSize: 16 }} className='mt-3 font-16 bodytext'>{description.slice(0,150)}{description.length>150 ? '...' : ''}</p> : null}
       {!disabled ? 
