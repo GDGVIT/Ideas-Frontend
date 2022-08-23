@@ -148,8 +148,8 @@ export default function Landing () {
         <img src={require('../assets/books.png')} alt='plantshelf' className='absolute h-5rem books-position sm:block hidden' />
         <img src={require('../assets/board.png')} alt='plantshelf' className='absolute lg:h-18rem md:h-15rem board-position md:block hidden' />
         <img src={require('../assets/landingperson.png')} alt='plantshelf' className='absolute lg:h-22rem md:h-20rem board-position landing-person-position md:block hidden' />
-        <div className={`${enter ? null : 'text-white'} hero lg:w-6 md:w-8 w-12 z-5`} id='hero'>
-          <h1 className='g-bold landing-font  relative'>
+        <div className={`${enter ? null : 'text-white'} hero lg:w-6 md:w-8 w-12 ${black.entered ? 'z-2' :'z-5'}`} id='hero'>
+          <h1 className='z-2 g-bold landing-font  relative'>
             GDSC Idea Hub
             <img className='landing-circle absolute' src={require('../assets/drawCircle2.svg').default} alt='stroke' />
           </h1>

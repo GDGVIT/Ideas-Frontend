@@ -66,11 +66,12 @@ export default function Navbar () {
   const phoneUserMenu = () => {
     setPhoneMenuHidden(!phoneMenuHidden)
   }
+  const black = useSelector(state => state.black)
 
   return (
-    <header ref={menuRef} className='bg-white md:px-4 px-3 py-2 flex justify-content-between relative z-3'>
+    <header ref={menuRef} className={`bg-white md:px-4 px-3 py-2 flex justify-content-between relative ${black.entered ? 'z-5' :'z-3'}`}>
       {auth.token
-        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-3 ${menuHidden ? 'hidden' : 'flex'}`}>
+        ? <div id='usermenu' className={`absolute usermenu border-round-xl p-3 bg-white ideacard flex-column z-5 ${menuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-2'>
             <img src={require('../assets/usericon.svg').default} alt='usericon' />
             <p className='bodytext'>{auth.name}</p>
@@ -79,7 +80,7 @@ export default function Navbar () {
           </div>
         : null}
       {auth.token
-        ? <div id='usermenu' className={`absolute usermenu-mobile border-round-xl p-3 bg-white ideacard flex-column z-2 ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
+        ? <div id='usermenu' style={{'transform':'translateZ(10px)'}} className={`absolute usermenu-mobile border-round-xl z-5 p-3 bg-white ideacard flex-column ${phoneMenuHidden ? 'hidden' : 'flex'}`}>
           <span className='flex flex-row gap-4 justify-content-center'>
           <Link className='flex h-min' to='/mentions'>
             {notif && notif.unreads ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' /> :
