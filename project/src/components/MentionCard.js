@@ -49,7 +49,7 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
   return (
     <Link onClick={() => markRead(true)} to={`/ideas/${ideaId}`}>
       <div className={`flex-grow-1 border-round-xl ${!read ? 'bg-white' : null} mentioncard ideacard relative flex flex-row`}>
-        {!read ? <img className='absolute top-0 left-0 py-4 px-4' src={require('../assets/unreadCircle.svg').default} alt='unread' /> : null}
+        {!read ? <img className='absolute top-0 left-0 md:py-4 md:px-4 px-3 py-3' src={require('../assets/unreadCircle.svg').default} alt='unread' /> : null}
         <span className='blue read-toggle absolute top-0 right-0 md:py-3 md:px-3 sm:py-2 sm:px-2 px-3 py-3 flex-row sm:gap-2 gap-4 align-items-center'>
         <img
           style={{'height':'1.4rem'}}
@@ -63,7 +63,10 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
           }} className='blue w-max md:font-16 font-14'
         >
         </img>
-        <img style={{'height':'1.4rem'}} alt='trash' src={require('../assets/trash-bin.svg').default}></img>
+        <img onClick={e => {
+          e.stopPropagation()
+          e.preventDefault()
+        }} style={{'height':'1.4rem'}} alt='trash' src={require('../assets/trash-bin.svg').default}></img>
         </span>
         <div className='md:py-6 md:px-6 px-5 py-5 sm:flex flex-column hidden col-5 border-right'>
           <p className='mb-1 bodytext'>{author}</p>
