@@ -177,7 +177,6 @@ export default function Ideas () {
                 setMoreLoading(false)
                 setSearch(search)
               })
-              return search
             })
             return tags
           })
