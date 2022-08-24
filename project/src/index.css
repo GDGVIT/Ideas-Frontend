@@ -436,6 +436,12 @@ textarea {
   padding-right: 0.4rem;
 }
 
+.arrow {
+  right: 0;
+  top: 0;
+  margin-right: -7.7rem;
+}
+
 .searchbg {
   background-image: url("../src/assets/texture.png");
   background-size: 220px 300px;

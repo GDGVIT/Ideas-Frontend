@@ -140,7 +140,12 @@ export default function NewIdea () {
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Add an Idea</h1>
           <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
-            <div className='flex flex-column'>
+            <div className='flex flex-column relative'>
+              <img src={require('../../assets/arrow1.png')} style={{'marginTop':'-0.5rem'}} className='md:block hidden absolute arrow h-5rem w-min' alt='arrow1'></img>
+              <span style={{'marginTop':'5rem', 'top':0,'right':0,'marginRight':'-27rem'}} className='font-14 bodytext absolute'>
+              <p className='xl:w-12 lg:w-9 lg:block hidden'>Describe your Idea in a short and concise manner</p>
+              <p style={{'marginRight':'13.5rem','marginTop':'0.3rem'}} className='md:block hidden w-4 lg:hidden hidden'>Short and concise</p>
+              </span>
               <label className='relative' htmlFor='title-input'>
                 <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
                 Title*
@@ -148,13 +153,22 @@ export default function NewIdea () {
               </label>
               <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
-            <div className='flex flex-column'>
+            <div className='flex flex-column relative'>
+              <img src={require('../../assets/arrow2.png')} style={{'marginTop':'5rem'}} className='md:block hidden absolute arrow h-3rem w-min' alt='arrow1'></img>
+              <span style={{'marginTop':'8.7rem', 'top':0,'right':0,'marginRight':'-42rem'}} className='font-14 bodytext absolute'>
+              <p className='xl:w-7 lg:w-5 lg:block hidden'>Give details about your Idea, write about what you want to implement, cover all the details</p>
+              <p style={{'marginRight':'24rem','marginTop':'0.3rem'}} className='md:block hidden w-2 lg:hidden hidden'>Implementation, scope and details</p>
+              </span>
               <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
               <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
-            <div className='flex flex-column'>
+            <div className='flex flex-column relative'>
+              <img src={require('../../assets/arrow3.png')} style={{'bottom':0,'right':0, 'marginBottom':'-3.5rem','marginRight':'-2rem'}} className='md:block hidden absolute h-3rem w-min' alt='arrow1'></img>
+              <span style={{'marginTop':'4rem', 'top':0,'right':0,'marginRight':'-15rem'}} className='font-14 bodytext absolute'>
+              <p className='lg:w-12 md:w-7 md:block hidden'>Mention tags for your project</p>
+              </span>
               <label htmlFor='tag-input'>Tags</label>
-              <div className='flex align-items-center flex-row flex-wrap gap-3'>
+              <div className='flex align-items-center flex-row flex-wrap gap-3 mt-1'>
                 {tags.map((tag, index) => tag
                   ? <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501', fontSize: '14px' }} key={index}>
                     <button style={{ fontSize: '14px' }} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
@@ -173,7 +187,7 @@ export default function NewIdea () {
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
         <img src={require('../../assets/plant1.png')} alt='frame' className='absolute h-7rem bottom-0 right-0 mb-3 sm:block hidden' />
-        <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 lg:mr-8 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
+        <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 lg:mr-7 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
       </div>
       <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem top-0 right-0 shelf-position sm:block hidden' />
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden' />
