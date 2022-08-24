@@ -98,13 +98,14 @@ export default function Navbar () {
           <button onClick={() => dispatch(logout())} className='mt-2 logout-button'>Logout</button>
         </div>
         : null}
-      <div className='flex md:gap-5 sm:gap-3 gap-2 align-items-center'>
+      <div className='flex md:gap-5 gap-3 align-items-center'>
         <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
         <Link className='bodytext md:font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
         {auth.token
           ? <Link to='/ideas/new'>
-            <button className='primary-button lg:font-20 py-2 px-3 font-16'>Add an Idea</button>
+            <button className='primary-button sm:block hidden lg:font-20 py-2 px-3 font-16'>Add an Idea</button>
+            <button className='primary-button sm:hidden block lg:font-20 py-2 px-3 font-16'>Add Idea</button>
           </Link>
           : null}
       </div>
