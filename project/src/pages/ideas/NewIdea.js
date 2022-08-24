@@ -178,7 +178,7 @@ export default function NewIdea () {
       <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem top-0 right-0 shelf-position sm:block hidden' />
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden' />
       <div ref={prevRef} className='mt-8 grid gap-4 flex-grow-1 flex'>
-        <div className='md:col-4 h-min col-12 md:sticky top-0'>
+        <div style={{'top':'4rem'}} className='md:col-4 h-min col-12 md:sticky'>
           <h1 className='lg:text-4xl md:text-3xl text-2xl relative g-bold font-medium'>
             Your previous Ideas
             <img className='absolute lg:block md:hidden block' style={{ top: '2.7rem', left: '5.2rem' }} src={require('../../assets/drawUnderline1.svg').default} alt='stroke' />
