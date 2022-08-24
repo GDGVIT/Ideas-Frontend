@@ -187,9 +187,9 @@ export default function NewIdea () {
         </div>
         <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
         <img src={require('../../assets/plant1.png')} alt='frame' className='absolute h-7rem bottom-0 right-0 mb-3 sm:block hidden' />
-        <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 xl:mr-7 lg:mr-6 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
+        <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 z-2 xl:mr-7 lg:mr-6 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
       </div>
-      <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem top-0 right-0 shelf-position sm:block hidden' />
+      <img src={require('../../assets/shelf.png')} alt='frame' className='absolute h-10rem z-1 top-0 right-0 shelf-position sm:block hidden' />
       <img src={require('../../assets/plant2.png')} alt='frame' className='absolute h-7rem left-0 top-0 plant2-position md:block hidden' />
       <div ref={prevRef} className='mt-8 grid gap-4 flex-grow-1 flex'>
         <div style={{'top':'4rem'}} className='md:col-4 h-min col-12 md:sticky'>
