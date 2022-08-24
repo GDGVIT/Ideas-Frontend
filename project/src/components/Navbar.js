@@ -99,7 +99,7 @@ export default function Navbar () {
         </div>
         : null}
       <div className='flex md:gap-5 gap-3 align-items-center'>
-        <Link className='flex flex-row align-items-center' to='/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></Link>
+        <a className='flex flex-row align-items-center' rel='noreferrer' target='_blank' href='https://dscvit.com/'><img alt='logo' src={require('../assets/DSClogo.svg').default} /></a>
         <Link className='bodytext md:font-16' to='/'>Home</Link>
         <Link className='bodytext font-16' to='/ideas'>Ideas</Link>
         {auth.token
