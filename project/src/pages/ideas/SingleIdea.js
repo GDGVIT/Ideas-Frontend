@@ -114,10 +114,11 @@ export default function SingleIdea () {
   }
 
   const getIdea = useCallback(
-    async () => {
+    async (e) => {
       await axios
         .get(`/ideas/${id}`)
         .then(res => {
+          if (e) e.target.src = require('../../assets/trash-bin.svg').default
           setIdea(res.data.idea)
           setDate(dayjs(res.data.idea.createdOn).format('DD-MM-YYYY'))
           setUpvoteCount(res.data.idea.upvotes.length)
@@ -129,6 +130,7 @@ export default function SingleIdea () {
           }
           setComments(res.data.comments.reverse())
           setCommentsLoading(false)
+          setSubmitCommentLoading(false)
         })
     }, [auth, id]
   )
@@ -153,7 +155,6 @@ export default function SingleIdea () {
           document.getElementsByClassName('tagify__input')[0].innerHTML = null
           toast.success('Comment submitted!')
           // setUserMentions([])
-          setSubmitCommentLoading(false)
         }).catch((e) => {
           if (e.response.status === 401) {
             toast.error('You need to be logged in to comment.')
@@ -203,14 +204,15 @@ export default function SingleIdea () {
       })
   }
 
-  const deleteComment = async (commentId) => {
+  const deleteComment = async (commentId, e) => {
+    e.target.src = require('../../assets/spinner.gif')
     await axios.delete(`/ideas/comments/${commentId}`, {
       headers: {
         authorization: auth.token
       }
     })
       .then(() => {
-        getIdea()
+        getIdea(e)
       })
   }
 
@@ -299,7 +301,9 @@ export default function SingleIdea () {
                     <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
                   </div>
                   {comment.author && comment.author._id === userId &&
-                    <img onClick={() => deleteComment(comment._id)} className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
+                    <img onClick={(e) => {
+                      deleteComment(comment._id, e)
+                      }}  className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
                 </div>
               )
             })
