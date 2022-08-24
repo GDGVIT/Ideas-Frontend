@@ -110,7 +110,7 @@ header {
 }
 
 .mentioncard:hover > .read-toggle {
-  display: block;
+  display: flex;
 }
 
 .disabled-button:hover {
@@ -210,6 +210,14 @@ textarea {
   transform: translate(0, -50%);
 }
 
+.comment-delete {
+  display: none;
+}
+
+.comment:hover .comment-delete {
+  display: block;
+}
+
 .how-number {
   transform: translate(-52%, -38%);
   font-weight: 900;
@@ -293,29 +301,30 @@ textarea {
 }
 
 .usermenu {
-  bottom: -105px;
+  bottom: -112px;
   right: 0;
   margin-right: 1rem;
 }
 
 .usermenu-mobile {
-  bottom: -155px;
+  bottom: -162px;
   right: 0;
   margin-right: 1rem;
 }
 
 .logout-button {
-  color: red;
-  background: none;
-  border: none;
+  background-color: var(--red);
+  border-radius: 10px;
+  border: 0;
+  color: white;
+  padding: 0.45rem 1.1rem;
+  width: max-content;
+  font-family: Gilroy-Medium;
+  margin: auto;
   font-size: 16px;
-  border-radius: 2rem;
-  padding: 0.2rem;
 }
 
 .logout-button:hover {
-  background-color: rgb(255 45 45);
-  color: white;
   cursor: pointer;
 }
 

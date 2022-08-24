@@ -247,7 +247,7 @@ export default function SingleIdea () {
             <p className='font-16 datetext'>{date}</p>
           </div>
           <div className='flex flex-row justify-content-between'>
-            <h1 style={{ overflowWrap: 'break-word' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
+            <h1 style={{ wordBreak: 'break-all' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
             <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
@@ -294,7 +294,7 @@ export default function SingleIdea () {
           {comments.length
             ? comments.map((comment, index) => {
               return (
-                <div key={index} className='flex flex-row md:gap-4 gap-2'>
+                <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
                   <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
                   <div className='flex-grow-1'>
                     <p className='md:font-20 font-16'>{comment.authorName}</p>
@@ -303,7 +303,7 @@ export default function SingleIdea () {
                   {comment.author && comment.author._id === userId &&
                     <img onClick={(e) => {
                       deleteComment(comment._id, e)
-                      }}  className='pl-2 button' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
+                      }}  className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
                 </div>
               )
             })
