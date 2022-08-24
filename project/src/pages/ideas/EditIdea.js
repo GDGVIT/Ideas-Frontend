@@ -9,13 +9,14 @@ export default function EditIdea () {
   const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
-  const [title, setTitle] = useState('')
-  const [description, setDesc] = useState('')
+  const [title, setTitle] = useState('fetching...')
+  const [description, setDesc] = useState('fetching...')
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
   const [isKeyReleased, setIsKeyReleased] = useState(false)
   const navigate = useNavigate()
   const [submitLoading, setSubmitLoading] = useState(false)
+  const [fetchLoading, setFetchLoading] = useState(true)
 
   useEffect(() => {
     const getNotifs = () => {
@@ -72,6 +73,7 @@ export default function EditIdea () {
           setTitle(res.data.idea.title)
           setDesc(res.data.idea.description)
           setTags(res.data.idea.tags)
+          setFetchLoading(false)
         })
     }, [auth, id]
   )
@@ -121,15 +123,19 @@ export default function EditIdea () {
               <label className='relative' htmlFor='title-input'>
                 <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
                 Title
+                {!fetchLoading ?
                 <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
+                :null }
               </label>
-              <input value={title} onChange={(e) => { setTitle(e.target.value) }} className='input' id='title-input' />
+              <input disabled={fetchLoading} value={title} onChange={(e) => { setTitle(e.target.value) }} className={`input ${fetchLoading ? 'bodytext' : null}`} id='title-input' />
             </div>
             <div className='flex flex-column gap-2'>
               <label htmlFor='desc-input'>Description
+              {!fetchLoading ?
                 <span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span>
+                :null}
               </label>
-              <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+              <textarea disabled={fetchLoading} minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className={`input ${fetchLoading ? 'bodytext' :null}`} id='desc-input' />
             </div>
             <div className='flex flex-column gap-2'>
               <label htmlFor='tag-input'>Tags</label>
@@ -141,7 +147,7 @@ export default function EditIdea () {
                     </div>
                   : null)}
                 <input
-                  value={tagInput} onChange={(e) => {
+                  value={tagInput} disabled={fetchLoading} onChange={(e) => {
                     setTagInput(e.target.value)
                   }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
                 />
