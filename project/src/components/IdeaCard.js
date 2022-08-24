@@ -93,7 +93,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
       <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-25rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-25rem h-30rem' : null}`}>
+        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-25rem h-30rem' : null}`}>
           {!disabled
             ? <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
@@ -118,7 +118,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             : null}
           <p style={{ wordBreak: 'break-all' }} className='md:font-24 font-20 g-med'>{name}</p>
           {description
-            ? <p style={{ fontSize: 16 }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
+            ? <p style={{ fontSize: 16, wordBreak: 'break-all' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
             : null}
           {!disabled
             ? <div style={{ fontSize: 20 }} className='mt-3 flex flex-row flex-wrap gap-2'>
