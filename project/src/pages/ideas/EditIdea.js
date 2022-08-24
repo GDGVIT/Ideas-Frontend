@@ -67,6 +67,9 @@ export default function EditIdea () {
         .get(`/ideas/${id}`, {
           headers: {
             authorization: auth.token
+          },
+          params: {
+            edit:true
           }
         })
         .then(res => {

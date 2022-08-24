@@ -116,9 +116,9 @@ export default function IdeaCard ({ name, color, author, description, tags, date
               <p className='font-16 datetext'>{date}</p>
             </div>
             : null}
-          <p style={{ wordBreak: 'break-all' }} className='md:font-24 font-20 g-med'>{name}</p>
+          <p style={{ overflowWrap: 'break-word' }} className='md:font-24 font-20 g-med'>{name}</p>
           {description
-            ? <p style={{ fontSize: 16, wordBreak: 'break-all' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
+            ? <p style={{ fontSize: 16, overflowWrap: 'break-word' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
             : null}
           {!disabled
             ? <div style={{ fontSize: 20 }} className='mt-3 flex flex-row flex-wrap gap-2'>
