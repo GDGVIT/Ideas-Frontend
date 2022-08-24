@@ -138,9 +138,9 @@ export default function Landing () {
       setEnter(true)
     }
     if (!enter) {
-      document.body.style.overflow = 'hidden'
+      // document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'unset'
+      // document.body.style.overflow = 'unset'
       fetchTrending()
       fetchCompleted()
       dispatch(enterstore())
@@ -181,7 +181,8 @@ export default function Landing () {
             : <button href='#hero' onClick={() => setEnter(true)} className='primary-button mt-5 font-20'>Enter the Ideas Hub</button>}
           <p onClick={() => navigate('/how')} style={{ color: '#4D96FF', width: 'fit-content' }} className='button mt-4'>How does this work?</p>
         </div>
-
+        
+        {enter ? 
         <div className='relative'>
           <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
           <h2 className='font-36 g-bold'>Trending Ideas</h2>
@@ -202,7 +203,8 @@ export default function Landing () {
               </span>
             </div>
             : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
-        </div>
+        </div> : null }
+        {enter ? 
         <div className='mt-6 relative'>
           <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
           <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
@@ -226,8 +228,10 @@ export default function Landing () {
               </div>
               : <p className='bodytext mt-4'>No ideas made real yet 😔</p>
             : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
-        </div>
+        </div> : null }
+        {enter ?
         <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{ color: '#4D96FF' }} to='/how'>Let's find out.</Link></p>
+        :null }
       </div>
     </div>
   )
