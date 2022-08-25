@@ -265,11 +265,26 @@ export default function SingleIdea () {
       </div>
       <p style={{ overflowWrap: 'break-word' }} className='mt-4 bodytext font-16'>{idea.description || <Skeleton />}</p>
       <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
+        {idea.madeReal
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
+            )
+          : null}
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div>
-      <div className='relative mt-7'>
+      {idea.gitLinks && idea.gitLinks.length
+        ? (
+          <div className='mt-5'>
+            <span className='flex gap-2 align-items-center'>
+              <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
+              <a target='_blank' rel='noreferrer' href={idea.gitLinks[0]} className='button bodytext'>Check out the project!</a>
+            </span>
+          </div>
+          )
+        : null}
+      <div className='relative mt-5'>
         <MixedTags
           autoFocus
           settings={tagSettings}

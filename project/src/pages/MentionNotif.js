@@ -18,7 +18,7 @@ export default function MentionNotif () {
           authorization: auth.token
         }
       }).then(res => {
-        if (res.data.notifications.notifications) {
+        if (res.data.notifications && res.data.notifications.notifications) {
           dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
           setNotifs(res.data.notifications.notifications.reverse())
         }

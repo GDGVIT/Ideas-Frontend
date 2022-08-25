@@ -91,7 +91,7 @@ export default function CommentNotif () {
         {!ownCommentsLoading
           ? (
             <div className='mt-4 flex flex-column gap-3'>
-              {!ownCommentsLoading
+              {ownComments.length
                 ? (
                     ownComments.map((comment, index) => {
                       return (

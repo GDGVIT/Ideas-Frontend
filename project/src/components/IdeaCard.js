@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -95,10 +95,15 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
       <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-25rem h-30rem' : null}`}>
+        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
           {!disabled
             ? (
-              <div className='flex flex-row gap-2 absolute top-0 right-0 m-3'>
+              <div className='flex flex-row gap-2 align-items-center absolute top-0 right-0 m-3'>
+                {completed
+                  ? (
+                    <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
+                    )
+                  : null}
                 <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
                 {heartFull
                   ? (
@@ -129,7 +134,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             : null}
           <p style={{ overflowWrap: 'break-word' }} className='md:font-24 font-20 g-med'>{name}</p>
           {description
-            ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
+            ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{!horigrid ? description.slice(0, 150) : description.slice(0, 100)}{description.length > 150 ? '...' : ''}</p>
             : null}
           {!disabled
             ? (
