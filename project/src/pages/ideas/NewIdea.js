@@ -200,7 +200,7 @@ export default function NewIdea () {
             Your previous Ideas
             <img className='absolute lg:block md:hidden block' style={{ top: '2.7rem', left: '5.2rem' }} src={require('../../assets/drawUnderline1.svg').default} alt='stroke' />
           </h1>
-          <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+          <p className='mt-4 font-16 bodytext'>Here are the ideas that you have submitted so far. Feel free to add more!</p>
         </div>
         {!ideaLoad
           ? (
