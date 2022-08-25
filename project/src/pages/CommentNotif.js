@@ -109,7 +109,7 @@ export default function CommentNotif () {
                   )}
             </div>
             )
-          : <Skeleton className='w-11 mt-4 border-round-xl' height={100} count={25} />}
+          : <Skeleton className='md:w-11 w-12 mt-4 border-round-xl' height={100} count={25} />}
       </div>
       <div className='md:col-7 col-12'>
         <h1 className='g-bold text-xl'>
