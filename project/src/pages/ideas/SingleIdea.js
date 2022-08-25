@@ -270,6 +270,16 @@ export default function SingleIdea () {
             <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
             )
           : null}
+        {!idea.approved
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
+            )
+          : null}
+        {idea.approved && !idea.madeReal
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
+            )
+          : null}
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
