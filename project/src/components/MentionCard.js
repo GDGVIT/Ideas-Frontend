@@ -62,12 +62,12 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
               setRead(!read)
             }} className='blue w-max md:font-16 font-14'
           />
-          <img
+          {/* <img
             onClick={e => {
               e.stopPropagation()
               e.preventDefault()
             }} style={{ height: '1.4rem' }} alt='trash' src={require('../assets/trash-bin.svg').default}
-          />
+          /> */}
         </span>
         <div className='md:py-6 md:px-6 px-5 py-5 sm:flex flex-column hidden col-5 border-right'>
           <p className='mb-1 bodytext'>{author}</p>

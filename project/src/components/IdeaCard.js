@@ -113,12 +113,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
                     )
-                  :null }
+                  : null}
                 {rejected
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#ff6b6b' }}>In Progress</p>
                     )
-                  :null }
+                  : null}
                 <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
                 {heartFull
                   ? (
