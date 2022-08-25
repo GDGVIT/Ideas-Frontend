@@ -248,7 +248,7 @@ export default function SingleIdea () {
             <p className='font-16 datetext'>{date}</p>
           </div>
           <div className='flex flex-row justify-content-between'>
-            <h1 style={{ wordBreak: 'break-all' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
+            <h1 style={{ wordBreak: 'break-word' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
             <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
