@@ -1,14 +1,32 @@
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap";
 
+@font-face {
+  font-family: Gilroy-Bold;
+  src: local("Gilroy-Bold"), url("./assets/gilroy/Gilroy-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Gilroy-Medium;
+  src: local("Gilroy-Medium"), url("./assets/gilroy/Gilroy-Medium.ttf") format("truetype");
+}
+
 :root {
   --blue: #3994ff;
   --yellow: #f0b501;
   --green: #6bcb77;
+  --red: #ff6b6b;
   --bodytext: #575757;
+  --datetext: #8d8d8d;
+  --linecolor: #b1b1b1;
+}
+
+.sition {
+  transition: linear 1s;
 }
 
 html,
 body {
+  /* overflow-x: hidden; */
   padding: 0;
   margin: 0;
   font-family:
@@ -24,7 +42,43 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  background-color: #fafafa;
+  background-image: url("../src/assets/texture.png");
+  background-size: 220px 300px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-color: #fcfcfc;
+}
+
+.g-bold {
+  font-family:
+    Gilroy-Bold,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+.g-med {
+  font-family:
+    Gilroy-Medium,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
 }
 
 a {
@@ -40,6 +94,30 @@ header {
   box-shadow: 0 2px 11px 2px rgb(0 0 0 / 20%);
 }
 
+.primary-button-green {
+  background-color: var(--green);
+  border-radius: 18px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-family:
+    Gilroy-Medium,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+  border: 0;
+  color: white;
+  height: 100%;
+  padding: 0.55rem 1rem;
+}
+
 .primary-button {
   background-color: #3994ff;
   border-radius: 10px;
@@ -47,6 +125,44 @@ header {
   color: white;
   padding: 0.7rem 2rem;
   width: max-content;
+  font-family:
+    Gilroy-Medium,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+.border-right {
+  border-right: 0.8px solid var(--linecolor);
+}
+
+.primary-button:hover,
+.button:hover {
+  cursor: pointer;
+}
+
+.disabled-button {
+  opacity: 0.6;
+}
+
+.read-toggle {
+  display: none;
+}
+
+.mentioncard:hover > .read-toggle {
+  display: flex;
+}
+
+.disabled-button:hover {
+  cursor: default;
 }
 
 p,
@@ -68,18 +184,34 @@ h6 {
   padding: 3rem 6rem;
 }
 
+.negmar-ideas {
+  margin-left: -3rem !important;
+  margin-right: -3rem !important;
+}
+
+.pfp-nav:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 3rem 2rem;
   }
-}
 
-.disabled-button {
-  opacity: 0.6;
+  .negmar-ideas {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+  }
 }
 
 .bodytext {
   color: var(--bodytext);
+  font-weight: 300;
+}
+
+.datetext {
+  color: var(--datetext);
+  font-weight: 300;
 }
 
 .input {
@@ -89,8 +221,501 @@ h6 {
   resize: none;
 }
 
+.comment-input {
+  border: 0 solid #c7deff;
+  padding: 0.7rem;
+  padding-left: 3rem;
+  width: 100%;
+  border-bottom: 0.5px solid var(--linecolor);
+  color: var(--bodytext);
+  font-weight: 300;
+}
+
+textarea {
+  max-width: 100%;
+  position: static !important;
+  border: 0 solid #c7deff;
+  color: var(--bodytext);
+  font-weight: 300;
+  padding-bottom: 0.6rem;
+}
+
+.masonry-container {
+  columns: 4;
+  column-gap: 1rem;
+}
+
+.arrow-icon {
+  display: none;
+  transform: translate(50%, -50%);
+}
+
+.arrow-container:hover .arrow-icon {
+  display: block;
+}
+
+.comment-icon {
+  transform: translate(0, -50%);
+}
+
+.comment-delete {
+  display: none;
+}
+
+.comment:hover .comment-delete {
+  display: block;
+}
+
+.how-number {
+  transform: translate(-52%, -38%);
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.how-number-right {
+  transform: translate(52%, -38%);
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.green {
+  color: var(--green);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.comment-input:focus {
+  outline: none;
+}
+
 .pfp {
   border-radius: 50%;
   object-fit: contain;
   height: 100%;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.font-40 {
+  font-size: 40px;
+}
+
+.font-24 {
+  font-size: 24px;
+}
+
+.landing-font {
+  font-size: 54px;
+}
+
+.font-74 {
+  font-size: 74px;
+}
+
+.font-118 {
+  font-size: 118px;
+}
+
+.font-36 {
+  font-size: 36px;
+}
+
+.tag {
+  border-radius: 181px;
+}
+
+.usermenu {
+  bottom: -112px;
+  right: 0;
+  margin-right: 1rem;
+}
+
+.usermenu-mobile {
+  bottom: -162px;
+  right: 0;
+  margin-right: 1rem;
+}
+
+.logout-button {
+  background-color: var(--red);
+  border-radius: 10px;
+  border: 0;
+  color: white;
+  padding: 0.45rem 1.1rem;
+  width: max-content;
+  font-family:
+    Gilroy-Medium,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+  margin: auto;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+}
+
+.ideasearch-input {
+  border-radius: 18px;
+  border: 0 black solid;
+  font-size: 20px;
+  color: var(--bodytext);
+  padding: 15px 15px 15px 60px;
+}
+
+.ideasearch-input::placeholder {
+  color: var(--linecolor);
+}
+
+.frame-position {
+  margin-right: 16rem;
+}
+
+.shelf-position {
+  margin-top: 11rem;
+}
+
+.plant2-position {
+  margin-top: 35rem;
+}
+
+.plantshelf-position {
+  margin-top: 30rem;
+  margin-left: 39rem;
+}
+
+.cupboard-position {
+  margin-top: -2.5rem;
+  margin-right: 30rem;
+}
+
+.books-position {
+  margin-top: 4rem;
+  margin-left: 59rem;
+}
+
+.lamp-position {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 2.5rem;
+  z-index: 0;
+}
+
+.board-position {
+  top: 15rem;
+  left: 78rem;
+}
+
+.landing-person-position {
+  margin-top: 4rem;
+  margin-left: 6rem;
+}
+
+.line {
+  height: auto;
+  max-width: 100%;
+}
+
+.redline {
+  margin-top: -5rem;
+}
+
+.blueline {
+  margin-top: 38rem;
+}
+
+.cross-button {
+  background: none;
+  color: white;
+  border: 0 solid black;
+  font-size: large;
+}
+
+input,
+textarea {
+  font-family:
+    Gilroy-Medium,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+  color: black;
+  font-size: 16px;
+}
+
+.cross-button:hover {
+  color: var(--linecolor);
+}
+
+.blackout {
+  transition: all 1s ease;
+}
+
+.hanging-lights-position {
+  margin-top: 3rem;
+  margin-right: 9rem;
+}
+
+.landing-circle {
+  width: 10.1rem;
+  top: -1.5rem;
+  left: -0.35rem;
+}
+
+.brick1-position {
+  margin-top: -1rem;
+  margin-right: 0.5rem;
+}
+
+/* stylelint-disable */
+.react-datepicker__input-container > input {
+  border-radius: 6px;
+  border: none;
+  border: 0.5px solid var(--linecolor);
+  padding: 0.3rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+
+/* stylelint-enable */
+
+.arrow {
+  right: 0;
+  top: 0;
+  margin-right: -7.7rem;
+}
+
+.searchbg {
+  background-image: url("../src/assets/texture.png");
+  background-size: 220px 300px;
+  background-repeat: repeat;
+  background-color: #fcfcfc;
+  margin: -0.5rem;
+  margin-top: -3.2rem;
+  padding: 0.5rem;
+  padding-top: 2.2rem;
+  padding-bottom: 1rem;
+}
+
+.top-3 {
+  top: 3.1rem;
+}
+
+.top-2 {
+  top: 2.4rem;
+}
+
+.ideagrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.horigrid-container {
+  margin-left: -3rem;
+  margin-right: -3rem;
+}
+
+.horigrid {
+  display: flex;
+  flex-direction: row;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.horigrid::-webkit-scrollbar {
+  display: none;
+}
+
+.horiitem {
+  width: 300px;
+}
+
+.brick2-position {
+  margin-top: 30%;
+  margin-left: -4rem;
+}
+
+.brick3-position {
+  margin-top: 2.5rem;
+  margin-right: 4rem;
+}
+
+.web-position {
+  top: -10%;
+  margin-left: -7rem;
+}
+
+@media screen and (max-width: 1400px) {
+  .board-position {
+    left: 64rem;
+  }
+}
+
+@media screen and (max-width: 1248px) {
+  .board-position {
+    left: 50rem;
+  }
+
+  .cupboard-position {
+    margin-top: -2rem;
+    margin-right: 20rem;
+  }
+
+  .plantshelf-position {
+    margin-left: 34rem;
+  }
+
+  .blueline {
+    margin-top: 38rem;
+  }
+
+  .redline {
+    margin-top: 5rem;
+  }
+
+  .books-position {
+    margin-top: 4rem;
+    margin-left: 49rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .plantshelf-position {
+    margin-left: 23rem;
+    margin-top: 38rem;
+  }
+
+  .board-position {
+    left: 40rem;
+  }
+
+  .landing-font {
+    font-size: 54px;
+  }
+
+  .landing-circle {
+    width: 10.1rem;
+    top: -1.5rem;
+    left: -0.35rem;
+  }
+
+  .blueline {
+    margin-top: 35rem;
+  }
+
+  .cupboard-position {
+    margin-top: -1.8rem;
+    margin-right: 12rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .frame-position {
+    margin-right: 6rem;
+  }
+
+  .cupboard-position {
+    margin-top: -1.8rem;
+    margin-right: 5rem;
+  }
+
+  .tagify {
+    padding-right: 60px;
+  }
+
+  .books-position {
+    margin-left: 29rem;
+  }
+
+  .plantshelf-position {
+    margin-top: 30rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .rem-mar {
+    margin-left: -2rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  input,
+  textarea {
+    font-size: 14px;
+  }
+
+  .blueline {
+    margin-top: 25rem;
+  }
+
+  .landing-font {
+    font-size: 46px;
+  }
+
+  .landing-circle {
+    width: 8.7rem;
+    top: -1.2rem;
+    left: -0.28rem;
+  }
+
+  .plantshelf-position {
+    margin-left: 15rem;
+    margin-top: 35rem;
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .line {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 413px) {
+  .plantshelf-position {
+    margin-left: 10rem;
+    margin-top: 40rem;
+  }
 }
