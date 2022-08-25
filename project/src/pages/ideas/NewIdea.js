@@ -159,8 +159,8 @@ export default function NewIdea () {
                 <p className='xl:w-7 lg:w-5 lg:block hidden'>Give details about your Idea, write about what you want to implement, cover all the details</p>
               </span>
               <p style={{ marginLeft: '0.1rem', left: 0, bottom: 0, marginBottom: '-1.25rem' }} className='font-14 bodytext absolute block w-12 lg:hidden hidden'>Implementation, scope and details</p>
-              <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
-              <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+              <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 950 ? `${1000 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
+              <textarea minLength={199} maxLength={1000} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
             <div className='flex flex-column relative'>
               <img src={require('../../assets/arrow3.png')} style={{ bottom: 0, right: 0, marginBottom: '-3.5rem', marginRight: '-2rem' }} className='lg:block hidden absolute h-3rem w-min' alt='arrow1' />
