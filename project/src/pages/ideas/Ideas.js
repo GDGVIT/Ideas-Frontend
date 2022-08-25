@@ -246,7 +246,7 @@ export default function Ideas () {
                   >
                     <div className='flex flex-column m-auto'>
                       <p className='bodytext font-16'>You have</p>
-                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
+                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> idea{ideaCount !== 1 ? 's' : null}</p>
                     </div>
                   </Link>
                   )
