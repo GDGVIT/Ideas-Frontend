@@ -37,11 +37,11 @@ export default function MentionNotif () {
         <p className='button bodytext'>Clear all</p>
       </span>
       {!loading
-        ? notifs.length
-          ? notifs.map((notif, index) => {
-            return <MentionCard key={index} commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} name={notif.parentIdeaTitle} pfp={notif.commentAuthorPicture} author={notif.parentIdeaAuthorName} commentAuthor={notif.commentAuthorName} ideaId={notif.parentIdeaId} />
-          })
-          : <p className='bodytext font-16'>No notifications yet.</p>
+        ? (notifs.length
+            ? (notifs.map((notif, index) => {
+                return <MentionCard key={index} commentBody={notif.sourceBody} readStatus={notif.read} _id={notif._id} name={notif.parentIdeaTitle} pfp={notif.commentAuthorPicture} author={notif.parentIdeaAuthorName} commentAuthor={notif.commentAuthorName} ideaId={notif.parentIdeaId} />
+              }))
+            : <p className='bodytext font-16'>No notifications yet.</p>)
         : <Skeleton containerClassName='flex flex-column gap-1' height={100} count={5} />}
     </div>
   )
