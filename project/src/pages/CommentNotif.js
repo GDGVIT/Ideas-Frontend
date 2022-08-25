@@ -89,32 +89,36 @@ export default function CommentNotif () {
       <div className='md:col-5 col-12'>
         <h1 className='g-bold text-xl'>Your Comments</h1>
         {!ownCommentsLoading
-          ? <div className='mt-4 flex flex-column gap-3'>
-            {!ownCommentsLoading
-              ? ownComments.map((comment, index) => {
-                return (
-                  <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
-                    <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
-                    <span dangerouslySetInnerHTML={{ __html: comment.body }} className='bodytext' />
-                  </div>
-                )
-              })
-              : <p className='bodytext mt-4'>You haven't made any comments 😔</p>}
-          </div>
+          ? (
+            <div className='mt-4 flex flex-column gap-3'>
+              {!ownCommentsLoading
+                ? ownComments.map((comment, index) => {
+                  return (
+                    <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
+                      <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
+                      <span dangerouslySetInnerHTML={{ __html: comment.body }} className='bodytext' />
+                    </div>
+                  )
+                })
+                : <p className='bodytext mt-4'>You haven't made any comments 😔</p>}
+            </div>
+            )
           : <Skeleton className='w-11 mt-4 border-round-xl' height={100} count={25} />}
       </div>
       <div className='md:col-7 col-12'>
         <h1 className='g-bold text-xl'>Comments on your Ideas</h1>
         {!userIdeasLoading
-          ? <div className='mt-4 flex flex-column gap-3'>
-            {userIdeas.length
-              ? userIdeas.map((idea, index) => {
-                return idea.comments.length
-                  ? <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()} />
-                  : null
-              })
-              : <p className='bodytext mt-4'>Nothing to see here, yet 😔</p>}
-          </div>
+          ? (
+            <div className='mt-4 flex flex-column gap-3'>
+              {userIdeas.length
+                ? userIdeas.map((idea, index) => {
+                  return idea.comments.length
+                    ? <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()} />
+                    : null
+                })
+                : <p className='bodytext mt-4'>Nothing to see here, yet 😔</p>}
+            </div>
+            )
           : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
     </div>

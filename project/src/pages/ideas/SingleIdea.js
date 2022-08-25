@@ -194,8 +194,7 @@ export default function SingleIdea () {
   }
 
   const deleteIdea = async () => {
-    await axios.delete
-    (`/ideas/${id}`, {
+    await axios.delete(`/ideas/${id}`, {
       headers: {
         authorization: auth.token
       }
@@ -253,9 +252,10 @@ export default function SingleIdea () {
             <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
-              {idea.author && idea.author._id === userId && <Link className='flex' to={`/ideas/edit/${id}`}>
-                <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit' />
-              </Link>}
+              {idea.author && idea.author._id === userId &&
+                <Link className='flex' to={`/ideas/edit/${id}`}>
+                  <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit' />
+                </Link>}
               {idea.author && idea.author._id === userId && (warned
                 ? <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />
                 : <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />)}
@@ -292,27 +292,29 @@ export default function SingleIdea () {
             />}
       </div>
       {!commentsLoading
-        ? <div className='mt-6 flex flex-column gap-4'>
-          {comments.length
-            ? comments.map((comment, index) => {
-              return (
-                <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
-                  <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-                  <div className='flex-grow-1'>
-                    <p className='md:font-20 font-16'>{comment.authorName}</p>
-                    <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+        ? (
+          <div className='mt-6 flex flex-column gap-4'>
+            {comments.length
+              ? comments.map((comment, index) => {
+                return (
+                  <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
+                    <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+                    <div className='flex-grow-1'>
+                      <p className='md:font-20 font-16'>{comment.authorName}</p>
+                      <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+                    </div>
+                    {comment.author && comment.author._id === userId &&
+                      <img
+                        onClick={(e) => {
+                          deleteComment(comment._id, e)
+                        }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
+                      />}
                   </div>
-                  {comment.author && comment.author._id === userId &&
-                    <img
-                      onClick={(e) => {
-                        deleteComment(comment._id, e)
-                      }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
-                    />}
-                </div>
-              )
-            })
-            : <p className='bodytext'>No comments yet 😔</p>}
-        </div>
+                )
+              })
+              : <p className='bodytext'>No comments yet 😔</p>}
+          </div>
+          )
         : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
   )

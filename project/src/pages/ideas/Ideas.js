@@ -238,16 +238,18 @@ export default function Ideas () {
           <div className='align-items-center relative w-full flex gap-3 flex-row'>
             <form className='relative flex-grow-1 flex flex-row gap-4'>
               {auth.token
-                ? <Link
+                ? (
+                  <Link
                     className='sm:flex hidden' to='/ideas/new' state={{
                       toPrevious: true
                     }}
                   >
-                  <div className='flex flex-column m-auto'>
-                    <p className='bodytext font-16'>You have</p>
-                    <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
-                  </div>
-                </Link>
+                    <div className='flex flex-column m-auto'>
+                      <p className='bodytext font-16'>You have</p>
+                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
+                    </div>
+                  </Link>
+                  )
                 : null}
               <div className='relative flex-grow-1'>
                 <MixedTags
@@ -286,16 +288,19 @@ export default function Ideas () {
           </div>
         </div>
         {!ideasloading
-          ? <div className='ideagrid gap-5'>
-            {ideas.length
-              ? ideas.map((idea, index) => {
-                return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-              })
-              : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
-          </div>
+          ? (
+            <div className='ideagrid gap-5'>
+              {ideas.length
+                ? ideas.map((idea, index) => {
+                  return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                })
+                : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
+            </div>
+            )
           : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} />}
         {limitCount <= ideas.length
-          ? <button
+          ? (
+            <button
               onClick={async (e) => {
                 e.preventDefault()
                 setMoreLoading(true)
@@ -303,7 +308,8 @@ export default function Ideas () {
                 setLimitCount(limitCount + 12)
               }} className='button primary-button font-16 mx-auto mt-4 text-center'
             >Load more...
-          </button>
+            </button>
+            )
           : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>

@@ -144,10 +144,12 @@ export default function EditIdea () {
               <label htmlFor='tag-input'>Tags</label>
               <div className='flex align-items-center flex-row flex-wrap gap-3'>
                 {tags.map((tag, index) => tag
-                  ? <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
-                    <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
-                    {tag}
+                  ? (
+                    <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
+                      <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+                      {tag}
                     </div>
+                    )
                   : null)}
                 <input
                   value={tagInput} disabled={fetchLoading} onChange={(e) => {

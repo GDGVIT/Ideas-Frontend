@@ -171,10 +171,12 @@ export default function NewIdea () {
               <label htmlFor='tag-input'>Tags</label>
               <div className='flex align-items-center flex-row flex-wrap gap-3 mt-1'>
                 {tags.map((tag, index) => tag
-                  ? <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501', fontSize: '14px' }} key={index}>
-                    <button style={{ fontSize: '14px' }} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
-                    {tag}
-                  </div>
+                  ? (
+                    <div className='p-1 text-white px-3 tag' style={{ backgroundColor: '#F0B501', fontSize: '14px' }} key={index}>
+                      <button style={{ fontSize: '14px' }} type='button' className='button mr-2 cross-button' onClick={() => deleteTag(index)}>&#x2715;</button>
+                      {tag}
+                    </div>
+                    )
                   : null)}
                 <input
                   value={tagInput} onChange={(e) => {
@@ -201,15 +203,17 @@ export default function NewIdea () {
           <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
         </div>
         {!ideaLoad
-          ? <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5 relative'>
-            <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
-            <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
-            {userIdeas.length
-              ? userIdeas.map((idea, index) => {
-                return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-              })
-              : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
-          </div>
+          ? (
+            <div className='md:col md:mt-8 mt-2 col-12 flex flex-column gap-5 relative'>
+              <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 right-0 brick1-position sm:block hidden' />
+              <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
+              {userIdeas.length
+                ? userIdeas.map((idea, index) => {
+                  return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                })
+                : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
+            </div>
+            )
           : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5} />}
       </div>
     </div>

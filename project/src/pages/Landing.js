@@ -147,7 +147,6 @@ export default function Landing () {
   }, [enter, black, dispatch, fetchCompleted, fetchTrending])
 
   return (
-    /* eslint-disable react/jsx-closing-tag-location */
     <div className='z-2'>
       <div className={`${enter || black.entered ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.92)' }} />
       <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-8rem w-6rem mx-auto lamp-position' />
@@ -166,9 +165,13 @@ export default function Landing () {
           <p className='mt-5 mb-5'><i>"Everything Begins With An Idea" – Earl Nightingale</i></p>
           {enter
             ? auth.token
-              ? <Link to='/ideas/new'>
-                <button className='primary-button font-20'>Add an Idea</button>
-              </Link>
+              ? (
+                <Link to='/ideas/new'>
+                  <button className='primary-button font-20'>
+                    Add an Idea
+                  </button>
+                </Link>
+                )
               : <GoogleLogin
                   className='mt-5'
                   onSuccess={credentialResponse => {
@@ -183,59 +186,70 @@ export default function Landing () {
         </div>
 
         {enter
-          ? <div className='relative'>
-            <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
-            <h2 className='font-36 g-bold'>Trending Ideas</h2>
-            {!trendload
-              ? <div className='horigrid-container relative'>
-                <span onClick={() => trendingScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
-                  <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
-                </span>
-                <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
-                  <span className='grid-space-span' />
-                  {trending.map((idea, index) => {
-                    return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-                  })}
-                  <span className='grid-space-span' />
-                </div>
-                <span onClick={() => trendingScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
-                  <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
-                </span>
-              </div>
-              : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
-          </div>
+          ? (
+            <div className='relative'>
+              <img src={require('../assets/bricks2.png')} alt='bricks' className='absolute h-3rem brick3-position top-0 right-0 sm:block hidden' />
+              <h2 className='font-36 g-bold'>Trending Ideas</h2>
+              {!trendload
+                ? (
+                  <div className='horigrid-container relative'>
+                    <span onClick={() => trendingScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
+                      <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
+                    </span>
+                    <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
+                      <span className='grid-space-span' />
+                      {trending.map((idea, index) => {
+                        return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                      })}
+                      <span className='grid-space-span' />
+                    </div>
+                    <span onClick={() => trendingScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+                      <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
+                    </span>
+                  </div>
+                  )
+                : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
+            </div>
+            )
           : null}
         {enter
-          ? <div className='mt-6 relative'>
-            <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
-            <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
-            <h2 className='font-36 g-bold'>Ideas Made Real</h2>
-            {!realload
-              ? completed.length
-                ? <div className='horigrid-container relative'>
-                  <span onClick={() => realScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
-                    <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
-                  </span>
-                  <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
-                    <span className='grid-space-span' />
-                    {completed.map((idea, index) => {
-                      return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-                    })}
-                    <span className='grid-space-span' />
-                  </div>
-                  <span onClick={() => realScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
-                    <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
-                  </span>
-                </div>
-                : <p className='bodytext mt-4'>No ideas made real yet 😔</p>
-              : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
-          </div>
+          ? (
+            <div className='mt-6 relative'>
+              <img src={require('../assets/cupboard.png')} alt='bricks' className='absolute h-13rem cupboard-position top-0 right-0 sm:block hidden' />
+              <img src={require('../assets/web.png')} alt='bricks' className='absolute h-8rem web-position left-0 sm:block hidden' />
+              <h2 className='font-36 g-bold'>Ideas Made Real</h2>
+              {!realload
+                ? completed.length
+                  ? (
+                    <div className='horigrid-container relative'>
+                      <span onClick={() => realScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
+                        <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
+                      </span>
+                      <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
+                        <span className='grid-space-span' />
+                        {completed.map((idea, index) => {
+                          return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                        })}
+                        <span className='grid-space-span' />
+                      </div>
+                      <span onClick={() => realScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+                        <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
+                      </span>
+                    </div>
+                    )
+                  : (
+                    <p className='bodytext mt-4'>
+                      No ideas made real yet 😔
+                    </p>
+                    )
+                : (<Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />)}
+            </div>
+            )
           : null}
         {enter
           ? <p className='mt-8 text-center'>Wanna know how we make your ideas our reality? <Link style={{ color: '#4D96FF' }} to='/how'>Let's find out.</Link></p>
           : null}
       </div>
     </div>
-    /* eslint-enable react/jsx-closing-tag-location */
   )
 }
