@@ -246,7 +246,7 @@ export default function Ideas () {
                   >
                     <div className='flex flex-column m-auto'>
                       <p className='bodytext font-16'>You have</p>
-                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> ideas</p>
+                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> idea{ideaCount !== 1 ? 's' : null}</p>
                     </div>
                   </Link>
                   )
@@ -292,7 +292,7 @@ export default function Ideas () {
             <div className='ideagrid gap-5'>
               {ideas.length
                 ? (ideas.map((idea, index) => {
-                    return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                    return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} />
                   }))
                 : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
             </div>

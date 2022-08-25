@@ -149,7 +149,7 @@ export default function NewIdea () {
               <label className='relative' htmlFor='title-input'>
                 <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
                 Title*
-                <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
+                <span className='ml-3 font-12 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
               </label>
               <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
@@ -159,8 +159,8 @@ export default function NewIdea () {
                 <p className='xl:w-7 lg:w-5 lg:block hidden'>Give details about your Idea, write about what you want to implement, cover all the details</p>
               </span>
               <p style={{ marginLeft: '0.1rem', left: 0, bottom: 0, marginBottom: '-1.25rem' }} className='font-14 bodytext absolute block w-12 lg:hidden hidden'>Implementation, scope and details</p>
-              <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
-              <textarea minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
+              <label htmlFor='desc-input'>Description*<span className='ml-1 font-12 bodytext'>{description.length && description.length > 950 ? `${1000 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span></label>
+              <textarea minLength={199} maxLength={1000} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className='input' id='desc-input' />
             </div>
             <div className='flex flex-column relative'>
               <img src={require('../../assets/arrow3.png')} style={{ bottom: 0, right: 0, marginBottom: '-3.5rem', marginRight: '-2rem' }} className='lg:block hidden absolute h-3rem w-min' alt='arrow1' />
@@ -200,7 +200,7 @@ export default function NewIdea () {
             Your previous Ideas
             <img className='absolute lg:block md:hidden block' style={{ top: '2.7rem', left: '5.2rem' }} src={require('../../assets/drawUnderline1.svg').default} alt='stroke' />
           </h1>
-          <p className='mt-4 font-16 bodytext'>This is a paragraph with more information about something important. This something has many uses and is made of 100% recycled material.</p>
+          <p className='mt-4 font-16 bodytext'>Here are the ideas that you have submitted so far. Feel free to add more!</p>
         </div>
         {!ideaLoad
           ? (
@@ -209,7 +209,7 @@ export default function NewIdea () {
               <img src={require('../../assets/bricks.png')} alt='bricks' className='absolute h-3rem top-0 left-0 brick2-position sm:block hidden' />
               {userIdeas.length
                 ? (userIdeas.map((idea, index) => {
-                    return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                    return <IdeaCard key={index} name={idea.title} description={idea.description} completed={idea.madeReal} authorId={idea.author._id} author='You' tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} unapproved={!idea.approved} rejected={idea.rejected} />
                   }))
                 : <p className='text-right bodytext mt-4'>You haven't submitted any ideas yet 😔</p>}
             </div>

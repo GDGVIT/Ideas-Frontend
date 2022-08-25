@@ -18,7 +18,7 @@ export default function MentionNotif () {
           authorization: auth.token
         }
       }).then(res => {
-        if (res.data.notifications.notifications) {
+        if (res.data.notifications && res.data.notifications.notifications) {
           dispatch(setStatus(res.data.notifications.notifications.some(notif => !notif.read)))
           setNotifs(res.data.notifications.notifications.reverse())
         }
@@ -34,7 +34,7 @@ export default function MentionNotif () {
     <div className='flex flex-column gap-4'>
       <span className='flex flex-row justify-content-between align-items-center'>
         <h1 className='g-bold text-xl'>Notifications</h1>
-        <p className='button bodytext'>Clear all</p>
+        {/* <p className='button bodytext'>Clear all</p> */}
       </span>
       {!loading
         ? (notifs.length

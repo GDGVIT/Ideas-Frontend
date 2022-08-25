@@ -248,7 +248,7 @@ export default function SingleIdea () {
             <p className='font-16 datetext'>{date}</p>
           </div>
           <div className='flex flex-row justify-content-between'>
-            <h1 style={{ wordBreak: 'break-all' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
+            <h1 style={{ wordBreak: 'break-word' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
             <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
               <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
               {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
@@ -265,16 +265,46 @@ export default function SingleIdea () {
       </div>
       <p style={{ overflowWrap: 'break-word' }} className='mt-4 bodytext font-16'>{idea.description || <Skeleton />}</p>
       <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
+        {idea.madeReal
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
+            )
+          : null}
+        {idea.tags.length && !idea.approved
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
+            )
+          : null}
+        {idea.approved && !idea.madeReal
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
+            )
+          : null}
+        {idea.rejected
+          ? (
+            <p className='p-1 px-3 tag' style={{ backgroundColor: '#ff6b6b' }}>In Progress</p>
+            )
+          : null}
         {idea.tags.map((tag, index) => {
           return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
         })}
       </div>
-      <div className='relative mt-7'>
+      {idea.gitLinks && idea.gitLinks.length
+        ? (
+          <div className='mt-5'>
+            <span className='flex gap-2 align-items-center'>
+              <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
+              <a target='_blank' rel='noreferrer' href={idea.gitLinks[0]} className='button bodytext'>Check out the project!</a>
+            </span>
+          </div>
+          )
+        : null}
+      <div className='relative mt-5'>
         <MixedTags
           autoFocus
           settings={tagSettings}
           onInput={onInput}
-          placeholder='Add a comment...'
+          placeholder='type @ to mention a user'
           tagifyRef={tagifyRef}
           className={styles.tagifyComments}
           id='comment-input'

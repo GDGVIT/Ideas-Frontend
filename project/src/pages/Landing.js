@@ -193,21 +193,29 @@ export default function Landing () {
               <h2 className='font-36 g-bold'>Trending Ideas</h2>
               {!trendload
                 ? (
-                  <div className='horigrid-container relative'>
-                    <span onClick={() => trendingScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
-                      <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
-                    </span>
-                    <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
-                      <span className='grid-space-span' />
-                      {trending.map((idea, index) => {
-                        return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
-                      })}
-                      <span className='grid-space-span' />
-                    </div>
-                    <span onClick={() => trendingScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
-                      <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
-                    </span>
-                  </div>
+                    trending.length
+                      ? (
+                        <div className='horigrid-container relative'>
+                          <span onClick={() => trendingScrollRight(-3)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 left-0'>
+                            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='left-arrow' src={require('../assets/arrow-left.svg').default} />
+                          </span>
+                          <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
+                            <span className='grid-space-span' />
+                            {trending.map((idea, index) => {
+                              return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} />
+                            })}
+                            <span className='grid-space-span' />
+                          </div>
+                          <span onClick={() => trendingScrollRight(2)} className='button z-2 arrow-container md:block hidden h-full w-3rem absolute top-0 right-0'>
+                            <img className='arrow-icon absolute h-3rem top-50 left-0' alt='right-arrow' src={require('../assets/arrow-right.svg').default} />
+                          </span>
+                        </div>
+                        )
+                      : (
+                        <p className='bodytext mt-4'>
+                          Hm, nothing trending 😔
+                        </p>
+                        )
                   )
                 : <Skeleton containerClassName='flex flex-column gap-2 mt-4' className='border-round-xl' height={250} count={1} />}
             </div>
@@ -230,7 +238,7 @@ export default function Landing () {
                           <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
                             <span className='grid-space-span' />
                             {completed.map((idea, index) => {
-                              return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                              return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} />
                             })}
                             <span className='grid-space-span' />
                           </div>
