@@ -202,7 +202,7 @@ export default function Landing () {
                           <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
                             <span className='grid-space-span' />
                             {trending.map((idea, index) => {
-                              return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                              return <IdeaCard type='trending' index={index} id={'trending' + index} key={'trending' + index} horigrid name={idea.title} description={idea.description} ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} />
                             })}
                             <span className='grid-space-span' />
                           </div>
@@ -238,7 +238,7 @@ export default function Landing () {
                           <div className='mt-5 px-3 pb-2 horigrid overflow-scroll flex-row gap-5'>
                             <span className='grid-space-span' />
                             {completed.map((idea, index) => {
-                              return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} />
+                              return <IdeaCard type='real' index={index} id={'real' + index} key={'real' + index} name={idea.title} description={idea.description} horigrid ideaspage authorId={idea.author._id} author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} />
                             })}
                             <span className='grid-space-span' />
                           </div>

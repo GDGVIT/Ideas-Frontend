@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -99,11 +99,21 @@ export default function IdeaCard ({ name, color, author, description, tags, date
           {!disabled
             ? (
               <div className='flex flex-row gap-2 align-items-center absolute top-0 right-0 m-3'>
+                {unapproved
+                  ? (
+                    <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
+                    )
+                  : null}
                 {completed
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
                     )
                   : null}
+                {!unapproved && !completed
+                  ? (
+                    <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
+                    )
+                  :null }
                 <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
                 {heartFull
                   ? (
@@ -125,7 +135,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             </Link>}
           {author
             ? (
-              <div className='bodytext font-16 grid gap-1 md:w-11 w-8 flex-row align-items-center mb-3'>
+              <div className='bodytext font-16 grid gap-1 md:w-11 w-8 flex-row align-items-center mb-3 mt-5'>
                 <p>{author}</p>
                 <p>|</p>
                 <p className='font-16 datetext'>{date}</p>
@@ -134,7 +144,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             : null}
           <p style={{ overflowWrap: 'break-word' }} className='md:font-24 font-20 g-med'>{name}</p>
           {description
-            ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{!horigrid ? description.slice(0, 150) : description.slice(0, 100)}{description.length > 150 ? '...' : ''}</p>
+            ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{!horigrid ? description.slice(0, 120) : description.slice(0, 75)}{description.length > 150 ? '...' : ''}</p>
             : null}
           {!disabled
             ? (
