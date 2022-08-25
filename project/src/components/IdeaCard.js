@@ -155,7 +155,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                       <img width={30} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
                       <div className='flex-grow-1'>
                         <p className='font-16'>{comment.authorName}</p>
-                        <span dangerouslySetInnerHTML={{ __html: comment.body }} className='mt-1 bodytext font-16' />
+                        <span style={{ wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: comment.body }} className='mt-1 bodytext font-16' />
                       </div>
                     </div>
                   )

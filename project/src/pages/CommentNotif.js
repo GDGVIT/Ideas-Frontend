@@ -96,8 +96,8 @@ export default function CommentNotif () {
                     ownComments.map((comment, index) => {
                       return (
                         <div key={index} className='flex-grow-1 border-round-xl py-3 px-4 bg-white ideacard md:w-11'>
-                          <Link to={`/ideas/${comment.ideaId}`}><p className='font-16'>{comment.ideaTitle}</p></Link>
-                          <span dangerouslySetInnerHTML={{ __html: comment.body }} className='bodytext' />
+                          <Link to={`/ideas/${comment.ideaId}`}><p style={{ overflowWrap: 'break-word' }} className='font-16'>{comment.ideaTitle}</p></Link>
+                          <span style={{ overflowWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: comment.body }} className='bodytext' />
                         </div>
                       )
                     })

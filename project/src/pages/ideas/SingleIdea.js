@@ -302,7 +302,7 @@ export default function SingleIdea () {
                         <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
                         <div className='flex-grow-1'>
                           <p className='md:font-20 font-16'>{comment.authorName}</p>
-                          <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+                          <span style={{ wordBreak: 'break-word' }} className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
                         </div>
                         {comment.author && comment.author._id === userId &&
                           <img
