@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import axios from '../../axios'
 import dayjs from 'dayjs'
@@ -231,6 +232,7 @@ export default function Ideas () {
   }, [])
 
   return (
+    /* eslint-disable react/jsx-closing-tag-location */
     <div className='negmar-ideas grid md:gap-4 gap-2'>
       <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
         <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
@@ -306,5 +308,7 @@ export default function Ideas () {
           : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>
+    /* eslint-enable react/jsx-closing-tag-location */
   )
 }
+/* eslint-enable no-unused-vars */

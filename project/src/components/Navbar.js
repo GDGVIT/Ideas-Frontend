@@ -129,16 +129,16 @@ export default function Navbar () {
                 getAuthToken(credentialResponse.credential, dispatch)
               }}
               onError={() => {
-                toast.error("Login failed.")
+                toast.error('Login failed.')
               }}
               useOneTap
             />}
       </div>
-      {auth.token ? 
-      <div className='md:hidden h-min'>
-        <input type='image' src={require('../assets/hamburger.png')} onClick={phoneUserMenu} alt='ham' />
-      </div>
-      :null }
+      {auth.token
+        ? <div className='md:hidden h-min'>
+          <input type='image' src={require('../assets/hamburger.png')} onClick={phoneUserMenu} alt='ham' />
+        </div>
+        : null}
     </header>
   )
 }

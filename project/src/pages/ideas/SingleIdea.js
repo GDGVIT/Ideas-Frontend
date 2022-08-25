@@ -235,6 +235,7 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
+    /* eslint-disable react/jsx-closing-tag-location */
     <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
       <Link to='/ideas'>
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
@@ -301,9 +302,11 @@ export default function SingleIdea () {
                     <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
                   </div>
                   {comment.author && comment.author._id === userId &&
-                    <img onClick={(e) => {
-                      deleteComment(comment._id, e)
-                      }}  className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash' />}
+                    <img
+                      onClick={(e) => {
+                        deleteComment(comment._id, e)
+                      }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
+                    />}
                 </div>
               )
             })
@@ -311,5 +314,6 @@ export default function SingleIdea () {
         </div>
         : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
+    /* eslint-enable react/jsx-closing-tag-location */
   )
 }

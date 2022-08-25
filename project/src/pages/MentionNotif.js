@@ -33,8 +33,8 @@ export default function MentionNotif () {
   return (
     <div className='flex flex-column gap-4'>
       <span className='flex flex-row justify-content-between align-items-center'>
-      <h1 className='g-bold text-xl'>Notifications</h1>
-      <p className='button bodytext'>Clear all</p>
+        <h1 className='g-bold text-xl'>Notifications</h1>
+        <p className='button bodytext'>Clear all</p>
       </span>
       {!loading
         ? notifs.length
