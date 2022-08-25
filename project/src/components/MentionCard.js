@@ -71,15 +71,15 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
         </span>
         <div className='md:py-6 md:px-6 px-5 py-5 sm:flex flex-column hidden col-5 border-right'>
           <p className='mb-1 bodytext'>{author}</p>
-          <p className='font-20 g-med'>{name}</p>
+          <p style={{ wordBreak: 'break-word' }} className='font-20 g-med'>{name}</p>
         </div>
         <div className='md:py-6 md:px-6 px-5 py-5 sm:col-7 col-12 flex flex-column'>
-          <p className='sm:hidden flex flex-column mb-3 font-20 g-med'>{name}</p>
+          <p style={{ wordBreak: 'break-word' }} className='sm:hidden flex flex-column mb-3 font-20 g-med'>{name}</p>
           <div className='flex flex-row md:gap-4 gap-3 my-auto'>
             <img className='w-3rem h-min pfp' src={pfp} alt='pfp' referrerPolicy='no-referrer' />
             <div className='flex-grow-1'>
               <p className='md:font-20 font-16'>{commentAuthor}</p>
-              <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: doRegex(commentBody) }} />
+              <span style={{ wordBreak: 'break-word' }} className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: doRegex(commentBody) }} />
             </div>
           </div>
         </div>

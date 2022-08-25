@@ -129,7 +129,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             : null}
           <p style={{ overflowWrap: 'break-word' }} className='md:font-24 font-20 g-med'>{name}</p>
           {description
-            ? <p style={{ fontSize: 16, overflowWrap: 'break-word' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
+            ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{description.slice(0, 150)}{description.length > 150 ? '...' : ''}</p>
             : null}
           {!disabled
             ? (
@@ -153,7 +153,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                   return (
                     <div key={index} className='grid gap-3'>
                       <img width={30} className='pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-                      <div className='flex-grow-1'>
+                      <div className='flex-grow-1 col p-0'>
                         <p className='font-16'>{comment.authorName}</p>
                         <span style={{ wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: comment.body }} className='mt-1 bodytext font-16' />
                       </div>
