@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -112,6 +112,11 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                 {!unapproved && !completed
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
+                    )
+                  :null }
+                {rejected
+                  ? (
+                    <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#ff6b6b' }}>In Progress</p>
                     )
                   :null }
                 <p style={{ color: '#FF6B6B' }}>{upvoteCountNum}</p>
