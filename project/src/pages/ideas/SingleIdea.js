@@ -295,24 +295,29 @@ export default function SingleIdea () {
         ? (
           <div className='mt-6 flex flex-column gap-4'>
             {comments.length
-              ? comments.map((comment, index) => {
-                return (
-                  <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
-                    <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-                    <div className='flex-grow-1'>
-                      <p className='md:font-20 font-16'>{comment.authorName}</p>
-                      <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
-                    </div>
-                    {comment.author && comment.author._id === userId &&
-                      <img
-                        onClick={(e) => {
-                          deleteComment(comment._id, e)
-                        }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
-                      />}
-                  </div>
-                )
-              })
-              : <p className='bodytext'>No comments yet 😔</p>}
+              ? (
+                  comments.map((comment, index) => {
+                    return (
+                      <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
+                        <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+                        <div className='flex-grow-1'>
+                          <p className='md:font-20 font-16'>{comment.authorName}</p>
+                          <span className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+                        </div>
+                        {comment.author && comment.author._id === userId &&
+                          <img
+                            onClick={(e) => {
+                              deleteComment(comment._id, e)
+                            }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
+                          />}
+                      </div>
+                    )
+                  }))
+              : (
+                <p className='bodytext'>
+                  No comments yet 😔
+                </p>
+                )}
           </div>
           )
         : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
