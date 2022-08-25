@@ -289,7 +289,7 @@ export default function SingleIdea () {
           autoFocus
           settings={tagSettings}
           onInput={onInput}
-          placeholder='Add a comment...'
+          placeholder='type @ to mention a user'
           tagifyRef={tagifyRef}
           className={styles.tagifyComments}
           id='comment-input'

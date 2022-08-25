@@ -149,7 +149,7 @@ export default function NewIdea () {
               <label className='relative' htmlFor='title-input'>
                 <img className='z-0 absolute' style={{ top: '-0.7rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
                 Title*
-                <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
+                <span className='ml-3 font-12 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
               </label>
               <input maxLength={50} value={title} onChange={(e) => { setTitle(e.target.value) }} className='input z-1' id='title-input' />
             </div>
