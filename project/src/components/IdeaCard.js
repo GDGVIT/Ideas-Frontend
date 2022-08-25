@@ -39,10 +39,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     }
   }
 
+  /* eslint-disable no-unused-vars */
   const { ref, visible } = useVisibility({
     onChangeVisibility: handleChangeVisibility,
     options: visiOptions
   })
+  /* eslint-enable no-unused-vars */
 
   const doRegex = useCallback((input) => {
     const regex = /\[\[\{([^}]+)\}]]/gm

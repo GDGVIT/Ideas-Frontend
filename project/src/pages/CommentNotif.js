@@ -85,7 +85,6 @@ export default function CommentNotif () {
   }, [auth, fetchOwnComments, fetchUserPosts])
 
   return (
-    /* eslint-disable react/jsx-closing-tag-location */
     <div className='negmar-ideas grid md:gap-0 gap-6'>
       <div className='md:col-5 col-12'>
         <h1 className='g-bold text-xl'>Your Comments</h1>
@@ -119,6 +118,5 @@ export default function CommentNotif () {
           : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
     </div>
-    /* eslint-enable react/jsx-closing-tag-location */
   )
 }

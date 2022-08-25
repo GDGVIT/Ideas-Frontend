@@ -44,7 +44,6 @@ export default function Navbar () {
 
   const menuRef = useRef(null)
   const [listening, setListening] = useState(false)
-  const [unread, setUnread] = useState(false)
 
   useEffect(listenForOutsideClicks(
     listening,

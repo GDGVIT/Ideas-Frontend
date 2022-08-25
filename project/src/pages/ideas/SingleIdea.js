@@ -10,6 +10,7 @@ import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import { setStatus } from '../../app/slices/notifSlice'
 
 export default function SingleIdea () {
+  /* eslint-disable no-unused-vars */
   const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
@@ -41,6 +42,7 @@ export default function SingleIdea () {
       position: 'text'
     }
   })
+  /* eslint-enable no-unused-vars */
 
   useEffect(() => {
     const getNotifs = () => {
@@ -235,7 +237,6 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
-    /* eslint-disable react/jsx-closing-tag-location */
     <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
       <Link to='/ideas'>
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
@@ -314,6 +315,5 @@ export default function SingleIdea () {
         </div>
         : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
-    /* eslint-enable react/jsx-closing-tag-location */
   )
 }
