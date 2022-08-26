@@ -32,7 +32,7 @@ export default function Ideas () {
       enabled: 1,
       position: 'text'
     },
-    backspace: true, 
+    backspace: true,
     templates: {
       tag (tagData, tagify) {
         return `<tag title="${(tagData.title || tagData.value)}"
