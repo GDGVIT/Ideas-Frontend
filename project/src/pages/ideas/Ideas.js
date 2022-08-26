@@ -32,6 +32,7 @@ export default function Ideas () {
       enabled: 1,
       position: 'text'
     },
+    backspace: true,
     templates: {
       tag (tagData, tagify) {
         return `<tag title="${(tagData.title || tagData.value)}"
@@ -224,6 +225,18 @@ export default function Ideas () {
   }, [])
 
   const onRemove = useCallback(e => {
+    setTags(tags => {
+      if (tags && tags.length) {
+        for (let i = 0; i < tags.length; i++) {
+          setSearch(search => search.replace(tags[i], ''))
+        }
+      }
+      return tags
+    })
+    setUser(user => {
+      if (user) setSearch(search => search.replace(user, ''))
+      return user
+    })
     if (e.detail.data.prefix === '@') {
       setUser('')
     } else if (e.detail.data.prefix === '#') {
