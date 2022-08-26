@@ -25,11 +25,11 @@ export default function Landing () {
 
   const trendingScrollRight = (step) => {
     let card
-    if (slideshow.trendingEnd + step >= 0 && slideshow.trendingEnd + step < trending.length) {
+    if (slideshow.trendingEnd + step > 0 && slideshow.trendingEnd + step < trending.length-1) {
       card = document.getElementById(`trending${slideshow.trendingEnd + step}`)
       dispatch(setTrendingIndexEnd(slideshow.trendingEnd + step))
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-    } else if (slideshow.trendingEnd + step < 0) {
+    } else if (slideshow.trendingEnd + step <= 0) {
       card = document.getElementById(`trending${0}`)
       dispatch(setTrendingIndexEnd(0))
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
@@ -42,11 +42,11 @@ export default function Landing () {
 
   const realScrollRight = (step) => {
     let card
-    if (slideshow.realEnd + step >= 0 && slideshow.realEnd + step < completed.length) {
+    if (slideshow.realEnd + step > 0 && slideshow.realEnd + step < completed.length-1) {
       card = document.getElementById(`real${slideshow.realEnd + step}`)
       dispatch(setRealIndexEnd(slideshow.realEnd + step))
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-    } else if (slideshow.realEnd + step < 0) {
+    } else if (slideshow.realEnd + step <= 0) {
       card = document.getElementById(`real${0}`)
       dispatch(setRealIndexEnd(0))
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
