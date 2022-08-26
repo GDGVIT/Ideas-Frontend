@@ -72,7 +72,7 @@ export default function NewIdea () {
   const fetchUserPosts = useCallback(
     async () => {
       await axios
-        .get(`/ideas/user/${auth._id}`, {
+        .get(`/user/${auth._id}/ideas`, {
           headers: {
             authorization: auth.token
           }
