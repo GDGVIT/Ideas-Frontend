@@ -12,7 +12,6 @@ export default function CommentNotif () {
   const [userIdeas, setUserIdeas] = useState([])
   const [ownCommentsLoading, setOwnCommentLoading] = useState(true)
   const [userIdeasLoading, setUserIdeasLoading] = useState(true)
-  const [commentOnOwnIdea, setCommentOnOwnIdea] = useState(false)
 
   const auth = useSelector(state => state.auth)
 
@@ -119,13 +118,12 @@ export default function CommentNotif () {
         {!userIdeasLoading
           ? (
             <div className='mt-4 flex flex-column gap-3'>
-              {commentOnOwnIdea
+              {userIdeas.length
                 ? (
                     userIdeas.map((idea, index) => {
-                      if (idea.comments.length) setCommentOnOwnIdea(true)
                       return idea.comments.length
                         ? (
-                          <IdeaCard key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()} />
+                          <IdeaCard commNotif key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()} />
                           )
                         : null
                     })

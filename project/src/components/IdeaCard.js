@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -147,7 +147,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
               </div>
               )
             : null}
-          <p style={{ overflowWrap: 'break-word' }} className='md:font-24 font-20 g-med'>{name}</p>
+          <p style={{ overflowWrap: 'break-word' }} className={`${commNotif ? 'mt-5' : null} md:font-24 font-20 g-med`}>{name}</p>
           {description
             ? <p style={{ fontSize: 16, wordBreak: 'break-word' }} className='mt-3 font-16 bodytext'>{!horigrid ? description.slice(0, 120) : description.slice(0, 75)}{description.length > 150 ? '...' : ''}</p>
             : null}
