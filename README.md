@@ -10,21 +10,28 @@
 [![Join Us](https://img.shields.io/badge/Join%20Us-Developer%20Student%20Clubs-red)](https://dsc.community.dev/vellore-institute-of-technology/)
 [![Discord Chat](https://img.shields.io/discord/760928671698649098.svg)](https://discord.gg/498KVdSKWR)
 
-[![DOCS](https://img.shields.io/badge/Documentation-see%20docs-green?style=flat-square&logo=appveyor)](INSERT_LINK_FOR_DOCS_HERE) 
-  [![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=flat-square&logo=appveyor)](INSERT_UI_LINK_HERE)
+[![DOCS](https://img.shields.io/badge/Documentation-see%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/14311632/Uz5FLd1J) 
+  [![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=flat-square&logo=appveyor)](https://ideas.dscvit.com/)
 
 
 ## Features
-- [ ]  Landing Page and Google Auth
-- [ ]  Add New Idea Page
-- [ ]  Idea Searching
-- [ ]  Idea Discussion
+- [*]  Landing Page and Google Auth
+- [*]  Add New Idea Page
+- [*]  Idea Searching and Tagging
+- [*]  Idea Discussion
+- [*]  Idea Progress Indicators
+- [*]  User Mentioning and Notifications
 
 <br>
 
 ## Dependencies
- - < dependency >
- - < dependency >
+ - react
+ - redux
+ - react-oauth/google
+ - yaireo/tagify
+ - react-toastify
+ - axios
+ - dayjs
 
 
 ## Running
@@ -49,7 +56,7 @@ npm run dev
 		<td>
 		Anirudh Mishra
 		<p align="center">
-			<img src = "https://dscvit.com/images/dsc-logo-square.svg" width="150" height="150" alt="Your Name Here (Insert Your Image Link In Src">
+			<img src = "https://avatars.githubusercontent.com/u/91245420" width="150" height="150" alt="anirudh mishra">
 		</p>
 			<p align="center">
 				<a href = "https://github.com/anirudhgray">
