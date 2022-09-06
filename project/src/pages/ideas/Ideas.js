@@ -292,11 +292,11 @@ export default function Ideas () {
           <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
             <span className='flex flex-row'>
               <label className='mr-2' htmlFor='date-from'>From</label>
-              <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }} name='date-from' id='date-from' className='date-picker' />
+              <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }} name='date-from' id='date-from' excludeDateIntervals={toDate ? [{start:toDate,end:new Date(Date.now()+10000000000)}] : null} placeholderText='YYYY/MM/DD' className='date-picker' />
             </span>
             <span className='flex flex-row'>
               <label className='mr-2' htmlFor='date-to'>To</label>
-              <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' id='date-to' />
+              <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' excludeDateIntervals={fromDate ? [{start:new Date(0),end:fromDate}] :null } placeholderText='YYYY/MM/DD' id='date-to' />
             </span>
           </div>
         </div>
