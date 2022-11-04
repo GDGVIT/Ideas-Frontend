@@ -5,9 +5,9 @@ import Navbar from './Navbar'
 export default function Layout ({ admin, children }) {
   return (
     <div className='layout min-h-screen flex flex-column'>
-      <Navbar admin />
+      <Navbar admin={admin} />
       <main className='container'>{children}</main>
-      <Footer admin />
+      <Footer admin={admin} />
     </div>
   )
 }

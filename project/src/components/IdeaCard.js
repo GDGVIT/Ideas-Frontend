@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -95,7 +95,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
       <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
+        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? (showAdminButtons) ? 'h-29rem' : 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
           {!disabled
             ? (
               <div className='flex flex-row gap-2 align-items-center absolute top-0 right-0 m-3'>
@@ -180,6 +180,23 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     </div>
                   )
                 })}
+              </div>
+              )
+            : null}
+          {showAdminButtons
+            ? (
+              <div className='mt-6 absolute bottom-0 mb-3'>
+                {rejected
+                  ? (
+                    <p className='font-16'>This idea was rejected.</p>
+                    )
+                  : !unapproved
+                      ? (
+                        <p className='font-16'>This idea was approved.</p>
+                        )
+                      : (
+                        <p className='font-16'>Them buttons.</p>
+                        )}
               </div>
               )
             : null}

@@ -64,7 +64,9 @@ function App () {
         <Route exact path='/mentions' element={<GuardedRoute auth={auth} />}>
           <Route exact path='/mentions' element={<MentionNotif />} />
         </Route>
-        <Route exact path='/admin' element={<Admin />} />
+        <Route exact path='/admin' element={<GuardedRoute admin auth={auth} />}>
+          <Route exact path='/admin' element={<Admin />} />
+        </Route>
       </Routes>
     </div>
   )
