@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import IdeaCard from '../components/IdeaCard'
 import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../app/slices/notifSlice'
+import Layout from '../components/Layout'
 
 export default function CommentNotif () {
   const dispatch = useDispatch()
@@ -85,6 +86,7 @@ export default function CommentNotif () {
   }, [auth, fetchOwnComments, fetchUserPosts])
 
   return (
+    <Layout>
     <div className='negmar-ideas grid md:gap-0 gap-6'>
       <div className='md:col-5 col-12'>
         <h1 className='g-bold text-xl'>Your Comments</h1>
@@ -123,7 +125,7 @@ export default function CommentNotif () {
                     userIdeas.map((idea, index) => {
                       return idea.comments.length
                         ? (
-                          <IdeaCard commNotif key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} comments={idea.comments.reverse()} />
+                          <IdeaCard commNotif key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} rejected={idea.rejected} completed={idea.madeReal} comments={idea.comments.reverse()} />
                           )
                         : null
                     })
@@ -138,5 +140,6 @@ export default function CommentNotif () {
           : <Skeleton containerClassName='flex flex-column gap-2' className='mt-4 border-round-xl' height={150} count={25} />}
       </div>
     </div>
+    </Layout>
   )
 }

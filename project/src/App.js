@@ -19,6 +19,7 @@ import EditIdea from './pages/ideas/EditIdea'
 import CommentNotif from './pages/CommentNotif'
 import HowInfo from './pages/ideas/HowInfo'
 import MentionNotif from './pages/MentionNotif'
+import Admin from './pages/Admin'
 
 function App () {
   const dispatch = useDispatch()
@@ -63,6 +64,7 @@ function App () {
         <Route exact path='/mentions' element={<GuardedRoute auth={auth} />}>
           <Route exact path='/mentions' element={<MentionNotif />} />
         </Route>
+        <Route exact path='/admin' element={<Admin />} />
       </Routes>
     </div>
   )

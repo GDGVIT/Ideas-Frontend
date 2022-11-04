@@ -10,6 +10,7 @@ import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../app/slices/notifSlice'
 import { setTrendingIndexEnd, setRealIndexEnd } from '../app/slices/slideshowSlice'
 import { toast } from 'react-toastify'
+import Layout from '../components/Layout'
 
 export default function Landing () {
   const navigate = useNavigate()
@@ -147,6 +148,7 @@ export default function Landing () {
   }, [enter, black, dispatch, fetchCompleted, fetchTrending])
 
   return (
+    <Layout>
     <div className='z-2'>
       <div className={`${enter || black.entered ? 'opacity-0 z-0' : 'opacity-100 z-4'} blackout top-0 left-0 fixed h-screen w-screen`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.92)' }} />
       <img src={require('../assets/lamp.png')} alt='lamp' className='absolute lg:w-8rem w-6rem mx-auto lamp-position' />
@@ -262,5 +264,6 @@ export default function Landing () {
           : null}
       </div>
     </div>
+    </Layout>
   )
 }

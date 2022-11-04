@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { setStatus } from '../../app/slices/notifSlice'
+import Layout from '../../components/Layout'
 
 export default function Ideas () {
   const dispatch = useDispatch()
@@ -245,6 +246,7 @@ export default function Ideas () {
   }, [])
 
   return (
+    <Layout>
     <div className='negmar-ideas grid md:gap-4 gap-2'>
       <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
         <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
@@ -326,6 +328,7 @@ export default function Ideas () {
           : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
       </div>
     </div>
+    </Layout>
   )
 }
 /* eslint-enable no-unused-vars */

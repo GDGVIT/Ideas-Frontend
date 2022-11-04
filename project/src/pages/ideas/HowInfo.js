@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setStatus } from '../../app/slices/notifSlice'
 import axios from '../../axios'
+import Layout from '../../components/Layout'
 
 export default function HowInfo () {
   const dispatch = useDispatch
@@ -25,6 +26,7 @@ export default function HowInfo () {
     }
   }, [auth, dispatch])
   return (
+    <Layout>
     <div>
       <img src={require('../../assets/hanging-lights.png')} alt='lights' className='absolute h-10rem top-0 right-0 hanging-lights-position sm:block hidden' />
       <img src={require('../../assets/redline.png')} alt='line1' className='absolute line redline top-0 right-0' />
@@ -58,5 +60,6 @@ export default function HowInfo () {
         </div>
       </div>
     </div>
+    </Layout>
   )
 }

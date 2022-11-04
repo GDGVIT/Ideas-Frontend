@@ -8,6 +8,7 @@ import Skeleton from 'react-loading-skeleton'
 import styles from './singleIdea.css'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import { setStatus } from '../../app/slices/notifSlice'
+import Layout from '../../components/Layout'
 
 export default function SingleIdea () {
   /* eslint-disable no-unused-vars */
@@ -236,6 +237,7 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
+    <Layout>
     <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
       <Link to='/ideas'>
         <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
@@ -358,5 +360,6 @@ export default function SingleIdea () {
           )
         : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
     </div>
+    </Layout>
   )
 }

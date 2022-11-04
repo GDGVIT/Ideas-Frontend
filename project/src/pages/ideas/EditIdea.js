@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { setStatus } from '../../app/slices/notifSlice'
 import { toast } from 'react-toastify'
+import Layout from '../../components/Layout'
 
 export default function EditIdea () {
   const dispatch = useDispatch()
@@ -117,6 +118,7 @@ export default function EditIdea () {
   }, [auth, id, getIdea])
 
   return (
+    <Layout>
     <div>
       <div className='mt-6 grid gap-3 relative'>
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
@@ -166,5 +168,6 @@ export default function EditIdea () {
         <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 lg:mr-8 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
       </div>
     </div>
+    </Layout>
   )
 }

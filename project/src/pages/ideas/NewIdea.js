@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import Skeleton from 'react-loading-skeleton'
 import { setStatus } from '../../app/slices/notifSlice'
+import Layout from '../../components/Layout'
 
 export default function NewIdea () {
   const dispatch = useDispatch()
@@ -135,6 +136,7 @@ export default function NewIdea () {
   }, [auth, fetchUserPosts])
 
   return (
+    <Layout>
     <div>
       <div className='mt-6 grid gap-3 relative'>
         <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
@@ -217,5 +219,6 @@ export default function NewIdea () {
           : <Skeleton containerClassName='flex flex-column gap-2 col' className='border-round-xl flex-grow-1' height={200} count={5} />}
       </div>
     </div>
+    </Layout>
   )
 }

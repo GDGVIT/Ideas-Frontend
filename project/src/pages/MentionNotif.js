@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from '../axios'
 import { setStatus } from '../app/slices/notifSlice'
 import Skeleton from 'react-loading-skeleton'
+import Layout from '../components/Layout'
 
 export default function MentionNotif () {
   const dispatch = useDispatch()
@@ -30,11 +31,23 @@ export default function MentionNotif () {
     }
   }, [auth, dispatch])
 
+  const clearNotifs = async () => {
+    setLoading(true)
+    await axios.delete('/notifications', {
+      headers: {
+        authorization: auth.token
+      }
+    })
+    setNotifs([])
+    setLoading(false)
+  }
+
   return (
+    <Layout>
     <div className='flex flex-column gap-4'>
       <span className='flex flex-row justify-content-between align-items-center'>
         <h1 className='g-bold text-xl'>Notifications</h1>
-        {/* <p className='button bodytext'>Clear all</p> */}
+        <p onClick={clearNotifs} className='button bodytext'>Clear all</p>
       </span>
       {!loading
         ? (notifs.length
@@ -44,5 +57,6 @@ export default function MentionNotif () {
             : <p className='bodytext font-16'>No notifications yet.</p>)
         : <Skeleton containerClassName='flex flex-column gap-1' height={100} count={5} />}
     </div>
+    </Layout>
   )
 }
