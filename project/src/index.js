@@ -18,7 +18,7 @@ root.render(
     <Provider store={store}>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <Router>
-            <App />
+          <App />
         </Router>
       </GoogleOAuthProvider>
     </Provider>

@@ -247,87 +247,87 @@ export default function Ideas () {
 
   return (
     <Layout>
-    <div className='negmar-ideas grid md:gap-4 gap-2'>
-      <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
-        <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
-          <div className='align-items-center relative w-full flex gap-3 flex-row'>
-            <form className='relative flex-grow-1 flex flex-row gap-4'>
-              {auth.token
-                ? (
-                  <Link
-                    className='sm:flex hidden' to='/ideas/new' state={{
-                      toPrevious: true
-                    }}
+      <div className='negmar-ideas grid md:gap-4 gap-2'>
+        <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
+          <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
+            <div className='align-items-center relative w-full flex gap-3 flex-row'>
+              <form className='relative flex-grow-1 flex flex-row gap-4'>
+                {auth.token
+                  ? (
+                    <Link
+                      className='sm:flex hidden' to='/ideas/new' state={{
+                        toPrevious: true
+                      }}
+                    >
+                      <div className='flex flex-column m-auto'>
+                        <p className='bodytext font-16'>You have</p>
+                        <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> idea{ideaCount !== 1 ? 's' : null}</p>
+                      </div>
+                    </Link>
+                    )
+                  : null}
+                <div className='relative flex-grow-1'>
+                  <MixedTags
+                    autoFocus
+                    id='area'
+                    settings={tagSettings}
+                    onInput={onInput}
+                    onChange={onChange}
+                    placeholder='hint: type @ or #'
+                    styles={{ borderRadius: '18px' }}
+                    tagifyRef={tagifyRef}
+                    className='radius'
+                    onRemove={onRemove}
+                  />
+                  <button
+                    onClick={e => {
+                      e.preventDefault()
+                      setIdeasloading(true); searchIdeas(e)
+                    }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
-                    <div className='flex flex-column m-auto'>
-                      <p className='bodytext font-16'>You have</p>
-                      <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> idea{ideaCount !== 1 ? 's' : null}</p>
-                    </div>
-                  </Link>
-                  )
-                : null}
-              <div className='relative flex-grow-1'>
-                <MixedTags
-                  autoFocus
-                  id='area'
-                  settings={tagSettings}
-                  onInput={onInput}
-                  onChange={onChange}
-                  placeholder='hint: type @ or #'
-                  styles={{ borderRadius: '18px' }}
-                  tagifyRef={tagifyRef}
-                  className='radius'
-                  onRemove={onRemove}
-                />
-                <button
-                  onClick={e => {
-                    e.preventDefault()
-                    setIdeasloading(true); searchIdeas(e)
-                  }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
-                >
-                  <p className='font-16'>Search</p>
-                  <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
-            <span className='flex flex-row'>
-              <label className='mr-2' htmlFor='date-from'>From</label>
-              <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }} name='date-from' id='date-from' excludeDateIntervals={toDate ? [{start:toDate,end:new Date(Date.now()+10000000000)}] : null} placeholderText='YYYY/MM/DD' className='date-picker' />
-            </span>
-            <span className='flex flex-row'>
-              <label className='mr-2' htmlFor='date-to'>To</label>
-              <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' excludeDateIntervals={fromDate ? [{start:new Date(0),end:fromDate}] :null } placeholderText='YYYY/MM/DD' id='date-to' />
-            </span>
-          </div>
-        </div>
-        {!ideasloading
-          ? (
-            <div className='ideagrid gap-5'>
-              {ideas.length
-                ? (ideas.map((idea, index) => {
-                    return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={!idea.approved} rejected={idea.rejected} />
-                  }))
-                : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
+                    <p className='font-16'>Search</p>
+                    <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
+                  </button>
+                </div>
+              </form>
             </div>
-            )
-          : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} />}
-        {limitCount <= ideas.length
-          ? (
-            <button
-              onClick={async (e) => {
-                e.preventDefault()
-                setMoreLoading(true)
-                searchIdeas(e, limitCount + 12)
-                setLimitCount(limitCount + 12)
-              }} className='button primary-button font-16 mx-auto mt-4 text-center'
-            >Load more...
-            </button>
-            )
-          : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
+            <div className='mt-3 flex flex-row sm:gap-4 gap-2 md:justify-content-end justify-content-center flex-wrap'>
+              <span className='flex flex-row'>
+                <label className='mr-2' htmlFor='date-from'>From</label>
+                <DatePicker selected={fromDate} dateFormat='yyyy/MM/dd' onChange={(date) => { setFromDate(date) }} name='date-from' id='date-from' excludeDateIntervals={toDate ? [{ start: toDate, end: new Date(Date.now() + 10000000000) }] : null} placeholderText='YYYY/MM/DD' className='date-picker' />
+              </span>
+              <span className='flex flex-row'>
+                <label className='mr-2' htmlFor='date-to'>To</label>
+                <DatePicker dateFormat='yyyy/MM/dd' selected={toDate} onChange={(date) => { setToDate(date) }} name='date-to' className='date-picker' excludeDateIntervals={fromDate ? [{ start: new Date(0), end: fromDate }] : null} placeholderText='YYYY/MM/DD' id='date-to' />
+              </span>
+            </div>
+          </div>
+          {!ideasloading
+            ? (
+              <div className='ideagrid gap-5'>
+                {ideas.length
+                  ? (ideas.map((idea, index) => {
+                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={!idea.approved} rejected={idea.rejected} />
+                    }))
+                  : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
+              </div>
+              )
+            : <Skeleton containerClassName='flex flex-column gap-2' className='border-round-xl' height={200} count={50} />}
+          {limitCount <= ideas.length
+            ? (
+              <button
+                onClick={async (e) => {
+                  e.preventDefault()
+                  setMoreLoading(true)
+                  searchIdeas(e, limitCount + 12)
+                  setLimitCount(limitCount + 12)
+                }} className='button primary-button font-16 mx-auto mt-4 text-center'
+              >Load more...
+              </button>
+              )
+            : moreLoading ? <button disabled className=' font-16 mx-auto disabled-button primary-button mt-4 text-center'>Fetching...</button> : <p className='mt-4 blue text-center'>You've reached the end.</p>}
+        </div>
       </div>
-    </div>
     </Layout>
   )
 }
