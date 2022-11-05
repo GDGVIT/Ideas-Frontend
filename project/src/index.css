@@ -118,6 +118,12 @@ header {
   padding: 0.55rem 1rem;
 }
 
+.text-button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .primary-button {
   background-color: #3994ff;
   border-radius: 10px;

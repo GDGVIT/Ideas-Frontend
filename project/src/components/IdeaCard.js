@@ -23,6 +23,11 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   const visiOptions = {}
 
+  const setIdeaStatus = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
   const handleChangeVisibility = (visible) => {
     if (visible) {
       if (type === 'trending') {
@@ -185,17 +190,59 @@ export default function IdeaCard ({ name, color, author, description, tags, date
             : null}
           {showAdminButtons
             ? (
-              <div className='mt-6 absolute bottom-0 mb-3'>
+              <div className='mt-6 absolute bottom-0 left-0 right-0 mb-3 w-full'>
                 {rejected
                   ? (
-                    <p className='font-16'>This idea was rejected.</p>
+                    <div className='flex flex-column align-items-center'>
+                      <p className='font-16 red'>This idea was rejected.</p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          e.preventDefault()
+                          setIdeaStatus()
+                        }}
+                        className='blue flex-shrink-0 p-2 button text-button'
+                      >Reset
+                      </button>
+                    </div>
                     )
                   : !unapproved
                       ? (
-                        <p className='font-16'>This idea was approved.</p>
+                        <div className='flex flex-column align-items-center'>
+                          <p className='font-16 green'>This idea was approved.</p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              setIdeaStatus()
+                            }}
+                            className='blue flex-shrink-0 p-2 button text-button'
+                          >Reset
+                          </button>
+                        </div>
                         )
                       : (
-                        <p className='font-16'>Them buttons.</p>
+                        <span className='flex flex-row justify-content-evenly gap-5'>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              setIdeaStatus()
+                            }}
+                            className='green flex-shrink-0 p-2 button text-button'
+                          >Accept &#10003;
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              setIdeaStatus()
+                            }}
+                            style={{ width: 'max-content' }}
+                            className='red p-2 flex-shrink-0 button text-button'
+                          >Reject &#x2718;
+                          </button>
+                        </span>
                         )}
               </div>
               )
