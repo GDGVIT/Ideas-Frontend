@@ -3,14 +3,14 @@ import dayjs from 'dayjs'
 import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
 export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [heartFull, setHeartFull] = useState(hearted)
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
   const [userId, setUserId] = useState('')
@@ -40,9 +40,6 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         authorization: auth.token
       }
     })
-  }
-  const makeReal = () => {
-    
   }
 
   const handleChangeVisibility = (visible) => {
@@ -227,6 +224,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                       ? (
                         <div className='flex flex-column align-items-center'>
                           <p className='font-16 green'>This idea was approved.</p>
+                          <span className='flex flex-row justify-content-evenly gap-5'>
                           <button
                             onClick={(e) => {
                               e.stopPropagation()
@@ -236,6 +234,16 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             className='blue flex-shrink-0 p-2 button text-button'
                           >Reset
                           </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              navigate(`/admin/makereal/${ideaId}`)
+                            }}
+                            className='green flex-shrink-0 p-2 button text-button'
+                          >Make Real
+                          </button>
+                          </span>
                         </div>
                         )
                       : (

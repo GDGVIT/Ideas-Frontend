@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import axios from '../axios'
+import axios from '../../axios'
 import dayjs from 'dayjs'
-import IdeaCard from '../components/IdeaCard'
+import IdeaCard from '../../components/IdeaCard'
 import { useSelector, useDispatch } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
-import styles from './ideas/ideas.css'
+import styles from '../ideas/ideas.css'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { setStatus } from '../app/slices/notifSlice'
-import Layout from '../components/Layout'
+import { setStatus } from '../../app/slices/notifSlice'
+import Layout from '../../components/Layout'
 
 export default function Admin ({ a, r }) {
   const dispatch = useDispatch()
@@ -272,7 +272,7 @@ export default function Admin ({ a, r }) {
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>
-                    <img className='h-1rem' src={require('../assets/searchglass.svg').default} alt='searchglass' />
+                    <img className='h-1rem' src={require('../../assets/searchglass.svg').default} alt='searchglass' />
                   </button>
                 </div>
               </form>

@@ -272,6 +272,10 @@ textarea {
   display: block;
 }
 
+.linklistitem:last-child {
+  margin-bottom: 2rem;
+}
+
 .how-number {
   transform: translate(-52%, -38%);
   font-weight: 900;

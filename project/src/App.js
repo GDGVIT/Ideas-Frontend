@@ -19,7 +19,8 @@ import EditIdea from './pages/ideas/EditIdea'
 import CommentNotif from './pages/CommentNotif'
 import HowInfo from './pages/ideas/HowInfo'
 import MentionNotif from './pages/MentionNotif'
-import Admin from './pages/Admin'
+import Admin from './pages/admin/Admin'
+import MakeReal from './pages/admin/MakeReal'
 
 function App () {
   const dispatch = useDispatch()
@@ -72,6 +73,9 @@ function App () {
         </Route>
         <Route exact path='/admin/rejected' element={<GuardedRoute admin auth={auth} />}>
           <Route exact path='/admin/rejected' element={<Admin r />} />
+        </Route>
+        <Route exact path='/admin/makereal/:id' element={<GuardedRoute admin auth={auth} />}>
+          <Route exact path='/admin/makereal/:id' element={<MakeReal />} />
         </Route>
       </Routes>
     </div>

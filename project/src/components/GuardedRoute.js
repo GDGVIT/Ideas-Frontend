@@ -3,7 +3,13 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const GuardedRoute = ({ admin }) => {
   const auth = localStorage.getItem('token')
-  return auth ? <Outlet /> : <Navigate to='/' />
+  const isAdmin = localStorage.getItem('admin')
+  if (admin) {
+    return (auth || isAdmin) ? <Outlet /> : <Navigate to='/' />
+  }
+  else {
+    return auth ? <Outlet /> : <Navigate to='/' />
+  }
 }
 
 export default GuardedRoute
