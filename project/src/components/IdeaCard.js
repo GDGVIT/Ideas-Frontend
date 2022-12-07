@@ -23,9 +23,26 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   const visiOptions = {}
 
-  const setIdeaStatus = (e) => {
-    e.stopPropagation()
-    e.preventDefault()
+  const setIdeaStatus = (status) => {
+    axios.post(`/admin/approve/${ideaId}`, {
+      status
+    }, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+  }
+  const resetIdeaStatus = () => {
+    axios.patch(`/admin/reset/${ideaId}`, {
+      status: ""
+    }, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+  }
+  const makeReal = () => {
+    
   }
 
   const handleChangeVisibility = (visible) => {
@@ -199,7 +216,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                         onClick={(e) => {
                           e.stopPropagation()
                           e.preventDefault()
-                          setIdeaStatus()
+                          resetIdeaStatus()
                         }}
                         className='blue flex-shrink-0 p-2 button text-button'
                       >Reset
@@ -214,7 +231,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
-                              setIdeaStatus()
+                              resetIdeaStatus()
                             }}
                             className='blue flex-shrink-0 p-2 button text-button'
                           >Reset
@@ -227,7 +244,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
-                              setIdeaStatus()
+                              setIdeaStatus("approved")
                             }}
                             className='green flex-shrink-0 p-2 button text-button'
                           >Accept &#10003;
@@ -236,7 +253,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
-                              setIdeaStatus()
+                              setIdeaStatus("rejected")
                             }}
                             style={{ width: 'max-content' }}
                             className='red p-2 flex-shrink-0 button text-button'

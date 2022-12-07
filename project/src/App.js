@@ -67,6 +67,12 @@ function App () {
         <Route exact path='/admin' element={<GuardedRoute admin auth={auth} />}>
           <Route exact path='/admin' element={<Admin />} />
         </Route>
+        <Route exact path='/admin/accepted' element={<GuardedRoute admin auth={auth} />}>
+          <Route exact path='/admin/accepted' element={<Admin a />} />
+        </Route>
+        <Route exact path='/admin/rejected' element={<GuardedRoute admin auth={auth} />}>
+          <Route exact path='/admin/rejected' element={<Admin r />} />
+        </Route>
       </Routes>
     </div>
   )

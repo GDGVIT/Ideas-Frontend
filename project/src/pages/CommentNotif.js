@@ -125,7 +125,7 @@ export default function CommentNotif () {
                       userIdeas.map((idea, index) => {
                         return idea.comments.length
                           ? (
-                            <IdeaCard commNotif key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} rejected={idea.rejected} completed={idea.madeReal} comments={idea.comments.reverse()} />
+                            <IdeaCard commNotif key={index} name={idea.title} tags={idea.tags} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} rejected={idea.status === "rejected"} completed={idea.madeReal} comments={idea.comments.reverse()} />
                             )
                           : null
                       })

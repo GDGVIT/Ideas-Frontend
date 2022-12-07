@@ -13,7 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { setStatus } from '../app/slices/notifSlice'
 import Layout from '../components/Layout'
 
-export default function Admin () {
+export default function Admin ({ a, r }) {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
   const [limitCount, setLimitCount] = useState(12)
@@ -293,7 +293,7 @@ export default function Admin () {
               <div className='ideagrid gap-5'>
                 {ideas.length
                   ? (ideas.map((idea, index) => {
-                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={!idea.approved} rejected={idea.rejected} showAdminButtons />
+                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status === ""} rejected={idea.status === "rejected"} showAdminButtons />
                     }))
                   : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
               </div>
