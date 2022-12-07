@@ -34,7 +34,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   }
   const resetIdeaStatus = () => {
     axios.patch(`/admin/reset/${ideaId}`, {
-      status: ""
+      status: ''
     }, {
       headers: {
         authorization: auth.token
@@ -225,24 +225,24 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                         <div className='flex flex-column align-items-center'>
                           <p className='font-16 green'>This idea was approved.</p>
                           <span className='flex flex-row justify-content-evenly gap-5'>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              e.preventDefault()
-                              resetIdeaStatus()
-                            }}
-                            className='blue flex-shrink-0 p-2 button text-button'
-                          >Reset
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              e.preventDefault()
-                              navigate(`/admin/makereal/${ideaId}`)
-                            }}
-                            className='green flex-shrink-0 p-2 button text-button'
-                          >Make Real
-                          </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                                resetIdeaStatus()
+                              }}
+                              className='blue flex-shrink-0 p-2 button text-button'
+                            >Reset
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                                navigate(`/admin/makereal/${ideaId}`)
+                              }}
+                              className='green flex-shrink-0 p-2 button text-button'
+                            >Make Real
+                            </button>
                           </span>
                         </div>
                         )
@@ -252,7 +252,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
-                              setIdeaStatus("approved")
+                              setIdeaStatus('approved')
                             }}
                             className='green flex-shrink-0 p-2 button text-button'
                           >Accept &#10003;
@@ -261,7 +261,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
-                              setIdeaStatus("rejected")
+                              setIdeaStatus('rejected')
                             }}
                             style={{ width: 'max-content' }}
                             className='red p-2 flex-shrink-0 button text-button'

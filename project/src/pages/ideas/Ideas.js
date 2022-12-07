@@ -307,7 +307,7 @@ export default function Ideas () {
               <div className='ideagrid gap-5'>
                 {ideas.length
                   ? (ideas.map((idea, index) => {
-                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status === ""} rejected={idea.status === "rejected"} />
+                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status === ''} rejected={idea.status === 'rejected'} />
                     }))
                   : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
               </div>

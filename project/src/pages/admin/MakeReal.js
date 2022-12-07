@@ -1,19 +1,19 @@
-import React, {useCallback, useState, useEffect} from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from '../../axios'
 import Layout from '../../components/Layout'
 import Skeleton from 'react-loading-skeleton'
 import Toggle from 'react-toggle'
-import "react-toggle/style.css"
+import 'react-toggle/style.css'
 import { toast } from 'react-toastify'
 
-export default function MakeReal() {
+export default function MakeReal () {
   const { id } = useParams()
   const [idea, setIdea] = useState({ tags: [] })
-  const [gitlinkInput, setGitlinkInput] = useState("")
+  const [gitlinkInput, setGitlinkInput] = useState('')
   const [gitlinks, setGitlinks] = useState([])
-  const [deployedURLsInput, setDeployedURLsInput] = useState("")
+  const [deployedURLsInput, setDeployedURLsInput] = useState('')
   const [deployedURLs, setDeployedURLs] = useState([])
   const [madeReal, setMadeReal] = useState(false)
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -36,9 +36,9 @@ export default function MakeReal() {
   )
 
   const addGitlink = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       setGitlinks([...gitlinks, gitlinkInput])
-      setGitlinkInput("");
+      setGitlinkInput('')
     }
   }
   const deleteGitlink = (i) => {
@@ -46,9 +46,9 @@ export default function MakeReal() {
   }
 
   const addDeployedURL = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       setDeployedURLs([...deployedURLs, deployedURLsInput])
-      setDeployedURLsInput("");
+      setDeployedURLsInput('')
     }
   }
   const deleteDeployedURL = (i) => {
@@ -57,7 +57,7 @@ export default function MakeReal() {
 
   const submit = async (e) => {
     setSubmitLoading(true)
-    e.preventDefault();
+    e.preventDefault()
     try {
       await axios.patch(`/admin/makeReal/${id}`, {
         madeReal
@@ -75,17 +75,16 @@ export default function MakeReal() {
         }
       })
       navigate('/admin/accepted')
-    }
-    catch {
-      toast.error("Unexpected failure.")
+    } catch {
+      toast.error('Unexpected failure.')
     }
     setSubmitLoading(false)
   }
-  
+
   useEffect(() => {
     getIdea()
   }, [getIdea])
-  
+
   return (
     <Layout admin>
       <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
@@ -98,39 +97,40 @@ export default function MakeReal() {
           <label className='bodytext' htmlFor='gitlink-input'>
             Github Links
           </label>
-          <input value={gitlinkInput} onKeyDown={(e) => {addGitlink(e)}} onChange={(e) => { setGitlinkInput(e.target.value) }} className='input z-1 block w-12' id='gitlink-input' />
+          <input value={gitlinkInput} onKeyDown={(e) => { addGitlink(e) }} onChange={(e) => { setGitlinkInput(e.target.value) }} className='input z-1 block w-12' id='gitlink-input' />
           <div className='mb-4'>
-          {gitlinks.map((gitlink, index) => {
-            return (
-              <span key={`gitlink${index}`} className='mt-1 comment flex justify-content-between align-items-center'>
-                <a style={{ wordBreak: 'break-word' }} className='block' href={gitlink}>{gitlink}</a>
-                <img onClick={() => {deleteGitlink(index)}} className='comment-delete' height={20} src={require('../../assets/trash-bin.svg').default} alt="trash" />
-              </span>
-            )
-          })}
+            {gitlinks.map((gitlink, index) => {
+              return (
+                <span key={`gitlink${index}`} className='mt-1 comment flex justify-content-between align-items-center'>
+                  <a style={{ wordBreak: 'break-word' }} className='block' href={gitlink}>{gitlink}</a>
+                  <img onClick={() => { deleteGitlink(index) }} className='comment-delete' height={20} src={require('../../assets/trash-bin.svg').default} alt='trash' />
+                </span>
+              )
+            })}
           </div>
           <label className='bodytext' htmlFor='deployedurls-input'>
             Deployed URLs
           </label>
-          <input value={deployedURLsInput} onKeyDown={(e) => {addDeployedURL(e)}} onChange={(e) => { setDeployedURLsInput(e.target.value) }} className='input z-1 block w-12' id='deployedurls-input' />
+          <input value={deployedURLsInput} onKeyDown={(e) => { addDeployedURL(e) }} onChange={(e) => { setDeployedURLsInput(e.target.value) }} className='input z-1 block w-12' id='deployedurls-input' />
           <div className='mb-4'>
-          {deployedURLs.map((url, index) => {
-            return (
-              <span key={`deployed${index}`} className='mt-1 comment flex justify-content-between align-items-center'>
-                <a style={{ wordBreak: 'break-word' }} className='block' href={url}>{url}</a>
-                <img onClick={() => {deleteDeployedURL(index)}} className='comment-delete' height={20} src={require('../../assets/trash-bin.svg').default} alt="trash" />
-              </span>
-            )
-          })}
+            {deployedURLs.map((url, index) => {
+              return (
+                <span key={`deployed${index}`} className='mt-1 comment flex justify-content-between align-items-center'>
+                  <a style={{ wordBreak: 'break-word' }} className='block' href={url}>{url}</a>
+                  <img onClick={() => { deleteDeployedURL(index) }} className='comment-delete' height={20} src={require('../../assets/trash-bin.svg').default} alt='trash' />
+                </span>
+              )
+            })}
           </div>
           <span className='flex align-items-center gap-2'>
-          <label className='bodytext' htmlFor='madereal-input'>
-            Made Real?
-          </label>
-          <Toggle
-            id='madereal-input'
-            defaultChecked={madeReal}
-            onChange={(e) => {setMadeReal(e.currentTarget)}} />
+            <label className='bodytext' htmlFor='madereal-input'>
+              Made Real?
+            </label>
+            <Toggle
+              id='madereal-input'
+              defaultChecked={madeReal}
+              onChange={(e) => { setMadeReal(e.currentTarget) }}
+            />
           </span>
           <button type='submit' className={(submitLoading ? 'disabled-button' : null) + ' primary-button mx-auto mt-5 font-16'}>Submit</button>
         </form>

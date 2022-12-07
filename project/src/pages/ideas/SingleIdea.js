@@ -272,7 +272,7 @@ export default function SingleIdea () {
               <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
               )
             : null}
-          {idea.status === ""
+          {idea.status === ''
             ? (
               <p className='p-1 px-3 tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
               )
@@ -282,7 +282,7 @@ export default function SingleIdea () {
               <p className='p-1 px-3 tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
               )
             : null}
-          {idea.status === "rejected"
+          {idea.status === 'rejected'
             ? (
               <p className='p-1 px-3 tag' style={{ backgroundColor: '#ff6b6b' }}>Rejected</p>
               )

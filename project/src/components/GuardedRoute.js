@@ -5,9 +5,9 @@ const GuardedRoute = ({ admin }) => {
   const auth = localStorage.getItem('token')
   const isAdmin = localStorage.getItem('admin')
   if (admin) {
+    // return <Outlet />
     return (auth || isAdmin) ? <Outlet /> : <Navigate to='/' />
-  }
-  else {
+  } else {
     return auth ? <Outlet /> : <Navigate to='/' />
   }
 }
