@@ -16,7 +16,7 @@ import Layout from '../../components/Layout'
 export default function Ideas () {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
-  const [limitCount, setLimitCount] = useState(12)
+  const [limitCount, setLimitCount] = useState(50)
   const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
@@ -167,12 +167,15 @@ export default function Ideas () {
                     return new Date(b.createdOn) - new Date(a.createdOn)
                   }))
                 } else {
-                  let arr = res.data.searchResults.sort(function (a, b) {
-                    return b.score - a.score
-                  })
-                  arr = arr.map((idea, index) => {
-                    return idea.idea
-                  })
+                  const arr = res.data.searchResults
+                  // let arr = res.data.searchResults.sort(function (a, b) {
+                  //   return b.score - a.score
+                  // })
+                  // arr = arr.map((idea, index) => {
+                  //   return idea.idea
+                  // })
+                  // console.log(res.data.searchResults)
+                  // console.log(arr)
                   setIdeas(arr)
                 }
               }).then(() => {
@@ -282,7 +285,7 @@ export default function Ideas () {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true); searchIdeas(e)
+                      setIdeasloading(true); searchIdeas(e, 50)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>
@@ -307,7 +310,7 @@ export default function Ideas () {
               <div className='ideagrid gap-5'>
                 {ideas.length
                   ? (ideas.map((idea, index) => {
-                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status === ''} rejected={idea.status === 'rejected'} />
+                      return <IdeaCard key={index} name={idea ? idea.title : null} description={idea ? idea.description : null} authorId={idea ? idea.author._id : null} ideaspage author={idea ? idea.author._id === auth._id ? 'You' : idea.authorName : null} tags={idea ? idea.tags : []} date={idea ? idea.createdOn : null} ideaId={idea ? idea._id : null} hearted={idea ? idea.upvotes.includes(auth._id) : []} upvoteCount={idea ? idea.upvotes.length : null} completed={idea ? idea.madeReal : null} unapproved={idea ? idea.status !== 'approved' : null} rejected={idea ? idea.status === 'rejected' : null} />
                     }))
                   : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
               </div>

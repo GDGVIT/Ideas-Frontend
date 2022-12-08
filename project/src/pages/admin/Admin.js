@@ -95,11 +95,15 @@ export default function Admin ({ a, r }) {
   }, [])
 
   useEffect(() => {
+    setIdeasloading(true)
     const fetchIdeas = async () => {
       await axios
-        .get('/ideas', {
+        .get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status='), {
           params: {
             limit: 12
+          },
+          headers: {
+            authorization: auth.token
           }
         }
         )
@@ -133,7 +137,7 @@ export default function Admin ({ a, r }) {
     }
     fetchIdeas()
     fetchUsers()
-  }, [auth])
+  }, [auth, a, r])
 
   const searchIdeas = (e, limit) => {
     e.preventDefault()
@@ -149,9 +153,9 @@ export default function Admin ({ a, r }) {
                 }
               }
               if (user) search = search.replace(user, '')
-              await axios.get('/ideas', {
+              await axios.get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status='), {
                 headers: {
-                  authorization: authRef.current.token
+                  authorization: auth.token
                 },
                 params: {
                   endDate: to,
@@ -167,12 +171,13 @@ export default function Admin ({ a, r }) {
                     return new Date(b.createdOn) - new Date(a.createdOn)
                   }))
                 } else {
-                  let arr = res.data.searchResults.sort(function (a, b) {
-                    return b.score - a.score
-                  })
-                  arr = arr.map((idea, index) => {
-                    return idea.idea
-                  })
+                  const arr = res.data.searchResults
+                  // let arr = res.data.searchResults.sort(function (a, b) {
+                  //   return b.score - a.score
+                  // })
+                  // arr = arr.map((idea, index) => {
+                  //   return idea.idea
+                  // })
                   setIdeas(arr)
                 }
               }).then(() => {
@@ -268,7 +273,7 @@ export default function Admin ({ a, r }) {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true); searchIdeas(e)
+                      setIdeasloading(true); searchIdeas(e, 12)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>
@@ -293,7 +298,7 @@ export default function Admin ({ a, r }) {
               <div className='ideagrid gap-5'>
                 {ideas.length
                   ? (ideas.map((idea, index) => {
-                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status === ''} rejected={idea.status === 'rejected'} showAdminButtons />
+                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status !== 'approved'} rejected={idea.status === 'rejected'} showAdminButtons />
                     }))
                   : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
               </div>

@@ -16,6 +16,11 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   const [userId, setUserId] = useState('')
   const [mentionComments, setMentionComments] = useState([])
 
+  const [unapprovedStatus, setUnapprovedStatus] = useState(unapproved)
+  const [rejectedStatus, setRejectedStatus] = useState(rejected)
+
+  const [cardloading, setCardloading] = useState(false)
+
   const mentionReplacement = (match) => {
     const mention = JSON.parse(match.slice(2, match.length - 2))
     return `@ <span class='green'>${mention.value}</span>`
@@ -24,6 +29,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   const visiOptions = {}
 
   const setIdeaStatus = (status) => {
+    setCardloading(true)
     axios.post(`/admin/approve/${ideaId}`, {
       status
     }, {
@@ -31,8 +37,21 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         authorization: auth.token
       }
     })
+      .then(() => {
+        if (status === 'rejected') {
+          setRejectedStatus(true)
+          setUnapprovedStatus(true)
+        } else if (status === 'approved') {
+          setRejectedStatus(false)
+          setUnapprovedStatus(false)
+        }
+        setCardloading(false)
+      }).catch(() => {
+        setCardloading(false)
+      })
   }
   const resetIdeaStatus = () => {
+    setCardloading(true)
     axios.patch(`/admin/reset/${ideaId}`, {
       status: ''
     }, {
@@ -40,6 +59,13 @@ export default function IdeaCard ({ name, color, author, description, tags, date
         authorization: auth.token
       }
     })
+      .then(() => {
+        setRejectedStatus(false)
+        setUnapprovedStatus(true)
+        setCardloading(false)
+      }).catch(() => {
+        setCardloading(false)
+      })
   }
 
   const handleChangeVisibility = (visible) => {
@@ -114,11 +140,11 @@ export default function IdeaCard ({ name, color, author, description, tags, date
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
       <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? (showAdminButtons) ? 'h-29rem' : 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
+        <div className={`${cardloading ? 'opacity-50' : null} flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? (showAdminButtons) ? 'h-29rem' : 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
           {!disabled
             ? (
               <div className='flex flex-row gap-2 align-items-center absolute top-0 right-0 m-3'>
-                {unapproved
+                {unapprovedStatus && !rejectedStatus
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
                     )
@@ -128,12 +154,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
                     )
                   : null}
-                {!unapproved && !completed
+                {!unapprovedStatus && !completed
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
                     )
                   : null}
-                {rejected
+                {rejectedStatus
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#ff6b6b' }}>Rejected</p>
                     )
@@ -205,7 +231,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
           {showAdminButtons
             ? (
               <div className='mt-6 absolute bottom-0 left-0 right-0 mb-3 w-full'>
-                {rejected
+                {rejectedStatus
                   ? (
                     <div className='flex flex-column align-items-center'>
                       <p className='font-16 red'>This idea was rejected.</p>
@@ -220,7 +246,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                       </button>
                     </div>
                     )
-                  : !unapproved
+                  : !unapprovedStatus
                       ? (
                         <div className='flex flex-column align-items-center'>
                           <p className='font-16 green'>This idea was approved.</p>
@@ -252,6 +278,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                             onClick={(e) => {
                               e.stopPropagation()
                               e.preventDefault()
+                              console.log('hello')
                               setIdeaStatus('approved')
                             }}
                             className='green flex-shrink-0 p-2 button text-button'

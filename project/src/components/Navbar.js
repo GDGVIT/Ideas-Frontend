@@ -27,6 +27,7 @@ export default function Navbar ({ admin }) {
         localStorage.setItem('picture', res.data.data.picture)
         localStorage.setItem('_id', res.data.data._id)
         localStorage.setItem('token', res.data.token)
+        localStorage.setItem('admin', res.data.data.admin)
         dispatch(setUserInfo({ data: res.data.data, token: res.data.token }))
       })
       .catch(() => {

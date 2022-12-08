@@ -48,6 +48,9 @@ export const authSlice = createSlice({
       if (localStorage.getItem('token')) {
         localStorage.removeItem('token')
       }
+      if (localStorage.getItem('admin')) {
+        localStorage.removeItem('admin')
+      }
       window.location.reload()
     }
   }
