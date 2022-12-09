@@ -293,18 +293,30 @@ export default function SingleIdea () {
         </div>
         {idea.gitLinks && idea.gitLinks.length
           ? (
-            <span className='mt-5 flex gap-2 align-items-center'>
-              <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
-              <a target='_blank' rel='noreferrer' href={idea.gitLinks[0]} className='button bodytext'>Check out the code</a>
-            </span>
+            <div className='mt-5'>
+              {idea.gitLinks.map((gitlink, index) => {
+                return (
+                  <span key={`gitlink${index}`} className='mt-4 flex gap-2 align-items-center'>
+                    <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
+                    <a target='_blank' rel='noreferrer' href={gitlink} className='button bodytext'>Check out the code</a>
+                  </span>
+                )
+              })}
+            </div>
             )
           : null}
         {idea.deployedURLs && idea.deployedURLs.length
           ? (
-            <span className='mt-4 flex gap-2 align-items-center'>
-              <img src={require('../../assets/globe.png')} alt='github' className='h-2rem' />
-              <a target='_blank' rel='noreferrer' href={idea.deployedURLs[0]} className='button bodytext'>See it live</a>
-            </span>
+            <div>
+              {idea.deployedURLs.map((depURL, index) => {
+                return (
+                  <span key={`depURL${index}`} className='mt-4 flex gap-2 align-items-center'>
+                    <img src={require('../../assets/globe.png')} alt='github' className='h-2rem' />
+                    <a target='_blank' rel='noreferrer' href={depURL} className='button bodytext'>See it live</a>
+                  </span>
+                )
+              })}
+            </div>
             )
           : null}
         <div className='relative mt-5'>
