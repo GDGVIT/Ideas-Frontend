@@ -255,7 +255,7 @@ export default function Admin ({ a, r }) {
     <Layout admin>
       <div className='negmar-ideas grid md:gap-4 gap-2'>
         <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
-          <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
+          <div className={`${auth.token ? 'top-3-ad' : 'top-2'} searchbg z-2 sticky`}>
             <div className='align-items-center relative w-full mt-1 flex gap-3 flex-row'>
               <form className='relative flex-grow-1 flex flex-row gap-4'>
                 <div className='relative flex-grow-1'>

@@ -552,6 +552,10 @@ textarea {
   top: 3.1rem;
 }
 
+.top-3-ad {
+  top: 3rem;
+}
+
 .top-2 {
   top: 2.4rem;
 }
@@ -663,6 +667,10 @@ textarea {
 }
 
 @media screen and (max-width: 768px) {
+  .top-3-ad {
+    top: 2.5rem;
+  }
+
   .frame-position {
     margin-right: 6rem;
   }
