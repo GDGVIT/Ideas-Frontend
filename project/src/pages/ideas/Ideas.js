@@ -16,7 +16,7 @@ import Layout from '../../components/Layout'
 export default function Ideas () {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
-  const [limitCount, setLimitCount] = useState(50)
+  const [limitCount, setLimitCount] = useState(4)
   const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
@@ -99,7 +99,7 @@ export default function Ideas () {
       await axios
         .get('/ideas', {
           params: {
-            limit: 12
+            limit: 4
           }
         }
         )
@@ -124,7 +124,7 @@ export default function Ideas () {
           authorization: auth.token
         }
       }).then(res => {
-        setIdeaCount(res.data.user.ideaCount)
+        setIdeaCount(res.data.noOfIdeas)
       })
     }
     if (auth.token) {
@@ -162,19 +162,19 @@ export default function Ideas () {
                   limit
                 }
               }).then(res => {
-                if (!res.data.searchResults) {
+                if (!res.data.results) {
                   setIdeas(res.data.ideas.sort(function (a, b) {
                     return new Date(b.createdOn) - new Date(a.createdOn)
                   }))
                 } else {
-                  const arr = res.data.searchResults
-                  // let arr = res.data.searchResults.sort(function (a, b) {
-                  //   return b.score - a.score
-                  // })
-                  // arr = arr.map((idea, index) => {
-                  //   return idea.idea
-                  // })
-                  // console.log(res.data.searchResults)
+                  // const arr = res.data.searchResults
+                  let arr = res.data.results.sort(function (a, b) {
+                    return b.score - a.score
+                  })
+                  arr = arr.map((idea, index) => {
+                    return idea.idea
+                  })
+                  // console.log(res.data.results)
                   // console.log(arr)
                   setIdeas(arr)
                 }
@@ -285,7 +285,7 @@ export default function Ideas () {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true); searchIdeas(e, 50)
+                      setIdeasloading(true); setLimitCount(4); searchIdeas(e, 4)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>

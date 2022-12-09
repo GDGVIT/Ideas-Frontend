@@ -16,7 +16,7 @@ import Layout from '../../components/Layout'
 export default function Admin ({ a, r }) {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
-  const [limitCount, setLimitCount] = useState(12)
+  const [limitCount, setLimitCount] = useState(4)
   const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
@@ -96,14 +96,15 @@ export default function Admin ({ a, r }) {
 
   useEffect(() => {
     setIdeasloading(true)
+    setLimitCount(4)
     const fetchIdeas = async () => {
       await axios
-        .get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status='), {
+        .get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status=pending'), {
           params: {
-            limit: 12
+            limit: 4
           },
           headers: {
-            authorization: auth.token
+            authorization: authRef.current.token
           }
         }
         )
@@ -134,6 +135,7 @@ export default function Admin ({ a, r }) {
     if (auth.token) {
       authRef.current = auth
       getIdeaCount()
+      fetchIdeas()
     }
     fetchIdeas()
     fetchUsers()
@@ -141,7 +143,6 @@ export default function Admin ({ a, r }) {
 
   const searchIdeas = (e, limit) => {
     e.preventDefault()
-
     setUser(user => {
       setFromDate(from => {
         setToDate(to => {
@@ -153,7 +154,7 @@ export default function Admin ({ a, r }) {
                 }
               }
               if (user) search = search.replace(user, '')
-              await axios.get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status='), {
+              await axios.get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status=pending'), {
                 headers: {
                   authorization: auth.token
                 },
@@ -166,18 +167,18 @@ export default function Admin ({ a, r }) {
                   limit
                 }
               }).then(res => {
-                if (!res.data.searchResults) {
+                if (!res.data.results) {
                   setIdeas(res.data.ideas.sort(function (a, b) {
                     return new Date(b.createdOn) - new Date(a.createdOn)
                   }))
                 } else {
-                  const arr = res.data.searchResults
-                  // let arr = res.data.searchResults.sort(function (a, b) {
-                  //   return b.score - a.score
-                  // })
-                  // arr = arr.map((idea, index) => {
-                  //   return idea.idea
-                  // })
+                  // const arr = res.data.searchResults
+                  let arr = res.data.results.sort(function (a, b) {
+                    return b.score - a.score
+                  })
+                  arr = arr.map((idea, index) => {
+                    return idea.idea
+                  })
                   setIdeas(arr)
                 }
               }).then(() => {
@@ -273,7 +274,7 @@ export default function Admin ({ a, r }) {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true); searchIdeas(e, 12)
+                      setIdeasloading(true);setLimitCount(4); searchIdeas(e, 4)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>
@@ -310,8 +311,8 @@ export default function Admin ({ a, r }) {
                 onClick={async (e) => {
                   e.preventDefault()
                   setMoreLoading(true)
-                  searchIdeas(e, limitCount + 12)
-                  setLimitCount(limitCount + 12)
+                  searchIdeas(e, limitCount + 4)
+                  setLimitCount(limitCount + 4)
                 }} className='button primary-button font-16 mx-auto mt-4 text-center'
               >Load more...
               </button>
