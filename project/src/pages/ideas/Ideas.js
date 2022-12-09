@@ -16,7 +16,7 @@ import Layout from '../../components/Layout'
 export default function Ideas () {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
-  const [limitCount, setLimitCount] = useState(4)
+  const [limitCount, setLimitCount] = useState(12)
   const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
@@ -99,7 +99,7 @@ export default function Ideas () {
       await axios
         .get('/ideas', {
           params: {
-            limit: 4
+            limit: 12
           }
         }
         )
@@ -285,7 +285,7 @@ export default function Ideas () {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true); setLimitCount(4); searchIdeas(e, 4)
+                      setIdeasloading(true); setLimitCount(12); searchIdeas(e, 12)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>

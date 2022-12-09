@@ -31,16 +31,16 @@ export default function MentionNotif () {
     }
   }, [auth, dispatch])
 
-  const clearNotifs = async () => {
-    setLoading(true)
-    await axios.delete('/notifications', {
-      headers: {
-        authorization: auth.token
-      }
-    })
-    setNotifs([])
-    setLoading(false)
-  }
+  // const clearNotifs = async () => {
+  //   setLoading(true)
+  //   await axios.delete('/notifications', {
+  //     headers: {
+  //       authorization: auth.token
+  //     }
+  //   })
+  //   setNotifs([])
+  //   setLoading(false)
+  // }
 
   return (
     <Layout>

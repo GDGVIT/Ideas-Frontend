@@ -9,7 +9,7 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
   const dispatch = useDispatch()
 
   const [read, setRead] = useState(readStatus)
-  const [visible, setVisbile] = useState(true)
+  const [visible] = useState(true)
 
   const mentionReplacement = (match) => {
     const mention = JSON.parse(match.slice(2, match.length - 2))
@@ -47,14 +47,14 @@ export default function MentionCard ({ author = 'Dorian', name = 'Default', pfp,
     })
   }
 
-  const clearNotif = async () => {
-    await axios.delete(`/notifications/${_id}`, {
-      headers: {
-        authorization: auth.token
-      }
-    })
-    setVisbile(false)
-  }
+  // const clearNotif = async () => {
+  //   await axios.delete(`/notifications/${_id}`, {
+  //     headers: {
+  //       authorization: auth.token
+  //     }
+  //   })
+  //   setVisbile(false)
+  // }
 
   return (
     <Link className={visible ? 'block' : 'hidden'} onClick={() => markRead(true)} to={`/ideas/${ideaId}`}>

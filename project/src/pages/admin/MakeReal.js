@@ -17,7 +17,6 @@ export default function MakeReal () {
   const [deployedURLs, setDeployedURLs] = useState([])
   const [madeReal, setMadeReal] = useState(false)
   const [submitLoading, setSubmitLoading] = useState(false)
-  const [origMadeReal, setOrigMadeReal] = useState(false)
   const navigate = useNavigate()
 
   const auth = useSelector(state => state.auth)
@@ -34,7 +33,6 @@ export default function MakeReal () {
           setGitlinks(res.data.idea.gitLinks)
           setDeployedURLs(res.data.idea.deployedURLs)
           setMadeReal(res.data.idea.madeReal)
-          setOrigMadeReal(res.data.idea.madeReal)
         })
     }, [auth, id]
   )
@@ -63,25 +61,26 @@ export default function MakeReal () {
     setSubmitLoading(true)
     e.preventDefault()
     try {
-      if (origMadeReal) {
-        await axios.patch(`/admin/makeReal/${id}`, {
-          madeReal: 'false'
-        }, {
-          headers: {
-            authorization: auth.token
-          }
-        })
-      } else {
-        await axios.patch(`/admin/makeReal/${id}`, {
-        }, {
-          headers: {
-            authorization: auth.token
-          }
-        })
-      }
-      await axios.post(`/admin/makeReal/${id}`, {
+      // if (origMadeReal) {
+      //   await axios.patch(`/admin/makeReal/${id}`, {
+      //     madeReal: 'false'
+      //   }, {
+      //     headers: {
+      //       authorization: auth.token
+      //     }
+      //   })
+      // } else {
+      //   await axios.patch(`/admin/makeReal/${id}`, {
+      //   }, {
+      //     headers: {
+      //       authorization: auth.token
+      //     }
+      //   })
+      // }
+      await axios.patch(`/admin/makeReal/${id}`, {
         gitLinks: gitlinks,
-        deployedURLs
+        deployedURLs,
+        madeReal: madeReal ? 'true' : 'false'
       }, {
         headers: {
           authorization: auth.token

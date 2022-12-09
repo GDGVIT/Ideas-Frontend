@@ -16,7 +16,7 @@ import Layout from '../../components/Layout'
 export default function Admin ({ a, r }) {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
-  const [limitCount, setLimitCount] = useState(4)
+  const [limitCount, setLimitCount] = useState(12)
   const [moreLoading, setMoreLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [userList, setUserList] = useState([])
@@ -96,12 +96,12 @@ export default function Admin ({ a, r }) {
 
   useEffect(() => {
     setIdeasloading(true)
-    setLimitCount(4)
+    setLimitCount(12)
     const fetchIdeas = async () => {
       await axios
         .get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status=pending'), {
           params: {
-            limit: 4
+            limit: 12
           },
           headers: {
             authorization: authRef.current.token
@@ -274,7 +274,7 @@ export default function Admin ({ a, r }) {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      setIdeasloading(true);setLimitCount(4); searchIdeas(e, 4)
+                      setIdeasloading(true); setLimitCount(12); searchIdeas(e, 12)
                     }} className='button absolute top-0 bottom-0 right-0 flex flex-row align-items-center gap-2 primary-button-green'
                   >
                     <p className='font-16'>Search</p>
@@ -311,8 +311,8 @@ export default function Admin ({ a, r }) {
                 onClick={async (e) => {
                   e.preventDefault()
                   setMoreLoading(true)
-                  searchIdeas(e, limitCount + 4)
-                  setLimitCount(limitCount + 4)
+                  searchIdeas(e, limitCount + 12)
+                  setLimitCount(limitCount + 12)
                 }} className='button primary-button font-16 mx-auto mt-4 text-center'
               >Load more...
               </button>
