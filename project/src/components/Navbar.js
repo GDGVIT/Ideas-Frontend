@@ -138,7 +138,7 @@ export default function Navbar ({ admin }) {
               {!admin
                 ? (
                   <>
-                    {isAdmin === "true"
+                    {isAdmin === 'true'
                       ? (
                         <span>
                           <Link className='bodytext' to='/admin'>Admin Portal</Link>
