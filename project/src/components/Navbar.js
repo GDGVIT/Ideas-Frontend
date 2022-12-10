@@ -38,6 +38,7 @@ export default function Navbar ({ admin }) {
 
   const auth = useSelector(state => state.auth)
   const notif = useSelector(state => state.notif)
+  const isAdmin = localStorage.getItem('admin')
 
   const [menuHidden, setMenuHidden] = useState(true)
   const [phoneMenuHidden, setPhoneMenuHidden] = useState(true)
@@ -137,6 +138,13 @@ export default function Navbar ({ admin }) {
               {!admin
                 ? (
                   <>
+                    {isAdmin === "true"
+                      ? (
+                        <span>
+                          <Link className='bodytext' to='/admin'>Admin Portal</Link>
+                        </span>
+                        )
+                      : null}
                     <Link className='flex h-min' to='/mentions'>
                       {notif && notif.unreads
                         ? <img src={require('../assets/bellSymbolBlue.svg').default} alt='notif' />
@@ -147,7 +155,11 @@ export default function Navbar ({ admin }) {
                     </Link>
                   </>
                   )
-                : null}
+                : (
+                  <span>
+                    <Link className='bodytext' to='/'>Back to main site</Link>
+                  </span>
+                  )}
               <span className='flex'>
                 <img alt='pfp' className='pfp pfp-nav' onClick={userMenu} width={33} src={auth.picture} referrerPolicy='no-referrer' />
               </span>

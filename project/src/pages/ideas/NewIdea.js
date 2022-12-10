@@ -72,6 +72,7 @@ export default function NewIdea () {
 
   const fetchUserPosts = useCallback(
     async () => {
+      setIdeaLoad(true)
       await axios
         .get(`/user/${auth._id}/ideas`, {
           headers: {

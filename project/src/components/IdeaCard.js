@@ -179,7 +179,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
               </div>
               )
             : null}
-          {author && authorId === userId &&
+          {!admin && author && authorId === userId &&
             <Link className='flex absolute bottom-0 right-0 m-3' to={`/ideas/edit/${ideaId}`}>
               <img className='pl-2 m-auto' src={require('../assets/edit-icon.svg').default} alt='edit' />
             </Link>}
