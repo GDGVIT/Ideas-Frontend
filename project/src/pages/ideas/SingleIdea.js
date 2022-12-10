@@ -1,6 +1,6 @@
 import axios from '../../axios'
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
@@ -12,6 +12,8 @@ import Layout from '../../components/Layout'
 
 export default function SingleIdea () {
   /* eslint-disable no-unused-vars */
+  const location = useLocation()
+  const linkState = location.state
   const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
@@ -237,9 +239,9 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
-    <Layout>
+    <Layout admin={linkState}>
       <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
-        <Link to='/ideas'>
+        <Link to={linkState === 'admin' ? '/admin' : linkState === 'approved' ? '/admin/accepted' : linkState === 'rejected' ? '/admin/rejected' : '/ideas'}>
           <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
         </Link>
         <div className='flex flex-row'>

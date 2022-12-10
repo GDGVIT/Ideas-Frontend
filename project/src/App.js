@@ -21,6 +21,8 @@ import HowInfo from './pages/ideas/HowInfo'
 import MentionNotif from './pages/MentionNotif'
 import Admin from './pages/admin/Admin'
 import MakeReal from './pages/admin/MakeReal'
+import AdminApproved from './pages/admin/AdminApproved'
+import AdminRejected from './pages/admin/AdminRejected'
 
 function App () {
   const dispatch = useDispatch()
@@ -69,10 +71,10 @@ function App () {
           <Route exact path='/admin' element={<Admin />} />
         </Route>
         <Route exact path='/admin/accepted' element={<GuardedRoute admin auth={auth} />}>
-          <Route exact path='/admin/accepted' element={<Admin a />} />
+          <Route exact path='/admin/accepted' element={<AdminApproved a />} />
         </Route>
         <Route exact path='/admin/rejected' element={<GuardedRoute admin auth={auth} />}>
-          <Route exact path='/admin/rejected' element={<Admin r />} />
+          <Route exact path='/admin/rejected' element={<AdminRejected r />} />
         </Route>
         <Route exact path='/admin/makereal/:id' element={<GuardedRoute admin auth={auth} />}>
           <Route exact path='/admin/makereal/:id' element={<MakeReal />} />

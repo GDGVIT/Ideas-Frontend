@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons, admin }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -139,7 +139,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   return (
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
-      <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
+      <ConditionalLink state={admin === 'all' ? 'admin' : admin === 'a' ? 'approved' : admin === 'r' ? 'rejected' : null} condition={!disabled} to={`/ideas/${ideaId}`}>
         <div className={`${cardloading ? 'opacity-50' : null} flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? (showAdminButtons) ? 'h-29rem' : 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
           {!disabled
             ? (

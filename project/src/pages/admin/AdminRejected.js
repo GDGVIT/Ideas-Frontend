@@ -13,7 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { setStatus } from '../../app/slices/notifSlice'
 import Layout from '../../components/Layout'
 
-export default function Admin ({ a, r }) {
+export default function AdminRejected ({ a, r }) {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
   const [limitCount, setLimitCount] = useState(12)
