@@ -1,3 +1,3 @@
 import axios from 'axios'
-const instance = axios.create({ baseURL: 'https://ideas-backend-production.up.railway.app' })
+const instance = axios.create({ baseURL: 'https://ideas-backend.fly.dev' })
 export default instance
