@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
+import { toast } from 'react-toastify'
 
 export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons, admin }) {
   const auth = useSelector(state => state.auth)
@@ -117,6 +118,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
       headers: {
         authorization: auth.token
       }
+    }).catch((e) => {
+      if (e.response.status === 401) {
+        toast.error('You need to be logged in to like an idea.')
+      } else {
+        toast.error('Unexpected error.')
+      }
     })
   }
 
@@ -174,7 +181,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     />
                     )
                   : (
-                    <img onClick={(e) => { e.stopPropagation(); e.preventDefault(); sendVote(1) }} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />
+                    <img onClick={(e) => { e.stopPropagation(); e.preventDefault(); sendVote(1) }} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.3rem' }} />
                     )}
               </div>
               )

@@ -156,6 +156,7 @@ export default function SingleIdea () {
           }
         }).then(() => {
           getNewComment('')
+          commentRef.current.value = ''
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null
           toast.success('Comment submitted!')
@@ -187,6 +188,12 @@ export default function SingleIdea () {
     }, {
       headers: {
         authorization: auth.token
+      }
+    }).catch((e) => {
+      if (e.response.status === 401) {
+        toast.error('You need to be logged in to like an idea.')
+      } else {
+        toast.error('Unexpected error.')
       }
     })
   }
