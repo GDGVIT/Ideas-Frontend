@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
+import { toast } from 'react-toastify'
 
 export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons, admin }) {
   const auth = useSelector(state => state.auth)
@@ -102,20 +103,28 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   const sendVote = (add) => {
     let voteType
-    if (add) {
-      voteType = 1
-      setHeartFull(true)
-      setUpvoteCountNum(upvoteCountNum + 1)
-    } else {
-      voteType = 0
-      setUpvoteCountNum(upvoteCountNum - 1)
-      setHeartFull(false)
+    if (localStorage.getItem('token')) {
+      if (add) {
+        voteType = 1
+        setHeartFull(true)
+        setUpvoteCountNum(upvoteCountNum + 1)
+      } else {
+        voteType = 0
+        setUpvoteCountNum(upvoteCountNum - 1)
+        setHeartFull(false)
+      }
     }
     axios.patch(`/ideas/${ideaId}/vote`, {
       voteType
     }, {
       headers: {
         authorization: auth.token
+      }
+    }).catch((e) => {
+      if (e.response.status === 401) {
+        toast.error('You need to be logged in to like an idea.')
+      } else {
+        toast.error('Unexpected error.')
       }
     })
   }

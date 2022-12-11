@@ -156,6 +156,7 @@ export default function SingleIdea () {
           }
         }).then(() => {
           getNewComment('')
+          commentRef.current = ''
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null
           toast.success('Comment submitted!')
@@ -173,20 +174,28 @@ export default function SingleIdea () {
 
   const sendVote = (add) => {
     let voteType
-    if (add) {
-      voteType = 1
-      setHearted(true)
-      setUpvoteCount(upvoteCount + 1)
-    } else {
-      voteType = 0
-      setUpvoteCount(upvoteCount - 1)
-      setHearted(false)
+    if (localStorage.getItem('token')) {
+      if (add) {
+        voteType = 1
+        setHearted(true)
+        setUpvoteCount(upvoteCount + 1)
+      } else {
+        voteType = 0
+        setUpvoteCount(upvoteCount - 1)
+        setHearted(false)
+      }
     }
     axios.patch(`/ideas/${id}/vote`, {
       voteType
     }, {
       headers: {
         authorization: auth.token
+      }
+    }).catch((e) => {
+      if (e.response.status === 401) {
+        toast.error('You need to be logged in to like an idea.')
+      } else {
+        toast.error('Unexpected error.')
       }
     })
   }
