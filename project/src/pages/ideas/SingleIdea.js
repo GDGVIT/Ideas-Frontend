@@ -156,7 +156,7 @@ export default function SingleIdea () {
           }
         }).then(() => {
           getNewComment('')
-          commentRef.current.value = ''
+          commentRef.current = ''
           getIdea()
           document.getElementsByClassName('tagify__input')[0].innerHTML = null
           toast.success('Comment submitted!')
