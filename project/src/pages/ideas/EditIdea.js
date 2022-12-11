@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { setStatus } from '../../app/slices/notifSlice'
 import { toast } from 'react-toastify'
+import Layout from '../../components/Layout'
 
 export default function EditIdea () {
   const dispatch = useDispatch()
@@ -117,54 +118,56 @@ export default function EditIdea () {
   }, [auth, id, getIdea])
 
   return (
-    <div>
-      <div className='mt-6 grid gap-3 relative'>
-        <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
-          <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Edit Idea</h1>
-          <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
-            <div className='flex flex-column gap-2'>
-              <label className='relative' htmlFor='title-input'>
-                <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
-                Title
-                {!fetchLoading
-                  ? <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
-                  : null}
-              </label>
-              <input disabled={fetchLoading} value={title} onChange={(e) => { setTitle(e.target.value) }} className={`input ${fetchLoading ? 'bodytext' : null}`} id='title-input' />
-            </div>
-            <div className='flex flex-column gap-2'>
-              <label htmlFor='desc-input'>Description
-                {!fetchLoading
-                  ? <span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span>
-                  : null}
-              </label>
-              <textarea disabled={fetchLoading} minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className={`input ${fetchLoading ? 'bodytext' : null}`} id='desc-input' />
-            </div>
-            <div className='flex flex-column gap-2'>
-              <label htmlFor='tag-input'>Tags</label>
-              <div className='flex align-items-center flex-row flex-wrap gap-3'>
-                {tags.map((tag, index) => tag
-                  ? (
-                    <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
-                      <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
-                      {tag}
-                    </div>
-                    )
-                  : null)}
-                <input
-                  value={tagInput} disabled={fetchLoading} onChange={(e) => {
-                    setTagInput(e.target.value)
-                  }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
-                />
+    <Layout>
+      <div>
+        <div className='mt-6 grid gap-3 relative'>
+          <div className='lg:w-6 md:w-7 sm:w-8 w-12'>
+            <h1 className='lg:text-4xl md:text-3xl text-2xl font-medium g-bold'>Edit Idea</h1>
+            <form onSubmit={handleSubmit} className='md:p-5 p-2 flex flex-column gap-3 mt-3'>
+              <div className='flex flex-column gap-2'>
+                <label className='relative' htmlFor='title-input'>
+                  <img className='absolute' style={{ top: '-0.5rem', left: '-0.7rem' }} src={require('../../assets/drawCircle1.svg').default} alt='stroke' />
+                  Title
+                  {!fetchLoading
+                    ? <span className='ml-3 font-16 bodytext'>{title.length ? `${50 - title.length} characters remaining` : null}</span>
+                    : null}
+                </label>
+                <input disabled={fetchLoading} value={title} onChange={(e) => { setTitle(e.target.value) }} className={`input ${fetchLoading ? 'bodytext' : null}`} id='title-input' />
               </div>
-            </div>
-            <button type='submit' disabled={!title || !description || !tags || description.length < 200} className={((submitLoading || !title || !description || !tags || description.length < 200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
-          </form>
+              <div className='flex flex-column gap-2'>
+                <label htmlFor='desc-input'>Description
+                  {!fetchLoading
+                    ? <span className='ml-1 font-16 bodytext'>{description.length && description.length > 450 ? `${500 - description.length} characters remaining` : null}{description.length && description.length < 200 ? `${200 - description.length} more characters minimum` : null}</span>
+                    : null}
+                </label>
+                <textarea disabled={fetchLoading} minLength={199} maxLength={500} value={description} onChange={(e) => { setDesc(e.target.value) }} rows={5} className={`input ${fetchLoading ? 'bodytext' : null}`} id='desc-input' />
+              </div>
+              <div className='flex flex-column gap-2'>
+                <label htmlFor='tag-input'>Tags</label>
+                <div className='flex align-items-center flex-row flex-wrap gap-3'>
+                  {tags.map((tag, index) => tag
+                    ? (
+                      <div className='p-1 text-white font-16 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>
+                        <button type='button' className='mr-2 cross-button' onClick={() => deleteTag(index)}>x</button>
+                        {tag}
+                      </div>
+                      )
+                    : null)}
+                  <input
+                    value={tagInput} disabled={fetchLoading} onChange={(e) => {
+                      setTagInput(e.target.value)
+                    }} onKeyUp={onKeyUp} onKeyDown={detectTagSep} className='w-12 input' id='tag-input'
+                  />
+                </div>
+              </div>
+              <button type='submit' disabled={!title || !description || !tags || description.length < 200} className={((submitLoading || !title || !description || !tags || description.length < 200) ? 'disabled-button' : null) + ' primary-button mx-auto mt-5'}>Submit</button>
+            </form>
+          </div>
+          <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
+          <img src={require('../../assets/plant1.png')} alt='frame' className='absolute h-7rem bottom-0 right-0 mb-3 sm:block hidden' />
+          <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 lg:mr-8 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
         </div>
-        <img src={require('../../assets/frame.png')} alt='frame' className='absolute h-3rem top-0 right-0 frame-position sm:block hidden' />
-        <img src={require('../../assets/plant1.png')} alt='frame' className='absolute h-7rem bottom-0 right-0 mb-3 sm:block hidden' />
-        <img src={require('../../assets/addIdeaPerson.png')} className='h-20rem hidden md:block absolute bottom-0 right-0 lg:mr-8 md:mr-5 mb-2 sm:block hidden' alt='addIdeaPerson' />
       </div>
-    </div>
+    </Layout>
   )
 }

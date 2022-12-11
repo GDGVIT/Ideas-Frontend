@@ -118,6 +118,12 @@ header {
   padding: 0.55rem 1rem;
 }
 
+.text-button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .primary-button {
   background-color: #3994ff;
   border-radius: 10px;
@@ -264,6 +270,10 @@ textarea {
 
 .comment:hover .comment-delete {
   display: block;
+}
+
+.linklistitem:last-child {
+  margin-bottom: 2rem;
 }
 
 .how-number {
@@ -542,6 +552,10 @@ textarea {
   top: 3.1rem;
 }
 
+.top-3-ad {
+  top: 3rem;
+}
+
 .top-2 {
   top: 2.4rem;
 }
@@ -653,6 +667,10 @@ textarea {
 }
 
 @media screen and (max-width: 768px) {
+  .top-3-ad {
+    top: 2.5rem;
+  }
+
   .frame-position {
     margin-right: 6rem;
   }

@@ -3,18 +3,23 @@ import dayjs from 'dayjs'
 import ConditionalLink from './ConditionalLink'
 import axios from '../axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useVisibility } from 'reactjs-visibility'
 import { setTrendingIndexEnd, setRealIndexEnd, setTrendingIndexStart, setRealIndexStart } from '../app/slices/slideshowSlice'
 
-export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif }) {
+export default function IdeaCard ({ name, color, author, description, tags, date, ideaId, hearted, upvoteCount, comments, disabled, fixedWidth, masonry, authorId, ideaspage, horigrid, index, id, type, completed, unapproved, rejected, commNotif, showAdminButtons, admin }) {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [heartFull, setHeartFull] = useState(hearted)
   const [upvoteCountNum, setUpvoteCountNum] = useState(upvoteCount)
   const [userId, setUserId] = useState('')
   const [mentionComments, setMentionComments] = useState([])
+
+  const [unapprovedStatus, setUnapprovedStatus] = useState(unapproved)
+  const [rejectedStatus, setRejectedStatus] = useState(rejected)
+
+  const [cardloading, setCardloading] = useState(false)
 
   const mentionReplacement = (match) => {
     const mention = JSON.parse(match.slice(2, match.length - 2))
@@ -22,6 +27,46 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   }
 
   const visiOptions = {}
+
+  const setIdeaStatus = (status) => {
+    setCardloading(true)
+    axios.post(`/admin/approve/${ideaId}`, {
+      status
+    }, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+      .then(() => {
+        if (status === 'rejected') {
+          setRejectedStatus(true)
+          setUnapprovedStatus(true)
+        } else if (status === 'approved') {
+          setRejectedStatus(false)
+          setUnapprovedStatus(false)
+        }
+        setCardloading(false)
+      }).catch(() => {
+        setCardloading(false)
+      })
+  }
+  const resetIdeaStatus = () => {
+    setCardloading(true)
+    axios.patch(`/admin/reset/${ideaId}`, {
+      status: ''
+    }, {
+      headers: {
+        authorization: auth.token
+      }
+    })
+      .then(() => {
+        setRejectedStatus(false)
+        setUnapprovedStatus(true)
+        setCardloading(false)
+      }).catch(() => {
+        setCardloading(false)
+      })
+  }
 
   const handleChangeVisibility = (visible) => {
     if (visible) {
@@ -94,12 +139,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
   return (
     <div id={id} className={`${masonry ? 'xl:w-3 lg:w-4 md:w-6 w-12 md:px-3 py-3' : null}`}>
       {horigrid ? <span ref={ref} /> : null}
-      <ConditionalLink condition={!disabled} to={`/ideas/${ideaId}`}>
-        <div className={`flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
+      <ConditionalLink state={admin === 'all' ? 'admin' : admin === 'a' ? 'approved' : admin === 'r' ? 'rejected' : null} condition={!disabled} to={`/ideas/${ideaId}`}>
+        <div className={`${cardloading ? 'opacity-50' : null} flex-grow-1 border-round-xl py-4 px-5 bg-white ideacard relative ${ideaspage ? (showAdminButtons) ? 'h-29rem' : 'h-27rem' : 'h-full'} ${horigrid ? 'sm:w-20rem w-17rem sm:h-27rem h-30rem' : null}`}>
           {!disabled
             ? (
               <div className='flex flex-row gap-2 align-items-center absolute top-0 right-0 m-3'>
-                {unapproved
+                {unapprovedStatus && !rejectedStatus
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
                     )
@@ -109,12 +154,12 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
                     )
                   : null}
-                {!unapproved && !completed
+                {!unapprovedStatus && !completed
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
                     )
                   : null}
-                {rejected
+                {rejectedStatus
                   ? (
                     <p className='p-1 px-3 font-12 text-white tag' style={{ backgroundColor: '#ff6b6b' }}>Rejected</p>
                     )
@@ -134,7 +179,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
               </div>
               )
             : null}
-          {author && authorId === userId &&
+          {!admin && author && authorId === userId &&
             <Link className='flex absolute bottom-0 right-0 m-3' to={`/ideas/edit/${ideaId}`}>
               <img className='pl-2 m-auto' src={require('../assets/edit-icon.svg').default} alt='edit' />
             </Link>}
@@ -180,6 +225,77 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     </div>
                   )
                 })}
+              </div>
+              )
+            : null}
+          {showAdminButtons
+            ? (
+              <div className='mt-6 absolute bottom-0 left-0 right-0 mb-3 w-full'>
+                {rejectedStatus
+                  ? (
+                    <div className='flex flex-column align-items-center'>
+                      <p className='font-16 red'>This idea was rejected.</p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          e.preventDefault()
+                          resetIdeaStatus()
+                        }}
+                        className='blue flex-shrink-0 p-2 button text-button'
+                      >Reset
+                      </button>
+                    </div>
+                    )
+                  : !unapprovedStatus
+                      ? (
+                        <div className='flex flex-column align-items-center'>
+                          <p className='font-16 green'>This idea was approved.</p>
+                          <span className='flex flex-row justify-content-evenly gap-5'>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                                resetIdeaStatus()
+                              }}
+                              className='blue flex-shrink-0 p-2 button text-button'
+                            >Reset
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                                navigate(`/admin/makereal/${ideaId}`)
+                              }}
+                              className='green flex-shrink-0 p-2 button text-button'
+                            >Make Real
+                            </button>
+                          </span>
+                        </div>
+                        )
+                      : (
+                        <span className='flex flex-row justify-content-evenly gap-5'>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              console.log('hello')
+                              setIdeaStatus('approved')
+                            }}
+                            className='green flex-shrink-0 p-2 button text-button'
+                          >Accept &#10003;
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              setIdeaStatus('rejected')
+                            }}
+                            style={{ width: 'max-content' }}
+                            className='red p-2 flex-shrink-0 button text-button'
+                          >Reject &#x2718;
+                          </button>
+                        </span>
+                        )}
               </div>
               )
             : null}

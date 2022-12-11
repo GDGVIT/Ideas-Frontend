@@ -1,6 +1,6 @@
 import axios from '../../axios'
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
@@ -8,9 +8,12 @@ import Skeleton from 'react-loading-skeleton'
 import styles from './singleIdea.css'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import { setStatus } from '../../app/slices/notifSlice'
+import Layout from '../../components/Layout'
 
 export default function SingleIdea () {
   /* eslint-disable no-unused-vars */
+  const location = useLocation()
+  const linkState = location.state
   const dispatch = useDispatch()
   const { id } = useParams()
   const auth = useSelector(state => state.auth)
@@ -236,121 +239,141 @@ export default function SingleIdea () {
   }, [auth, id, getIdea, fetchUsers])
 
   return (
-    <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
-      <Link to='/ideas'>
-        <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
-      </Link>
-      <div className='flex flex-row'>
-        <div className='flex-grow-1'>
-          <div className='flex gap-1 sm:flex-row flex-column sm:align-items-center'>
-            <p className='bodytext md:font-20 font-16'>{idea.authorName}</p>
-            <p className='font-20 sm:block hidden bodytext'>{idea.authorName ? '|' : null}</p>
-            <p className='font-16 datetext'>{date}</p>
-          </div>
-          <div className='flex flex-row justify-content-between'>
-            <h1 style={{ wordBreak: 'break-word' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
-            <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
-              <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
-              {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
-              {idea.author && idea.author._id === userId &&
-                <Link className='flex' to={`/ideas/edit/${id}`}>
-                  <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit' />
-                </Link>}
-              {idea.author && idea.author._id === userId && (warned
-                ? <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />
-                : <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />)}
+    <Layout admin={linkState}>
+      <div className='negmar-ideas border-round-xl py-7  md:px-8 sm:px-7 px-5 bg-white ideacard relative'>
+        <Link to={linkState === 'admin' ? '/admin' : linkState === 'approved' ? '/admin/accepted' : linkState === 'rejected' ? '/admin/rejected' : '/ideas'}>
+          <img className='absolute top-0 left-0 m-5' src={require('../../assets/backArrow.svg').default} alt='back-arrow' />
+        </Link>
+        <div className='flex flex-row'>
+          <div className='flex-grow-1'>
+            <div className='flex gap-1 sm:flex-row flex-column sm:align-items-center'>
+              <p className='bodytext md:font-20 font-16'>{idea.authorName}</p>
+              <p className='font-20 sm:block hidden bodytext'>{idea.authorName ? '|' : null}</p>
+              <p className='font-16 datetext'>{date}</p>
+            </div>
+            <div className='flex flex-row justify-content-between'>
+              <h1 style={{ wordBreak: 'break-word' }} className='font-bold'>{idea.title || <Skeleton className='w-100' />}</h1>
+              <div className='flex flex-row gap-2 h-min my-auto align-items-center'>
+                <p style={{ color: '#FF6B6B' }}>{upvoteCount}</p>
+                {hearted ? <img className='button' onClick={() => sendVote(0)} src={require('../../assets/fullHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} /> : <img onClick={() => sendVote(1)} className='button' src={require('../../assets/hollowHeart.svg').default} style={{ height: '1.5rem' }} alt='heart' />}
+                {idea.author && idea.author._id === userId &&
+                  <Link className='flex' to={`/ideas/edit/${id}`}>
+                    <img className='pl-2 m-auto' src={require('../../assets/edit-icon.svg').default} alt='edit' />
+                  </Link>}
+                {idea.author && idea.author._id === userId && (warned
+                  ? <img onClick={deleteIdea} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />
+                  : <img onClick={deleteWarn} className='pl-2 button' height={28} src={require('../../assets/trash-bin.svg').default} alt='trash' />)}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <p style={{ overflowWrap: 'break-word' }} className='mt-4 bodytext font-16'>{idea.description || <Skeleton />}</p>
-      <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
-        {idea.madeReal
+        <p style={{ overflowWrap: 'break-word' }} className='mt-4 bodytext font-16'>{idea.description || <Skeleton />}</p>
+        <div className='md:font-20 font-16 text-white mt-5 flex flex-row flex-wrap gap-2'>
+          {idea.madeReal
+            ? (
+              <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
+              )
+            : null}
+          {idea.status === ''
+            ? (
+              <p className='p-1 px-3 tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
+              )
+            : null}
+          {idea.approved && !idea.madeReal
+            ? (
+              <p className='p-1 px-3 tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
+              )
+            : null}
+          {idea.status === 'rejected'
+            ? (
+              <p className='p-1 px-3 tag' style={{ backgroundColor: '#ff6b6b' }}>Rejected</p>
+              )
+            : null}
+          {idea.tags.map((tag, index) => {
+            return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
+          })}
+        </div>
+        {idea.gitLinks && idea.gitLinks.length
           ? (
-            <p className='p-1 px-3 tag' style={{ backgroundColor: '#6bcb77' }}>Made Real</p>
+            <div className='mt-5'>
+              {idea.gitLinks.map((gitlink, index) => {
+                return (
+                  <span key={`gitlink${index}`} className='mt-4 flex gap-2 align-items-center'>
+                    <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
+                    <a target='_blank' rel='noreferrer' href={gitlink} className='button bodytext'>Check out the code</a>
+                  </span>
+                )
+              })}
+            </div>
             )
           : null}
-        {!idea.approved
+        {idea.deployedURLs && idea.deployedURLs.length
           ? (
-            <p className='p-1 px-3 tag' style={{ backgroundColor: '#575757' }}>Unapproved</p>
+            <div>
+              {idea.deployedURLs.map((depURL, index) => {
+                return (
+                  <span key={`depURL${index}`} className='mt-4 flex gap-2 align-items-center'>
+                    <img src={require('../../assets/globe.png')} alt='github' className='h-2rem' />
+                    <a target='_blank' rel='noreferrer' href={depURL} className='button bodytext'>See it live</a>
+                  </span>
+                )
+              })}
+            </div>
             )
           : null}
-        {idea.approved && !idea.madeReal
+        <div className='relative mt-5'>
+          <MixedTags
+            autoFocus
+            settings={tagSettings}
+            onInput={onInput}
+            placeholder='type @ to mention a user'
+            tagifyRef={tagifyRef}
+            className={styles.tagifyComments}
+            id='comment-input'
+            onChange={onChange}
+          />
+          {!submitCommentLoading
+            ? <img
+                src={require('../../assets/messageSymbol.svg').default} alt='tickIcon'
+                onClick={submitComment}
+                className='button comment-icon absolute top-50 right-0 pr-1'
+              />
+            : <img
+                src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon'
+                className='comment-icon absolute top-50 right-0 pr-1'
+              />}
+        </div>
+        {!commentsLoading
           ? (
-            <p className='p-1 px-3 tag' style={{ backgroundColor: '#3994ff' }}>In Progress</p>
-            )
-          : null}
-        {idea.rejected
-          ? (
-            <p className='p-1 px-3 tag' style={{ backgroundColor: '#ff6b6b' }}>Rejected</p>
-            )
-          : null}
-        {idea.tags.map((tag, index) => {
-          return <p className='p-1 px-3 tag' style={{ backgroundColor: '#F0B501' }} key={index}>{tag}</p>
-        })}
-      </div>
-      {idea.gitLinks && idea.gitLinks.length
-        ? (
-          <div className='mt-5'>
-            <span className='flex gap-2 align-items-center'>
-              <img src={require('../../assets/GitHub-Mark-64px.png')} alt='github' className='h-2rem' />
-              <a target='_blank' rel='noreferrer' href={idea.gitLinks[0]} className='button bodytext'>Check out the project!</a>
-            </span>
-          </div>
-          )
-        : null}
-      <div className='relative mt-5'>
-        <MixedTags
-          autoFocus
-          settings={tagSettings}
-          onInput={onInput}
-          placeholder='type @ to mention a user'
-          tagifyRef={tagifyRef}
-          className={styles.tagifyComments}
-          id='comment-input'
-          onChange={onChange}
-        />
-        {!submitCommentLoading
-          ? <img
-              src={require('../../assets/messageSymbol.svg').default} alt='tickIcon'
-              onClick={submitComment}
-              className='button comment-icon absolute top-50 right-0 pr-1'
-            />
-          : <img
-              src={require('../../assets/spinner.gif')} height={28} alt='spinnerIcon'
-              className='comment-icon absolute top-50 right-0 pr-1'
-            />}
-      </div>
-      {!commentsLoading
-        ? (
-          <div className='mt-6 flex flex-column gap-4'>
-            {comments.length
-              ? (
-                  comments.map((comment, index) => {
-                    return (
-                      <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
-                        <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
-                        <div className='flex-grow-1'>
-                          <p className='md:font-20 font-16'>{comment.authorName}</p>
-                          <span style={{ wordBreak: 'break-word' }} className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+            <div className='mt-6 flex flex-column gap-4'>
+              {comments.length
+                ? (
+                    comments.map((comment, index) => {
+                      return (
+                        <div key={index} className='comment flex flex-row md:gap-4 gap-2'>
+                          <img className='md:w-3rem w-2rem pfp' src={comment.author.picture} alt='pfp' referrerPolicy='no-referrer' />
+                          <div className='flex-grow-1'>
+                            <p className='md:font-20 font-16'>{comment.authorName}</p>
+                            <span style={{ wordBreak: 'break-word' }} className='mt-1 bodytext font-16' dangerouslySetInnerHTML={{ __html: comment.body }} />
+                          </div>
+                          {comment.author && comment.author._id === userId &&
+                            <img
+                              onClick={(e) => {
+                                deleteComment(comment._id, e)
+                              }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
+                            />}
                         </div>
-                        {comment.author && comment.author._id === userId &&
-                          <img
-                            onClick={(e) => {
-                              deleteComment(comment._id, e)
-                            }} className='pl-2 button comment-delete' height={25} src={require('../../assets/trash-bin.svg').default} alt='trash'
-                          />}
-                      </div>
-                    )
-                  }))
-              : (
-                <p className='bodytext'>
-                  No comments yet 😔
-                </p>
-                )}
-          </div>
-          )
-        : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
-    </div>
+                      )
+                    }))
+                : (
+                  <p className='bodytext'>
+                    No comments yet 😔
+                  </p>
+                  )}
+            </div>
+            )
+          : <div className='mt-6'><Skeleton height={45} className='mt-3' count={10} /></div>}
+      </div>
+    </Layout>
   )
 }

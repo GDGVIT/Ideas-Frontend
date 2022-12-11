@@ -6,14 +6,14 @@ import IdeaCard from '../../components/IdeaCard'
 import { useSelector, useDispatch } from 'react-redux'
 import { MixedTags } from '@yaireo/tagify/dist/react.tagify'
 import Skeleton from 'react-loading-skeleton'
-import styles from './ideas.css'
+import styles from '../ideas/ideas.css'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { setStatus } from '../../app/slices/notifSlice'
 import Layout from '../../components/Layout'
 
-export default function Ideas () {
+export default function Admin ({ a, r }) {
   const dispatch = useDispatch()
   const [ideas, setIdeas] = useState([])
   const [limitCount, setLimitCount] = useState(12)
@@ -95,11 +95,20 @@ export default function Ideas () {
   }, [])
 
   useEffect(() => {
+    setIdeas([])
+    if (document.getElementsByClassName('.ideagrid')[0]) {
+      document.getElementsByClassName('.ideagrid')[0].innerHTML = ''
+    }
+    setIdeasloading(true)
+    setLimitCount(12)
     const fetchIdeas = async () => {
       await axios
-        .get('/ideas', {
+        .get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status=pending'), {
           params: {
             limit: 12
+          },
+          headers: {
+            authorization: authRef.current.token
           }
         }
         )
@@ -107,6 +116,7 @@ export default function Ideas () {
           setIdeas(res.data.ideas.sort(function (a, b) {
             return new Date(b.createdOn) - new Date(a.createdOn)
           }))
+
           setIdeasloading(false)
         })
     }
@@ -124,20 +134,20 @@ export default function Ideas () {
           authorization: auth.token
         }
       }).then(res => {
-        setIdeaCount(res.data.noOfIdeas)
+        setIdeaCount(res.data.user.ideaCount)
       })
     }
     if (auth.token) {
       authRef.current = auth
       getIdeaCount()
+      fetchIdeas()
     }
     fetchIdeas()
     fetchUsers()
-  }, [auth])
+  }, [auth, a, r])
 
   const searchIdeas = (e, limit) => {
     e.preventDefault()
-
     setUser(user => {
       setFromDate(from => {
         setToDate(to => {
@@ -149,9 +159,9 @@ export default function Ideas () {
                 }
               }
               if (user) search = search.replace(user, '')
-              await axios.get('/ideas', {
+              await axios.get((a ? '/admin/all?status=approved' : r ? '/admin/all?status=rejected' : '/admin/all?status=pending'), {
                 headers: {
-                  authorization: authRef.current.token
+                  authorization: auth.token
                 },
                 params: {
                   endDate: to,
@@ -174,8 +184,6 @@ export default function Ideas () {
                   arr = arr.map((idea, index) => {
                     return idea.idea
                   })
-                  // console.log(res.data.results)
-                  // console.log(arr)
                   setIdeas(arr)
                 }
               }).then(() => {
@@ -249,26 +257,12 @@ export default function Ideas () {
   }, [])
 
   return (
-    <Layout>
+    <Layout admin>
       <div className='negmar-ideas grid md:gap-4 gap-2'>
         <div className='col-12 md:col flex flex-column md:gap-3 gap-4'>
-          <div className={`${auth.token ? 'top-3' : 'top-2'} searchbg z-2 sticky`}>
-            <div className='align-items-center relative w-full flex gap-3 flex-row'>
+          <div className={`${auth.token ? 'top-3-ad' : 'top-2'} searchbg z-2 sticky`}>
+            <div className='align-items-center relative w-full mt-1 flex gap-3 flex-row'>
               <form className='relative flex-grow-1 flex flex-row gap-4'>
-                {auth.token
-                  ? (
-                    <Link
-                      className='sm:flex hidden' to='/ideas/new' state={{
-                        toPrevious: true
-                      }}
-                    >
-                      <div className='flex flex-column m-auto'>
-                        <p className='bodytext font-16'>You have</p>
-                        <p className='m-auto md:font-24 font-16'><span className='md:font-24 font-20 blue font-bold'>{ideaCount}</span> idea{ideaCount !== 1 ? 's' : null}</p>
-                      </div>
-                    </Link>
-                    )
-                  : null}
                 <div className='relative flex-grow-1'>
                   <MixedTags
                     autoFocus
@@ -310,7 +304,7 @@ export default function Ideas () {
               <div className='ideagrid gap-5'>
                 {ideas.length
                   ? (ideas.map((idea, index) => {
-                      return <IdeaCard key={index} name={idea ? idea.title : null} description={idea ? idea.description : null} authorId={idea ? idea.author._id : null} ideaspage author={idea ? idea.author._id === auth._id ? 'You' : idea.authorName : null} tags={idea ? idea.tags : []} date={idea ? idea.createdOn : null} ideaId={idea ? idea._id : null} hearted={idea ? idea.upvotes.includes(auth._id) : []} upvoteCount={idea ? idea.upvotes.length : null} completed={idea ? idea.madeReal : null} unapproved={idea ? idea.status !== 'approved' : null} rejected={idea ? idea.status === 'rejected' : null} />
+                      return <IdeaCard key={index} name={idea.title} description={idea.description} authorId={idea.author._id} ideaspage author={idea.author._id === auth._id ? 'You' : idea.authorName} tags={idea.tags} date={idea.createdOn} ideaId={idea._id} hearted={idea.upvotes.includes(auth._id)} admin={a ? 'a' : r ? 'r' : 'all'} upvoteCount={idea.upvotes.length} completed={idea.madeReal} unapproved={idea.status !== 'approved'} rejected={idea.status === 'rejected'} showAdminButtons />
                     }))
                   : <p className='text-center bodytext mt-4'>No ideas found 😔</p>}
               </div>
