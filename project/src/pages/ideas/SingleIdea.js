@@ -174,14 +174,16 @@ export default function SingleIdea () {
 
   const sendVote = (add) => {
     let voteType
-    if (add) {
-      voteType = 1
-      setHearted(true)
-      setUpvoteCount(upvoteCount + 1)
-    } else {
-      voteType = 0
-      setUpvoteCount(upvoteCount - 1)
-      setHearted(false)
+    if (localStorage.getItem('token')) {
+      if (add) {
+        voteType = 1
+        setHearted(true)
+        setUpvoteCount(upvoteCount + 1)
+      } else {
+        voteType = 0
+        setUpvoteCount(upvoteCount - 1)
+        setHearted(false)
+      }
     }
     axios.patch(`/ideas/${id}/vote`, {
       voteType

@@ -103,14 +103,16 @@ export default function IdeaCard ({ name, color, author, description, tags, date
 
   const sendVote = (add) => {
     let voteType
-    if (add) {
-      voteType = 1
-      setHeartFull(true)
-      setUpvoteCountNum(upvoteCountNum + 1)
-    } else {
-      voteType = 0
-      setUpvoteCountNum(upvoteCountNum - 1)
-      setHeartFull(false)
+    if (localStorage.getItem('token')) {
+      if (add) {
+        voteType = 1
+        setHeartFull(true)
+        setUpvoteCountNum(upvoteCountNum + 1)
+      } else {
+        voteType = 0
+        setUpvoteCountNum(upvoteCountNum - 1)
+        setHeartFull(false)
+      }
     }
     axios.patch(`/ideas/${ideaId}/vote`, {
       voteType
@@ -181,7 +183,7 @@ export default function IdeaCard ({ name, color, author, description, tags, date
                     />
                     )
                   : (
-                    <img onClick={(e) => { e.stopPropagation(); e.preventDefault(); sendVote(1) }} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.3rem' }} />
+                    <img onClick={(e) => { e.stopPropagation(); e.preventDefault(); sendVote(1) }} src={require('../assets/hollowHeart.svg').default} alt='heart' style={{ height: '1.5rem' }} />
                     )}
               </div>
               )
